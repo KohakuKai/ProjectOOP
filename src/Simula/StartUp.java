@@ -15,7 +15,7 @@ public class StartUp {
             System.out.println("\n===== PHARMACY SYSTEM =====");
             System.out.println("[1] Log In");
             System.out.println("[2] Sign Up");
-            System.out.print("Type here: ");
+            System.out.print("\nType here: ");
 
             choice = in.nextInt();
             in.nextLine(); // nawawala name pag wala to
