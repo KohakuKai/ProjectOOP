@@ -1,4 +1,4 @@
-package main.jaba.Simula;
+package Simula;
 
 
 import java.util.Scanner;

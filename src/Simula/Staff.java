@@ -1,4 +1,4 @@
-package main.jaba.Simula;
+package Simula;
 
 public class Staff extends User {
 
