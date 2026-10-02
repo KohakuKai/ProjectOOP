@@ -6,6 +6,6 @@ public class Main {
         StartUp system = new StartUp();
         system.start();
 
-        System.out.println("Kamusta pipol");
+        // hi guys test lang kung na commit
     }
 }
