@@ -11,7 +11,7 @@ public class Batch {
     // product attribute dito
 
     //mga constructor
-    Batch(String batchID, LocalDate expirationDate, int quantity){
+    Batch(String batchID,int quantity, LocalDate expirationDate){
         this.batchID = batchID;
         this.expirationDate = expirationDate;   //syntax nito ay LocalDate.of(yy,mm,dd);
         this.quantity = quantity;
