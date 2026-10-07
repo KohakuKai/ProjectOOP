@@ -8,7 +8,7 @@ public class Batch {
     private LocalDate dateReceived;
     private int quantity;
 
-    // product attribute dito
+    private Product product;
 
     //mga constructor
     Batch(String batchID,int quantity, LocalDate expirationDate){
