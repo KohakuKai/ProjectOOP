@@ -28,3 +28,5 @@ public class Category {
         System.out.println("Description: " + getDescription());
     }
 }
+
+// di ko lam kung gagawan ba to mga setter eh
