@@ -3,7 +3,7 @@ package Simula;
 
 import java.util.Scanner;
 
-public class Owner extends User {
+public class Owner extends Employee {
     Scanner in = new Scanner (System.in);
 
     private final StartUp manager;
@@ -19,7 +19,7 @@ public class Owner extends User {
         System.out.println("\n=== OWNER DASHBOARD ===");
         System.out.println(this);
 
-        System.out.print("[1] View Employees\n[2] Create Employee\n[3]Change Password\n[4]Logout\nChoice: ");
+        System.out.print("[1] View Employees\n[2] Create Employee\n[3] Change Password\n[4]Logout\nChoice: ");
         int choice = in.nextInt();
         in.nextLine(); // consume the leftover Enter
 
@@ -33,11 +33,19 @@ public class Owner extends User {
                 break;
 
             case 3:
-                System.out.print("Enter new password: ");
-                String newPassword = in.nextLine();
+                System.out.print("\n=== CHANGE PASSWORD ===\nEnter Current password: ");
+                String checkPassword = in.nextLine();
 
-                setPassword(newPassword);
-                System.out.println("Password changed successfully!");
+                if(checkPassword.equals(this.getPassword())) {
+
+                    System.out.print("Enter new password: ");
+                    String newPassword = in.nextLine();
+
+                    setPassword(newPassword);
+                    System.out.println("Password changed successfully!");
+                }
+
+                else System.out.println("Password does not match!");
                 break;
 
             case 4:
@@ -53,8 +61,8 @@ public class Owner extends User {
     }
 
     private void displayEmployees() {
-        for (User user : manager.getEmployees()) {
-            System.out.println(user);
+        for (Employee employee : manager.getEmployees()) {
+            System.out.println(employee);
         }
     }
 }

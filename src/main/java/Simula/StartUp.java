@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class StartUp {
 
-    private ArrayList<User> registeredUsers = new ArrayList<>();
+    private ArrayList<Employee> registeredEmployees = new ArrayList<>();
     private Scanner in = new Scanner(System.in);
 
     public StartUp() { // dito lalagay yung owner
-        registeredUsers.add(
+        registeredEmployees.add(
                 new Owner("ownerName", this, "ownerPassword", "ownerUsername")
         );
     }
@@ -40,8 +40,8 @@ public class StartUp {
     }
 
     // getter para sa owner
-    public ArrayList<User> getEmployees() {
-        return registeredUsers;
+    public ArrayList<Employee> getEmployees() {
+        return registeredEmployees;
     }
 
 
@@ -57,12 +57,12 @@ public class StartUp {
         String password = in.nextLine();
 
         //ipapasa dito yung ininput then pagbalik, rekta store kay foundUser
-        User foundUser = findUser(username, empID, password);
+        Employee foundEmployee = findUser(username, empID, password);
 
-        if (foundUser != null) {
+        if (foundEmployee != null) {
             System.out.println("Login successful!");
             // may override each subclass
-            foundUser.showDashboard();
+            foundEmployee.showDashboard();
         } else {
             System.out.println("No matching account found. Please sign up first.");
         }
@@ -86,22 +86,22 @@ public class StartUp {
         int choice = in.nextInt();
         in.nextLine(); // consume the leftover Enter
 
-        User newUser = createUserByChoice(choice, name, username, password);
-        if (newUser == null) {
+        Employee newEmployee = createUserByChoice(choice, name, username, password);
+        if (newEmployee == null) {
             System.out.println("Invalid position. Employee creation cancelled.");
             return;
         }
 
-        registeredUsers.add(newUser);
+        registeredEmployees.add(newEmployee);
 
         System.out.println("Employee created successfully!");
-        System.out.println("Employee ID: " + newUser.getEmpID());
-        System.out.println("Position: " + newUser.getPosition());
+        System.out.println("Employee ID: " + newEmployee.getEmpID());
+        System.out.println("Position: " + newEmployee.getPosition());
     }
 
     // pinagpasahan ng input. taga gawa object
-    private User createUserByChoice(int choice, String name,
-                                    String username, String password) {
+    private Employee createUserByChoice(int choice, String name,
+                                        String username, String password) {
         switch (choice) {
             case 1:
                 return new Owner(name, this, password, username);
@@ -117,12 +117,12 @@ public class StartUp {
         }
     }
         // taga hanap if may ganitong tao ba na na sign up sa arraylist
-        private User findUser (String username,String empID, String password){
-            for (User user : registeredUsers) {
-                if (user.getUsername().equals(username)
-                        && user.getEmpID().equals(empID)
-                        && user.getPassword().equals(password)) {
-                    return user;
+        private Employee findUser (String username, String empID, String password){
+            for (Employee employee : registeredEmployees) {
+                if (employee.getUsername().equals(username)
+                        && employee.getEmpID().equals(empID)
+                        && employee.getPassword().equals(password)) {
+                    return employee;
                 }
             }
             return null;

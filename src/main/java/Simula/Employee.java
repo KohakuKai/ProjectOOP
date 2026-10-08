@@ -1,6 +1,6 @@
 package Simula;
 
-public abstract class User {
+public abstract class Employee {
 
     private String name;
     private String position; // "Owner", "Pharmacist", or "Staff"
@@ -9,7 +9,7 @@ public abstract class User {
     private static int nextEmpID = 1001;
     private String empID;
 
-    public User(String name, String position, String password, String username) {
+    public Employee(String name, String position, String password, String username) {
         this.empID = String.valueOf(nextEmpID++);
         this.name = name;
         this.position = position;

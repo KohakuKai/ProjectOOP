@@ -6,23 +6,27 @@ import java.util.List;
 //di pa to tapos ata
 
 public abstract class Product {
-    private String productID, productName, genericName, brand, unit;
+    private final String productID;
+    private String productName, genericName, brand, unit;
     private double sellingPrice;
 
     private int reorderLevel;
 
+
     private Category category;
-    private ArrayList<Batch> batch = new ArrayList<>();
+    private ArrayList<Batch> batches = new ArrayList<>();
 
     //constructor
-    Product(String productID, String productName, String genericName, String brand, String unit, double sellingPrice, Category category){
+    Product(String productID, String productName, String genericName, String brand, String unit,  double sellingPrice,int reorderLevel, Category category){
         this.productID = productID;
         this.productName = productName;
         this.genericName = genericName;
         this.brand = brand;
         this.unit = unit;
         this.sellingPrice = sellingPrice;
+        this.reorderLevel = reorderLevel;
         this.category = category;
+
     }
 
     //mga getter
@@ -44,17 +48,11 @@ public abstract class Product {
     public double getSellingPrice() {
         return sellingPrice;
     }
-    public int getReorderLevel() {
-        return reorderLevel;
-    }
-    public Category getCategory() {
-        return category;
-    }
+    public int getReorderLevel() {return reorderLevel;}
+    public Category getCategory() { return category;}
+
 
     //mga setter
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
     public void setProductName(String productName) {
         this.productName = productName;
     }
@@ -68,18 +66,32 @@ public abstract class Product {
         this.unit = unit;
     }
     public void setSellingPrice(double sellingPrice) {
-        this.sellingPrice = sellingPrice;
+        if(sellingPrice>=0) {
+            this.sellingPrice = sellingPrice;
+        }
+        else {
+            System.out.println("Invalid Selling Price!");
+        }
+
     }
     public void setReorderLevel(int reorderLevel) {
-        this.reorderLevel = reorderLevel;
+        if(reorderLevel>=0) {
+            this.reorderLevel = reorderLevel;
+        }
+        else {
+            System.out.println("Invalid Reorder Level!");
+        }
+
     }
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+    public void setCategory(Category category) {this.category = category;}
 
 
+    public abstract int getTotalStock(); //hindi ata to abstract? kasi pwede i desplay lahat ng overall products
     public abstract String getProductType();
-    public abstract int getTotalStock();
+    public abstract boolean isBelowReorderLevel();
+    public abstract boolean isNearExpiration();
+    public abstract void displayInfo();
+
 }
 
 

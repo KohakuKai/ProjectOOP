@@ -1,7 +1,7 @@
 package Simula;
 import java.util.Scanner;
 
-public class Staff extends User {
+public class Staff extends Employee {
 
     public Staff(String name, String password, String username) {
         super(name, "Staff", password, username);
@@ -21,11 +21,19 @@ public class Staff extends User {
 
         switch (choice) {
             case 1:
-                System.out.print("Enter new password: ");
-                String newPassword = in.nextLine();
+                System.out.print("\n=== CHANGE PASSWORD ===\nEnter Current password: ");
+                String checkPassword = in.nextLine();
 
-                setPassword(newPassword);
-                System.out.println("Password changed successfully!");
+                if(checkPassword.equals(this.getPassword())) {
+
+                    System.out.print("Enter new password: ");
+                    String newPassword = in.nextLine();
+
+                    setPassword(newPassword);
+                    System.out.println("Password changed successfully!");
+                }
+                else System.out.println("Password does not match!");
+
                 break;
 
             case 2:
