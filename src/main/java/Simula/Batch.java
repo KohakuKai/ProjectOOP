@@ -16,6 +16,7 @@ public class Batch {
         this.quantity = quantity;
         this.expirationDate = expirationDate;//syntax nito ay LocalDate.of(yy,mm,dd);
         this.product = product;
+
         this.dateReceived = LocalDate.now(); //kukunin time ngayon
     }
 
@@ -33,6 +34,21 @@ public class Batch {
         return expirationDate;
     }
 
+    //mga setter
+    public void setBatchID(String batchID) {
+        this.batchID = batchID;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    public void setDateReceived(LocalDate dateReceived) {
+        this.dateReceived = dateReceived;
+    }
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    //taga check expiration date
     public boolean isExpired(){
         return(LocalDate.now().isEqual(expirationDate) || LocalDate.now().isAfter(expirationDate));
         //chinecheck nito kung yung date ngayon ay >= expiration date
