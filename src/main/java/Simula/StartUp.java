@@ -14,6 +14,12 @@ public class StartUp {
         );
     }
 
+    private final Inventory inventory = new Inventory();
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     // login or sign up
     public void start() {
         int choice = 0;

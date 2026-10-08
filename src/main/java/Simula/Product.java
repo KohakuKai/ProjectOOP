@@ -13,13 +13,14 @@ public abstract class Product {
     private ArrayList<Batch> batch = new ArrayList<>();
 
     //constructor
-    Product(String productID, String productName, String genericName, String brand, String unit, double sellingPrice, Category category){
+    Product(String productID, String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
         this.productID = productID;
         this.productName = productName;
         this.genericName = genericName;
         this.brand = brand;
         this.unit = unit;
         this.sellingPrice = sellingPrice;
+        this.reorderLevel = reorderLevel;
         this.category = category;
     }
 
