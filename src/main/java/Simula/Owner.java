@@ -17,10 +17,9 @@ public class Owner extends User {
     @Override
     public void showDashboard() {
         System.out.println("\n=== OWNER DASHBOARD ===");
-        System.out.println(getEmpID() + getName());
         System.out.println(this);
 
-        System.out.print("[1] View Employees\n[2] Logout\nChoice: ");
+        System.out.print("[1] View Employees\n[2] Create Employee\n[3]Change Password\n[4]Logout\nChoice: ");
         int choice = in.nextInt();
         in.nextLine(); // consume the leftover Enter
 
@@ -29,10 +28,22 @@ public class Owner extends User {
                 displayEmployees();
                 break;
             }
-            case 2: {
-                System.out.println("Logging out...");
+            case 2:
+                manager.createEmployee();
                 break;
-            }
+
+            case 3:
+                System.out.print("Enter new password: ");
+                String newPassword = in.nextLine();
+
+                setPassword(newPassword);
+                System.out.println("Password changed successfully!");
+                break;
+
+            case 4:
+                System.out.println("Logging out...");
+                return;
+
             default: {
                 System.out.println("Invalid choice. Please try again.");
                 showDashboard();
@@ -47,3 +58,4 @@ public class Owner extends User {
         }
     }
 }
+

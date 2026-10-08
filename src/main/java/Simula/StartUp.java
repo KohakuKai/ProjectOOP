@@ -8,13 +8,19 @@ public class StartUp {
     private ArrayList<User> registeredUsers = new ArrayList<>();
     private Scanner in = new Scanner(System.in);
 
+    public StartUp() { // dito lalagay yung owner
+        registeredUsers.add(
+                new Owner("ownerName", this, "ownerPassword", "ownerUsername")
+        );
+    }
+
     // login or sign up
     public void start() {
         int choice = 0;
-        while ((choice != 1) || (choice !=2)) {
+        while (true) {
             System.out.println("\n===== PHARMACY SYSTEM =====");
             System.out.println("[1] Log In");
-            System.out.println("[2] Sign Up");
+            System.out.println("[2] Exit");
             System.out.print("\nType here: ");
 
             choice = in.nextInt();
@@ -25,8 +31,8 @@ public class StartUp {
                     logIn();
                     break;
                 case 2:
-                    signUp();
-                    break;
+                    System.out.println("Exiting...");
+                    return;
                 default:
                     System.out.println("Invalid option. Try again.");
             }
@@ -39,54 +45,19 @@ public class StartUp {
     }
 
 
-    // sign up method
-    private void signUp() {
-        System.out.print("\nEnter your name: ");
-        String name = in.nextLine().trim(); // para dito yung nextLine kanina
-
-        System.out.print("Enter your username: ");
-        String username = in.nextLine().trim();
-
-        System.out.print("Enter your password: ");
-        String password = in.nextLine();
-
-        System.out.println("Select your position:");
-        System.out.println("[1] Owner");
-        System.out.println("[2] Pharmacist");
-        System.out.println("[3] Staff");
-        System.out.print("Choice: ");
-        String posChoice = in.nextLine().trim();
-
-        //ipapasa dito yung ininput then pagbalik, rekta store kay newUser
-        User newUser = createUserByChoice(posChoice, name, password, username);
-
-        if (newUser == null) {
-            System.out.println("Invalid position selected. Sign up cancelled.");
-            return;
-        }
-
-        registeredUsers.add(newUser);
-        System.out.println("Sign up successful!");
-        System.out.println("Employee ID: " + newUser.getEmpID());
-        System.out.println("You may now log in.");
-    }
-
     // ----- LOG IN -----
     private void logIn() {
-        System.out.print("\nEnter your name: ");
-        String name = in.nextLine().trim(); // para dito yung nextLine kanina
-
-        System.out.print("Enter your position (Owner/Pharmacist/Staff): ");
-        String position = in.nextLine().trim();
-
-        System.out.print("Enter your username: ");
+        System.out.print("\nEnter your username: ");
         String username = in.nextLine().trim();
+
+        System.out.print("Enter your employee ID: ");
+        String empID = in.nextLine().trim();
 
         System.out.print("Enter your password: ");
         String password = in.nextLine();
 
         //ipapasa dito yung ininput then pagbalik, rekta store kay foundUser
-        User foundUser = findUser(name, position, username, password);
+        User foundUser = findUser(username, empID, password);
 
         if (foundUser != null) {
             System.out.println("Login successful!");
@@ -96,32 +67,65 @@ public class StartUp {
             System.out.println("No matching account found. Please sign up first.");
         }
     }
+    //create employee ng owner yan ah
+    public void createEmployee() {
+        System.out.print("\nEnter employee name: ");
+        String name = in.nextLine().trim();
+
+        System.out.print("Enter employee username: ");
+        String username = in.nextLine().trim();
+
+        System.out.print("Enter employee password: ");
+        String password = in.nextLine();
+
+        System.out.println("\nAssign position:");
+        System.out.println("[1] Owner");
+        System.out.println("[2] Pharmacist");
+        System.out.println("[3] Staff");
+        System.out.print("Choice: ");
+        int choice = in.nextInt();
+        in.nextLine(); // consume the leftover Enter
+
+        User newUser = createUserByChoice(choice, name, username, password);
+        if (newUser == null) {
+            System.out.println("Invalid position. Employee creation cancelled.");
+            return;
+        }
+
+        registeredUsers.add(newUser);
+
+        System.out.println("Employee created successfully!");
+        System.out.println("Employee ID: " + newUser.getEmpID());
+        System.out.println("Position: " + newUser.getPosition());
+    }
 
     // pinagpasahan ng input. taga gawa object
-    private User createUserByChoice(String choice, String name, String username, String password) {
+    private User createUserByChoice(int choice, String name,
+                                    String username, String password) {
         switch (choice) {
-            case "1":
-                return new Owner(name, this, username, password);
-            // this is para maaccess ni Owner yung employee list
-            case "2":
-                return new Pharmacist(name, username, password);
-            case "3":
-                return new Staff(name, username, password);
+            case 1:
+                return new Owner(name, this, password, username);
+
+            case 2:
+                return new Pharmacist(name, password, username);
+
+            case 3:
+                return new Staff(name, password, username);
+
             default:
                 return null;
         }
     }
-
-    // taga hanap if may ganitong tao ba na na sign up sa arraylist
-    private User findUser(String name, String position, String username, String password) {
-        for (User u : registeredUsers) {
-            if (u.getName().equalsIgnoreCase(name)
-                    && u.getPosition().equalsIgnoreCase(position)
-                    && u.getUsername().equals(username)
-                    && u.getPassword().equals(password)) {
-                return u;
+        // taga hanap if may ganitong tao ba na na sign up sa arraylist
+        private User findUser (String username,String empID, String password){
+            for (User user : registeredUsers) {
+                if (user.getUsername().equals(username)
+                        && user.getEmpID().equals(empID)
+                        && user.getPassword().equals(password)) {
+                    return user;
+                }
             }
+            return null;
         }
-        return null;
     }
-}
+

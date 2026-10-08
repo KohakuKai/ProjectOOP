@@ -11,7 +11,6 @@ public abstract class User {
 
     public User(String name, String position, String password, String username) {
         this.empID = String.valueOf(nextEmpID++);
-
         this.name = name;
         this.position = position;
         this.password = password;
@@ -60,6 +59,6 @@ public abstract class User {
 
     @Override
     public String toString() {
-        return "Name: " + name + " | Position: " + position;
+        return "ID no.: " + empID + "    |    " + name + "\n";
     }
 }
