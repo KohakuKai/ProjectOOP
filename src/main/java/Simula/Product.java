@@ -1,32 +1,26 @@
 package Simula;
 
 import java.util.ArrayList;
-import java.util.List;
-
-//di pa to tapos ata
 
 public abstract class Product {
-    private final String productID;
-    private String productName, genericName, brand, unit;
+    private String productID, productName, genericName, brand, unit;
     private double sellingPrice;
 
+    //user magseset nito, di ko lam kung dadamay ko sa constructor
     private int reorderLevel;
 
-
     private Category category;
-    private ArrayList<Batch> batches = new ArrayList<>();
+    private ArrayList<Batch> batch = new ArrayList<>();
 
     //constructor
-    Product(String productID, String productName, String genericName, String brand, String unit,  double sellingPrice,int reorderLevel, Category category){
+    Product(String productID, String productName, String genericName, String brand, String unit, double sellingPrice, Category category){
         this.productID = productID;
         this.productName = productName;
         this.genericName = genericName;
         this.brand = brand;
         this.unit = unit;
         this.sellingPrice = sellingPrice;
-        this.reorderLevel = reorderLevel;
         this.category = category;
-
     }
 
     //mga getter
@@ -48,11 +42,17 @@ public abstract class Product {
     public double getSellingPrice() {
         return sellingPrice;
     }
-    public int getReorderLevel() {return reorderLevel;}
-    public Category getCategory() { return category;}
-
+    public int getReorderLevel() {
+        return reorderLevel;
+    }
+    public Category getCategory() {
+        return category;
+    }
 
     //mga setter
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
     public void setProductName(String productName) {
         this.productName = productName;
     }
@@ -66,32 +66,51 @@ public abstract class Product {
         this.unit = unit;
     }
     public void setSellingPrice(double sellingPrice) {
-        if(sellingPrice>=0) {
-            this.sellingPrice = sellingPrice;
-        }
-        else {
-            System.out.println("Invalid Selling Price!");
-        }
-
+        this.sellingPrice = sellingPrice;
     }
     public void setReorderLevel(int reorderLevel) {
-        if(reorderLevel>=0) {
-            this.reorderLevel = reorderLevel;
-        }
-        else {
-            System.out.println("Invalid Reorder Level!");
-        }
-
+        this.reorderLevel = reorderLevel;
     }
-    public void setCategory(Category category) {this.category = category;}
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-
-    public abstract int getTotalStock(); //hindi ata to abstract? kasi pwede i desplay lahat ng overall products
+    //i ooverwrite to
     public abstract String getProductType();
-    public abstract boolean isBelowReorderLevel();
-    public abstract boolean isNearExpiration();
-    public abstract void displayInfo();
 
+    public int getTotalStock(){
+        int total = 0;
+        for(Batch b : batch){
+            total += b.getQuantity();
+        }
+        return total;
+    }
+
+    //kailangan na set na reorder level para rito
+    public boolean isBelowOrderLevel(){
+        return getTotalStock() < reorderLevel;
+    }
+
+    //get info method
+    public void getInfo(){
+        System.out.println("Product ID: " + productID);
+        System.out.println("Product Name: " + productName);
+        System.out.println("Generic Name: " + genericName);
+        System.out.println("Brand: " + brand);
+        System.out.println("Unit: " + unit);
+        System.out.println("Selling Price: " + sellingPrice);
+        System.out.println("Reorder Level: " + reorderLevel);
+        System.out.println("Category: " + category);
+        System.out.println("Total Stock: " + getTotalStock());
+    }
+
+    public void checkExpiration(){
+        for(Batch b : batch){
+            System.out.println("Batch ID: " + b.getBatchID());
+            System.out.println("Expiration date: " + b.getExpirationDate());
+            System.out.println("Expired: " + b.isExpired());
+        }
+    }
 }
 
 
