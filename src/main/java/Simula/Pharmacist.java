@@ -2,8 +2,8 @@ package Simula;
 
 public class Pharmacist extends User {
 
-    public Pharmacist(String name) {
-        super(name, "Pharmacist");
+    public Pharmacist(String name, String password, String username) {
+        super(name, "Pharmacist", username, password);
     }
 
     @Override

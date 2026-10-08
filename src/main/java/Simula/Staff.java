@@ -2,8 +2,8 @@ package Simula;
 
 public class Staff extends User {
 
-    public Staff(String name) {
-        super(name, "Staff");
+    public Staff(String name, String password, String username) {
+        super(name, "Staff", password, username);
     }
 
     @Override

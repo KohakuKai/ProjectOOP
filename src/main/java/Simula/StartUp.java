@@ -44,6 +44,12 @@ public class StartUp {
         System.out.print("\nEnter your name: ");
         String name = in.nextLine().trim(); // para dito yung nextLine kanina
 
+        System.out.print("Enter your username: ");
+        String username = in.nextLine().trim();
+
+        System.out.print("Enter your password: ");
+        String password = in.nextLine();
+
         System.out.println("Select your position:");
         System.out.println("[1] Owner");
         System.out.println("[2] Pharmacist");
@@ -52,7 +58,7 @@ public class StartUp {
         String posChoice = in.nextLine().trim();
 
         //ipapasa dito yung ininput then pagbalik, rekta store kay newUser
-        User newUser = createUserByChoice(posChoice, name);
+        User newUser = createUserByChoice(posChoice, name, password, username);
 
         if (newUser == null) {
             System.out.println("Invalid position selected. Sign up cancelled.");
@@ -60,7 +66,9 @@ public class StartUp {
         }
 
         registeredUsers.add(newUser);
-        System.out.println("Sign up successful! You may now log in.");
+        System.out.println("Sign up successful!");
+        System.out.println("Employee ID: " + newUser.getEmpID());
+        System.out.println("You may now log in.");
     }
 
     // ----- LOG IN -----
@@ -71,12 +79,18 @@ public class StartUp {
         System.out.print("Enter your position (Owner/Pharmacist/Staff): ");
         String position = in.nextLine().trim();
 
+        System.out.print("Enter your username: ");
+        String username = in.nextLine().trim();
+
+        System.out.print("Enter your password: ");
+        String password = in.nextLine();
+
         //ipapasa dito yung ininput then pagbalik, rekta store kay foundUser
-        User foundUser = findUser(name, position);
+        User foundUser = findUser(name, position, username, password);
 
         if (foundUser != null) {
             System.out.println("Login successful!");
-            // may override each sub class
+            // may override each subclass
             foundUser.showDashboard();
         } else {
             System.out.println("No matching account found. Please sign up first.");
@@ -84,25 +98,27 @@ public class StartUp {
     }
 
     // pinagpasahan ng input. taga gawa object
-    private User createUserByChoice(String choice, String name) {
+    private User createUserByChoice(String choice, String name, String username, String password) {
         switch (choice) {
             case "1":
-                return new Owner(name, this);
+                return new Owner(name, this, username, password);
             // this is para maaccess ni Owner yung employee list
             case "2":
-                return new Pharmacist(name);
+                return new Pharmacist(name, username, password);
             case "3":
-                return new Staff(name);
+                return new Staff(name, username, password);
             default:
                 return null;
         }
     }
 
     // taga hanap if may ganitong tao ba na na sign up sa arraylist
-    private User findUser(String name, String position) {
+    private User findUser(String name, String position, String username, String password) {
         for (User u : registeredUsers) {
             if (u.getName().equalsIgnoreCase(name)
-                    && u.getPosition().equalsIgnoreCase(position)) {
+                    && u.getPosition().equalsIgnoreCase(position)
+                    && u.getUsername().equals(username)
+                    && u.getPassword().equals(password)) {
                 return u;
             }
         }
