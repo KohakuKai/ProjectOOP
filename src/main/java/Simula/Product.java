@@ -1,14 +1,12 @@
 package Simula;
 
 import java.util.ArrayList;
-import java.util.List;
-
-//di pa to tapos ata
 
 public abstract class Product {
     private String productID, productName, genericName, brand, unit;
     private double sellingPrice;
 
+    //user magseset nito, di ko lam kung dadamay ko sa constructor
     private int reorderLevel;
 
     private Category category;
@@ -77,9 +75,42 @@ public abstract class Product {
         this.category = category;
     }
 
-
+    //i ooverwrite to
     public abstract String getProductType();
-    public abstract int getTotalStock();
+
+    public int getTotalStock(){
+        int total = 0;
+        for(Batch b : batch){
+            total += b.getQuantity();
+        }
+        return total;
+    }
+
+    //kailangan na set na reorder level para rito
+    public boolean isBelowOrderLevel(){
+        return getTotalStock() < reorderLevel;
+    }
+
+    //get info method
+    public void getInfo(){
+        System.out.println("Product ID: " + productID);
+        System.out.println("Product Name: " + productName);
+        System.out.println("Generic Name: " + genericName);
+        System.out.println("Brand: " + brand);
+        System.out.println("Unit: " + unit);
+        System.out.println("Selling Price: " + sellingPrice);
+        System.out.println("Reorder Level: " + reorderLevel);
+        System.out.println("Category: " + category);
+        System.out.println("Total Stock: " + getTotalStock());
+    }
+
+    public void checkExpiration(){
+        for(Batch b : batch){
+            System.out.println("Batch ID: " + b.getBatchID());
+            System.out.println("Expiration date: " + b.getExpirationDate());
+            System.out.println("Expired: " + b.isExpired());
+        }
+    }
 }
 
 
