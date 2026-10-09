@@ -5,8 +5,6 @@ import java.util.ArrayList;
 public abstract class Product {
     private String productID, productName, genericName, brand, unit;
     private double sellingPrice;
-
-    //user magseset nito, di ko lam kung dadamay ko sa constructor
     private int reorderLevel;
 
     private Category category;
