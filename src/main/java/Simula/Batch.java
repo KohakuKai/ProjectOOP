@@ -11,11 +11,11 @@ public class Batch {
     private Product product;
 
     //mga constructor
-    Batch(String batchID,int quantity, LocalDate expirationDate, Product product){
+    Batch(String batchID,int quantity,Product product, LocalDate expirationDate){
         this.batchID = batchID;
         this.quantity = quantity;
-        this.expirationDate = expirationDate;//syntax nito ay LocalDate.of(yy,mm,dd);
         this.product = product;
+        this.expirationDate = expirationDate;//syntax nito ay LocalDate.of(yy,mm,dd);
 
         this.dateReceived = LocalDate.now(); //kukunin time ngayon
     }

@@ -1,7 +1,10 @@
 package Simula;
 
 
+import org.springframework.web.context.request.AbstractRequestAttributesScope;
+
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class Owner extends Employee {
 
@@ -23,8 +26,9 @@ public class Owner extends Employee {
             System.out.print("\n[1] Manage Employee\n" +
                     "[2] Manage Products\n" +
                     "[3] Manage Categories\n" +
-                    "[4] Change Password\n" +
-                    "[5] Logout\n" +
+                    "[4] Manage Supplies\n" +
+                    "[5] Change Password\n" +
+                    "[6] Logout\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
@@ -98,11 +102,46 @@ public class Owner extends Employee {
 
                 }
                 case 4:{
+                    System.out.print("\n===Manage Supplies===\n\n" +
+                            "[1]Add Batch\n" +
+                            "[2]Add Supply\n" +
+                            "[3]Reduce Supply\n" +
+                            "[4]View Status\n" +
+                            "Choice: ");
+                    int choice4 = in.nextInt();
+                    in.nextLine();
+
+                    switch(choice4){
+                        case 1:{
+                            addBatch();
+                            break;
+                        }
+                        case 2:{
+                            addSupply();
+                            break;
+                        }
+                        case 3:{
+                            reduceSupply();
+                            break;
+                        }
+                        case 4:{
+                            viewBatchDetails();
+                            break;
+                        }
+                        default:{
+                            System.out.println("Invalid input. Try Again");
+                            break;
+                        }
+
+                    }
+                    break;
+                }
+                case 5:{
                     changePassword();
                     break;
                 }
 
-                case 5: {
+                case 6: {
                     System.out.println("Logging out...");
                     return;
                 }
@@ -352,6 +391,120 @@ public class Owner extends Employee {
 
         }
 
+    }
+
+    private void addBatch(){
+        System.out.print("Enter Product ID: ");
+        String ProductID = in.nextLine();
+
+        //hahanapin yung product gamit product id
+        Product product = manager.getInventory().findProductById(ProductID);
+
+        if(product == null){
+            System.out.println("Unable to find product!");
+            return;
+        }
+
+        //pag initialize ng variables
+        System.out.print("Enter batch ID: ");
+        String batchID = in.nextLine().trim();
+        System.out.print("Enter quantity: ");
+        int quantity = in.nextInt();
+        System.out.print("Enter year of expiration: ");
+        int yearexp = in.nextInt();
+        System.out.print("Enter month of expiration: ");
+        int monthexp = in.nextInt();
+        System.out.print("Enter day of expiration: ");
+        int dayexp = in.nextInt();
+
+
+        Batch addbatch = new Batch(batchID, quantity, product, LocalDate.of(yearexp, monthexp, dayexp));
+        if(product.addBatch(addbatch)) {
+            System.out.println("Batch added successfully!");
+        }
+        else{
+            System.out.println("Failed to add new batch");
+        }
+    }
+
+    private void addSupply() {
+        System.out.print("Enter Product ID: ");
+        String productID = in.nextLine().trim();
+
+        Product product = manager.getInventory()
+                .findProductById(productID);
+
+        if (product == null) {
+            System.out.println("Product not found!");
+            return;
+        }
+
+        System.out.print("Enter Batch ID: ");
+        String batchID = in.nextLine().trim();
+
+        Batch batch = product.findBatchById(batchID);
+
+        if (batch == null) {
+            System.out.println("Batch not found!");
+            return;
+        }
+
+        System.out.print("Enter quantity to add: ");
+        int amount = in.nextInt();
+        in.nextLine();
+
+        batch.increaseQuantity(amount);
+        System.out.println("Supply added successfully!");
+
+    }
+
+    private void reduceSupply() {
+        System.out.print("Enter Product ID: ");
+        String productID = in.nextLine().trim();
+
+        Product product = manager.getInventory()
+                .findProductById(productID);
+
+        if (product == null) {
+            System.out.println("Product not found!");
+            return;
+        }
+
+        System.out.print("Enter Batch ID: ");
+        String batchID = in.nextLine().trim();
+
+        Batch batch = product.findBatchById(batchID);
+
+        if (batch == null) {
+            System.out.println("Batch not found!");
+            return;
+        }
+
+        System.out.print("Enter quantity to reduce: ");
+        int amount = in.nextInt();
+        in.nextLine();
+
+        batch.reduceQuantity(amount);
+        System.out.println("Supply reduced successfully!");
+
+    }
+
+    private void viewBatchDetails() {
+        System.out.print("Enter Product ID: ");
+        String productID = in.nextLine().trim();
+
+        Product product = manager.getInventory().findProductById(productID);
+
+        if (product == null) {
+            System.out.println("Product not found!");
+            return;
+        }
+
+        System.out.println("\n=== Product Details ===");
+        product.getInfo();
+
+        System.out.println("\n=== Batch Details ===");
+        product.checkExpiration();
     }
 
 }

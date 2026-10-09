@@ -77,9 +77,27 @@ public abstract class Product {
     //i ooverwrite to
     public abstract String getProductType();
 
+    public boolean addBatch(Batch batch){
+        batches.add(batch);
+        return true;
+    }
+
+
+
+    public Batch findBatchById(String batchID) {
+        for (Batch b : batches) {
+            if (b.getBatchID().equals(batchID)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
     public int getTotalStock(){
+        int ctr = 1;
         int total = 0;
         for(Batch b : batches){
+            System.out.println("Batch" + ctr + ": " + b.getQuantity());
             total += b.getQuantity();
         }
         return total;
@@ -107,6 +125,7 @@ public abstract class Product {
         for(Batch b : batches){
             System.out.println("Batch ID: " + b.getBatchID());
             System.out.println("Expiration date: " + b.getExpirationDate());
+            System.out.println("Date received: " + b.getDateReceived());
             System.out.println("Expired: " + b.isExpired());
         }
     }
