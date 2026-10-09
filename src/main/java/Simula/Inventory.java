@@ -1,24 +1,18 @@
 package Simula;
 
-import java.util.ArrayList;
-
 public class Inventory {
+    private String transactionDetailID;
+    private int quantity;
+    private double unitPrice, subTotal;
 
-    private ArrayList<Product> products = new ArrayList<>();
-    private ArrayList<Category> categories = new ArrayList<>();
+    private Product product;
+    //private Transaction transaction;
+    //wala pa to
 
-    public ArrayList<Product> viewProducts() {
-        return products;
+    public double calculateSubTotal(){
+        return quantity * product.getSellingPrice();
     }
-
-    public void addProduct(Employee employee, Product newProduct) {
-        products.add(newProduct);
-    }
-
-    public ArrayList<Category> viewCategories() {
-        return categories;
-    }
-
-
 
 }
+
+//di pa to tapos
