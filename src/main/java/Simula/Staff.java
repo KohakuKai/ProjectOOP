@@ -6,7 +6,7 @@ public class Staff extends Employee {
     public Staff(String name, String password, String username) {
         super(name, "Staff", password, username);
     }
-    public static Scanner in = new Scanner(System.in);
+
     @Override
     public void showDashboard() {
         System.out.println("\n=== STAFF DASHBOARD ===");
@@ -21,19 +21,7 @@ public class Staff extends Employee {
 
         switch (choice) {
             case 1:
-                System.out.print("\n=== CHANGE PASSWORD ===\nEnter Current password: ");
-                String checkPassword = in.nextLine();
-
-                if(checkPassword.equals(this.getPassword())) {
-
-                    System.out.print("Enter new password: ");
-                    String newPassword = in.nextLine();
-
-                    setPassword(newPassword);
-                    System.out.println("Password changed successfully!");
-                }
-                else System.out.println("Password does not match!");
-
+                changePassword();
                 break;
 
             case 2:

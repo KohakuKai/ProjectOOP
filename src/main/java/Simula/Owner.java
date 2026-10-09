@@ -4,7 +4,7 @@ package Simula;
 import java.util.Scanner;
 
 public class Owner extends Employee {
-    Scanner in = new Scanner (System.in);
+
 
     private final StartUp manager;
 
@@ -21,8 +21,10 @@ public class Owner extends Employee {
             System.out.println(this);
 
             System.out.print("\n[1] Manage Employee\n" +
-                    "[2] Change Password\n" +
-                    "[3] Logout\n" +
+                    "[2] Manage Products\n" +
+                    "[3] Manage Categories\n" +
+                    "[4] Change Password\n" +
+                    "[5] Logout\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
@@ -51,36 +53,62 @@ public class Owner extends Employee {
                             break;
                         }
                         case 0: {
-                            continue;
+                            break;
                         }
                     }
                     break;
                 }
-                case 2:{
-                    System.out.print("\n=== CHANGE PASSWORD ===\nEnter Current password: ");
-                    String checkPassword = in.nextLine();
 
-                    if(checkPassword.equals(this.getPassword())) {
+                case 2 :{
 
-                        System.out.print("Enter new password: ");
-                        String newPassword = in.nextLine();
+                    System.out.print("\n=== Manage Products ===\n\n[1]Add Product\n[2]Display Products\n[0] Exit\nChoice:");
+                    int choice2 = in.nextInt();
+                    in.nextLine();
 
-                        setPassword(newPassword);
-                        System.out.println("Password changed successfully!");
+                    switch(choice2) {
+
+                        case 1 : addProduct(); break;
+                        case 2 : displayProducts(); break;
+                        case 0 : break;
+                        default : {
+                            System.out.println("Invalid input. Try Again");
+                            break;
+                        }
                     }
-
-                    else System.out.println("Password does not match!");
                     break;
                 }
 
-                case 3: {
+                case 3 : {
+
+                    System.out.print("\n=== Manage Categories ===\n\n[1]Add Category\n[2]Display Categories\n[0] Exit\nChoice:");
+                    int choice2 = in.nextInt();
+                    in.nextLine();
+
+                    switch(choice2) {
+
+                        case 1 : addCategory(); break;
+                        case 2 : displayCategories(); break;
+                        case 0 : break;
+                        default : {
+                            System.out.println("Invalid input. Try Again");
+                            break;
+                        }
+                    }
+                    break;
+
+                }
+                case 4:{
+                    changePassword();
+                    break;
+                }
+
+                case 5: {
                     System.out.println("Logging out...");
                     return;
                 }
 
                 default: {
                     System.out.println("Invalid choice. Please try again.");
-                    showDashboard();
                     break;
                 }
             }
@@ -165,5 +193,166 @@ public class Owner extends Employee {
                 return null;
         }
     }
+
+    //Product Methods
+    private void addProduct() {
+
+        System.out.println("=== Add Product ===\n");
+
+        System.out.print("Product ID: ");
+        String productID = in.nextLine().trim();
+
+        System.out.print("Product Name: ");
+        String productName = in.nextLine().trim();
+
+        System.out.print("Generic Name: ");
+        String genericName = in.nextLine().trim();
+
+        System.out.print("Brand: ");
+        String brand = in.nextLine().trim();
+
+        System.out.print("Unit: ");
+        String unit = in.nextLine().trim();
+
+        System.out.print("Selling Price: ");
+        double sellingPrice = in.nextDouble();
+        in.nextLine();
+
+        System.out.print("Reorder Level: ");
+        int reorderLevel = in.nextInt();
+        in.nextLine();
+
+        System.out.print("Category ID: ");
+        String categoryID = in.nextLine().trim();
+
+        Category category = manager.getInventory().findCategoryById(categoryID);
+
+        if(productID.isEmpty() || productName.isEmpty() || sellingPrice<0 || reorderLevel <0 || category ==null) {
+            System.out.println("Invalid Input in one of the Fields. Please Try Again.");
+            return;
+        }
+
+        System.out.print("\nProduct Type:\n[1]Medicine\n[2]Essentials\n[3]Exit\nChoice: ");
+        int choice  = in.nextInt();
+        in.nextLine();
+
+        Product newProduct = null;
+        switch(choice) {
+
+            case 1 : {
+
+                System.out.print("\nMedicine Type:\n[1]Over-The-Counter\n[2]Prescription Medicine\n[3]Exit\nChoice: ");
+                int choice2  = in.nextInt();
+                in.nextLine();
+
+                switch(choice2) {
+
+                    case 1: {
+                         newProduct = new OverTheCounter(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                        break;
+                    }
+                    case 2: {
+                         newProduct = new PrescriptionMedicine(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                        break;
+                    }
+                    case 3: {
+                        break;
+                    }
+                    default: {
+                        System.out.print("Invalid choice. Please try again.");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 2 : {
+                 newProduct = new Essentials(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                break;
+            }
+            case 3 : {
+                break;
+            }
+            default: {
+                System.out.print("Invalid choice. Please try again.");
+                break;
+            }
+        }
+
+        if(newProduct!= null) {
+            if (manager.getInventory().addProduct(this, newProduct)) {
+                System.out.println("Product Added Successfully");
+            } else {
+                System.out.println("Unable to add the Product");
+            }
+        }
+
+    }
+
+
+    private void displayProducts () {
+
+        System.out.println("=== Display Products ===\n");
+
+        int counter = 1;
+        for(Product p : manager.getInventory().viewProducts()) {
+            System.out.println("\nPRODUCT#"+counter +
+                    "\nProduct ID: " + p.getProductID() +
+                    "\nProduct Name: " + p.getProductName() +
+                    "\nGeneric Name: " + p.getGenericName() +
+                    "\nBrand : " + p.getBrand() +
+                    "\nUnit: " + p.getUnit() +
+                    "\nSelling Price: ₱" + p.getSellingPrice()+
+                    "\nReorder Level: " + p.getReorderLevel());
+            counter++;
+        }
+
+    }
+
+    //methods ng Category
+    private void addCategory() {
+
+        System.out.println("=== Add Category ===\n");
+
+        System.out.print("Category ID: ");
+        String categoryID = in.nextLine().trim();
+
+        System.out.print("Category Name: ");
+        String categoryName = in.nextLine().trim();
+
+        System.out.print("Category Description: ");
+        String description = in.nextLine().trim();
+
+        if(categoryID.isEmpty() || categoryName.isEmpty()) {
+            System.out.println("Category ID and Category Name are Required!");
+            return;
+        }
+
+        Category newCategory = new Category(categoryID,categoryName,description);
+
+        if(manager.getInventory().addCategory(this,newCategory)) {
+            System.out.println("\nCategory Added Successfully!");
+        }
+        else {
+            System.out.println("Unable to Add the Category!");
+        }
+
+    }
+
+    private void displayCategories() {
+
+        System.out.println("=== Display Categories ===");
+        int counter = 1;
+
+        for(Category c : manager.getInventory().viewCategories()) {
+            System.out.println("\nCATEGORY#"+counter+
+                    "\nCategory ID: "+ c.getCategory_ID() +
+                    "\nCategory Name: "+ c.getCategory_Name()+
+                    "\nCategory Description: "+ c.getDescription());
+            counter++;
+
+        }
+
+    }
+
 }
 

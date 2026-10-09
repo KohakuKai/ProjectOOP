@@ -1,6 +1,10 @@
 package Simula;
 
+import java.util.Scanner;
+
 public abstract class Employee {
+
+    protected static final Scanner in = new Scanner(System.in); //share share na lahat ng subclass sa isang scanner, para walang duplicate scanners
 
     private String name;
     private String position; // "Owner", "Pharmacist", or "Staff"
@@ -60,5 +64,23 @@ public abstract class Employee {
     @Override
     public String toString() {
         return "ID no.: " + empID + "    |    " + name + "\n";
+    }
+
+    public void changePassword() {
+
+        System.out.print("\n=== CHANGE PASSWORD ===\nEnter Current password: ");
+        String checkPassword = in.nextLine();
+
+        if(checkPassword.equals(this.getPassword())) {
+
+            System.out.print("Enter new password: ");
+            String newPassword = in.nextLine();
+
+            setPassword(newPassword);
+            System.out.println("Password changed successfully!");
+        }
+
+        else System.out.println("Password does not match!");
+
     }
 }
