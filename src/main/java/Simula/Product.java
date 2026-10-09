@@ -8,7 +8,7 @@ public abstract class Product {
     private int reorderLevel;
 
     private Category category;
-    private ArrayList<Batch> batch = new ArrayList<>();
+    private ArrayList<Batch> batches = new ArrayList<>();
 
     //constructor
     Product(String productID, String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
@@ -79,7 +79,7 @@ public abstract class Product {
 
     public int getTotalStock(){
         int total = 0;
-        for(Batch b : batch){
+        for(Batch b : batches){
             total += b.getQuantity();
         }
         return total;
@@ -104,7 +104,7 @@ public abstract class Product {
     }
 
     public void checkExpiration(){
-        for(Batch b : batch){
+        for(Batch b : batches){
             System.out.println("Batch ID: " + b.getBatchID());
             System.out.println("Expiration date: " + b.getExpirationDate());
             System.out.println("Expired: " + b.isExpired());

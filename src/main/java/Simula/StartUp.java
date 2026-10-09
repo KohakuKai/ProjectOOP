@@ -14,9 +14,9 @@ public class StartUp {
         );
     }
 
-    private final InventoryController inventory = new InventoryController();
+    private final Inventory inventory = new Inventory();
 
-    public InventoryController getInventory() {
+    public Inventory getInventory() {
         return inventory;
     }
 

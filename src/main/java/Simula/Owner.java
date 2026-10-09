@@ -301,7 +301,7 @@ public class Owner extends Employee {
                     "\nGeneric Name: " + p.getGenericName() +
                     "\nBrand : " + p.getBrand() +
                     "\nUnit: " + p.getUnit() +
-                    "\nSelling Price: ₱" + p.getSellingPrice()+
+                    "\nSelling Price: P" + p.getSellingPrice()+
                     "\nReorder Level: " + p.getReorderLevel());
             counter++;
         }
@@ -327,9 +327,9 @@ public class Owner extends Employee {
             return;
         }
 
-        Category newCategory = new Category(categoryID,categoryName,description);
+        Category newCategory = new Category(categoryID,categoryName,description); //dito gumawa ng bagong object
 
-        if(manager.getInventory().addCategory(this,newCategory)) {
+        if(manager.getInventory().addCategory(this,newCategory)) { //dito pinasok yung object(eto yung inventory class)
             System.out.println("\nCategory Added Successfully!");
         }
         else {

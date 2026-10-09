@@ -16,9 +16,15 @@ public class Inventory {
         return products;
     }
     public boolean addProduct(Employee employee, Product newProduct) {
-        if(!(employee instanceof  Owner)) return false; //pagka hindi owner gumamit
-        if(newProduct == null) return false; //pagka null yung laman ng newProduct
-        if(findProductById(newProduct.getProductID()) != null) return false; //pagka may ka same na ID
+        if(!(employee instanceof  Owner)) {
+            return false; //pagka hindi owner gumamit
+        }
+        if(newProduct == null) {
+            return false; //pagka null yung laman ng newProduct
+        }
+        if(findProductById(newProduct.getProductID()) != null) {
+            return false; //pagka may ka same na ID
+        }
         products.add(newProduct);
         return true;
     }
@@ -36,9 +42,15 @@ public class Inventory {
     //Category Methods
     public ArrayList<Category> viewCategories() { return categories; }
     public boolean addCategory(Employee employee,Category newCategory) {
-        if(!(employee instanceof Owner)) return false; //pagka hindi owner ang gumamit
-        if(newCategory == null) return false; //walang laman yung inadd
-        if(findCategoryById(newCategory.getCategory_ID()) != null) return false; //ibigsabihin may nahanap na existing category
+        if(!(employee instanceof Owner)){
+            return false; //pagka hindi owner ang gumamit
+        }
+        if(newCategory == null){
+            return false; //walang laman yung inadd
+        }
+        if(findCategoryById(newCategory.getCategory_ID()) != null){
+            return false; //ibigsabihin may nahanap na existing category
+        }
         categories.add(newCategory);
         return true;
     }
@@ -52,7 +64,7 @@ public class Inventory {
         return null; //pagkawalang nahanap null i rereturn
     }
 
-    private void defaultCategories() {
+    private void defaultCategories() { //dummy values lang para sa testing
         categories.add(new Category("C001","Vitamins","Makes the body stronger"));
         categories.add(new Category("C002","Antibiotics","Medicine for bacterial infections"));
         categories.add(new Category("C003","Personal Care","Hygiene and Care Products"));
