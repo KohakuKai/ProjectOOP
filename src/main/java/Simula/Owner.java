@@ -1,9 +1,5 @@
 package Simula;
 
-
-import org.springframework.web.context.request.AbstractRequestAttributesScope;
-
-import java.util.Scanner;
 import java.time.LocalDate;
 
 public class Owner extends Employee {
@@ -26,7 +22,7 @@ public class Owner extends Employee {
             System.out.print("\n[1] Manage Employee\n" +
                     "[2] Manage Products\n" +
                     "[3] Manage Categories\n" +
-                    "[4] Manage Supplies\n" +
+                    "[4] Manage Stocks\n" +
                     "[5] Change Password\n" +
                     "[6] Logout\n" +
                     "Choice: ");
@@ -102,11 +98,11 @@ public class Owner extends Employee {
 
                 }
                 case 4:{
-                    System.out.print("\n===Manage Supplies===\n\n" +
+                    System.out.print("\n===Manage Stock ===\n\n" +
                             "[1]Add Batch\n" +
-                            "[2]Add Supply\n" +
-                            "[3]Reduce Supply\n" +
-                            "[4]View Status\n" +
+                            "[2]Add Stock\n" +
+                            "[3]Reduce Stock\n" +
+                            "[4]View a Product's Batch  es\n" +
                             "Choice: ");
                     int choice4 = in.nextInt();
                     in.nextLine();
@@ -125,7 +121,7 @@ public class Owner extends Employee {
                             break;
                         }
                         case 4:{
-                            viewBatchDetails();
+                            viewProductBatchDetails();
                             break;
                         }
                         default:{
@@ -239,7 +235,7 @@ public class Owner extends Employee {
         System.out.println("=== Add Product ===\n");
 
         System.out.print("Product ID: ");
-        String productID = in.nextLine().trim();
+        String productID = in.nextLine().trim().toUpperCase();
 
         System.out.print("Product Name: ");
         String productName = in.nextLine().trim();
@@ -264,14 +260,14 @@ public class Owner extends Employee {
         System.out.print("Category ID: ");
         String categoryID = in.nextLine().trim();
 
-        Category category = manager.getInventory().findCategoryById(categoryID);
+        Category category = manager.getInventory().findCategoryById(categoryID); //dito hinanap yugn actual category object using String CategoryID
 
-        if(productID.isEmpty() || productName.isEmpty() || sellingPrice<0 || reorderLevel <0 || category ==null) {
+        if(productID.isEmpty() || productName.isEmpty() || sellingPrice<0 || reorderLevel <0 || category ==null) { //validation kung tama ba yung details nilagay sa fields
             System.out.println("Invalid Input in one of the Fields. Please Try Again.");
             return;
         }
 
-        System.out.print("\nProduct Type:\n[1]Medicine\n[2]Essentials\n[3]Exit\nChoice: ");
+        System.out.print("\nProduct Type:\n[1]Medicine\n[2]Essentials\n[3]Exit\nChoice: "); //pagpili ng product type
         int choice  = in.nextInt();
         in.nextLine();
 
@@ -280,7 +276,7 @@ public class Owner extends Employee {
 
             case 1 : {
 
-                System.out.print("\nMedicine Type:\n[1]Over-The-Counter\n[2]Prescription Medicine\n[3]Exit\nChoice: ");
+                System.out.print("\nMedicine Type:\n[1]Over-The-Counter\n[2]Prescription Medicine\n[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
                 int choice2  = in.nextInt();
                 in.nextLine();
 
@@ -304,7 +300,7 @@ public class Owner extends Employee {
                 }
                 break;
             }
-            case 2 : {
+            case 2 : { //kung Essentials, diretso create na
                  newProduct = new Essentials(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
                 break;
             }
@@ -353,7 +349,7 @@ public class Owner extends Employee {
         System.out.println("=== Add Category ===\n");
 
         System.out.print("Category ID: ");
-        String categoryID = in.nextLine().trim();
+        String categoryID = in.nextLine().trim().toUpperCase();
 
         System.out.print("Category Name: ");
         String categoryName = in.nextLine().trim();
@@ -395,7 +391,7 @@ public class Owner extends Employee {
 
     private void addBatch(){
         System.out.print("Enter Product ID: ");
-        String ProductID = in.nextLine();
+        String ProductID = in.nextLine().trim().toUpperCase();
 
         //hahanapin yung product gamit product id
         Product product = manager.getInventory().findProductById(ProductID);
@@ -407,18 +403,22 @@ public class Owner extends Employee {
 
         //pag initialize ng variables
         System.out.print("Enter batch ID: ");
-        String batchID = in.nextLine().trim();
+        String batchID = in.nextLine().trim().toUpperCase();
         System.out.print("Enter quantity: ");
-        int quantity = in.nextInt();
+        int quantity = in.nextInt(); in.nextLine();
         System.out.print("Enter year of expiration: ");
-        int yearexp = in.nextInt();
+        int yearExpiration = in.nextInt(); in.nextLine();
         System.out.print("Enter month of expiration: ");
-        int monthexp = in.nextInt();
+        int monthExpiration = in.nextInt(); in.nextLine();
         System.out.print("Enter day of expiration: ");
-        int dayexp = in.nextInt();
+        int dayExpiration = in.nextInt(); in.nextLine();
 
+        if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
+            System.out.print("Invalid Date");
+            return;
+        }
 
-        Batch addbatch = new Batch(batchID, quantity, product, LocalDate.of(yearexp, monthexp, dayexp));
+        Batch addbatch = new Batch(batchID, quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
         if(product.addBatch(addbatch)) {
             System.out.println("Batch added successfully!");
         }
@@ -429,7 +429,7 @@ public class Owner extends Employee {
 
     private void addSupply() {
         System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().trim();
+        String productID = in.nextLine().trim().toUpperCase();
 
         Product product = manager.getInventory()
                 .findProductById(productID);
@@ -440,7 +440,7 @@ public class Owner extends Employee {
         }
 
         System.out.print("Enter Batch ID: ");
-        String batchID = in.nextLine().trim();
+        String batchID = in.nextLine().trim().toUpperCase();
 
         Batch batch = product.findBatchById(batchID);
 
@@ -454,13 +454,12 @@ public class Owner extends Employee {
         in.nextLine();
 
         batch.increaseQuantity(amount);
-        System.out.println("Supply added successfully!");
 
     }
 
     private void reduceSupply() {
         System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().trim();
+        String productID = in.nextLine().trim().toUpperCase();
 
         Product product = manager.getInventory()
                 .findProductById(productID);
@@ -471,7 +470,7 @@ public class Owner extends Employee {
         }
 
         System.out.print("Enter Batch ID: ");
-        String batchID = in.nextLine().trim();
+        String batchID = in.nextLine().trim().toUpperCase();
 
         Batch batch = product.findBatchById(batchID);
 
@@ -485,13 +484,12 @@ public class Owner extends Employee {
         in.nextLine();
 
         batch.reduceQuantity(amount);
-        System.out.println("Supply reduced successfully!");
 
     }
 
-    private void viewBatchDetails() {
+    private void viewProductBatchDetails() {
         System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().trim();
+        String productID = in.nextLine().trim().toUpperCase();
 
         Product product = manager.getInventory().findProductById(productID);
 

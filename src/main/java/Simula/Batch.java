@@ -54,11 +54,22 @@ public class Batch {
         //chinecheck nito kung yung date ngayon ay >= expiration date
     }
 
-    //reduce o increase amount
-    public void reduceQuantity(int amount){
+    //reduce or increase amount
+    public void reduceQuantity(int amount) {
+        if (amount > quantity || amount <= 0) {
+            System.out.print("Invalid Amount!");
+            return;
+        }
         quantity -= amount;
+        System.out.println("Supply reduced successfully!");
     }
+
     public void increaseQuantity(int amount){
+        if(amount<=0) {
+            System.out.print("Invalid Amount");
+            return;
+        }
         quantity += amount;
+        System.out.println("Supply increased successfully!");
     }
 }

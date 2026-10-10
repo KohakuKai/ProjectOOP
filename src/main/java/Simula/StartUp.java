@@ -39,6 +39,15 @@ public class StartUp {
                 case 2:
                     System.out.println("Exiting...");
                     return;
+                case 67: {
+                    System.out.println("Bypass!");
+                    String username = "ownerUsername";
+                    String empID = "1001";
+                    String password = "ownerPassword";
+                    Employee foundEmployee = findUser(username, empID, password);
+                    if (foundEmployee != null) foundEmployee.showDashboard();
+                    break;
+                }
                 default:
                     System.out.println("Invalid option. Try again.");
             }

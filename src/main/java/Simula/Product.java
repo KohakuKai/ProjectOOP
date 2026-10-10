@@ -77,12 +77,12 @@ public abstract class Product {
     //i ooverwrite to
     public abstract String getProductType();
 
-    public boolean addBatch(Batch batch){
-        batches.add(batch);
-        return true;
+    public boolean addBatch(Batch addBatch){
+        if(addBatch == null) return false;
+        if(findBatchById(addBatch.getBatchID())!= null) return false;
+
+        batches.add(addBatch);  return true;
     }
-
-
 
     public Batch findBatchById(String batchID) {
         for (Batch b : batches) {
@@ -104,7 +104,7 @@ public abstract class Product {
     }
 
     //kailangan na set na reorder level para rito
-    public boolean isBelowOrderLevel(){
+    public boolean isBelowReorderLevel(){
         return getTotalStock() < reorderLevel;
     }
 
@@ -117,7 +117,7 @@ public abstract class Product {
         System.out.println("Unit: " + unit);
         System.out.println("Selling Price: " + sellingPrice);
         System.out.println("Reorder Level: " + reorderLevel);
-        System.out.println("Category: " + category);
+        System.out.println("Category: " + category.getCategory_Name());
         System.out.println("Total Stock: " + getTotalStock());
     }
 
@@ -126,9 +126,10 @@ public abstract class Product {
             System.out.println("Batch ID: " + b.getBatchID());
             System.out.println("Expiration date: " + b.getExpirationDate());
             System.out.println("Date received: " + b.getDateReceived());
-            System.out.println("Expired: " + b.isExpired());
+            System.out.println("Expired: " + b.isExpired() +"\n");
         }
     }
+
 }
 
 

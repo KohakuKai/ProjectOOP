@@ -9,6 +9,7 @@ public class Inventory {
 
     public Inventory() {
         defaultCategories();
+        defaultProducts();
     }
 
     //Product Methods
@@ -16,24 +17,16 @@ public class Inventory {
         return products;
     }
     public boolean addProduct(Employee employee, Product newProduct) {
-        if(!(employee instanceof  Owner)) {
-            return false; //pagka hindi owner gumamit
-        }
-        if(newProduct == null) {
-            return false; //pagka null yung laman ng newProduct
-        }
-        if(findProductById(newProduct.getProductID()) != null) {
-            return false; //pagka may ka same na ID
-        }
-        products.add(newProduct);
-        return true;
+        if(!(employee instanceof  Owner))  return false; //pagka hindi owner gumamit
+        if(newProduct == null) return false; //pagka null yung laman ng newProduct
+        if(findProductById(newProduct.getProductID()) != null)  return false; //pagka may ka same na ID
+
+        products.add(newProduct);return true;
     }
 
     public Product findProductById(String givenProductID) {
         for(Product p : products) {
-            if(p.getProductID().equals(givenProductID)) {
-                return p;
-            }
+            if(p.getProductID().equals(givenProductID)) return p;
         }
         return null;
     }
@@ -41,27 +34,28 @@ public class Inventory {
 
     //Category Methods
     public ArrayList<Category> viewCategories() { return categories; }
+
     public boolean addCategory(Employee employee,Category newCategory) {
-        if(!(employee instanceof Owner)){
-            return false; //pagka hindi owner ang gumamit
-        }
-        if(newCategory == null){
-            return false; //walang laman yung inadd
-        }
-        if(findCategoryById(newCategory.getCategory_ID()) != null){
-            return false; //ibigsabihin may nahanap na existing category
-        }
-        categories.add(newCategory);
-        return true;
+        if(!(employee instanceof Owner)) return false; //pagka hindi owner ang gumamit
+        if(newCategory == null) return false; //walang laman yung inadd
+        if(findCategoryById(newCategory.getCategory_ID()) != null) return false; //ibigsabihin may nahanap na existing category
+
+        categories.add(newCategory); return true;
     }
 
     public Category findCategoryById(String givenCategoryID) {
         for(Category c : categories) {
-            if(c.getCategory_ID().equals(givenCategoryID)){
-                return c;
-            }
+            if(c.getCategory_ID().equals(givenCategoryID)) return c;
         }
         return null; //pagkawalang nahanap null i rereturn
+    }
+
+    private void defaultProducts() {
+
+        products.add(new OverTheCounter("P001","Biogesic","Paracetamol","Unilab","Tablet",7,50,findCategoryById("C005")));
+        products.add(new OverTheCounter("P002","Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",50,50,findCategoryById("C001")));
+
+
     }
 
     private void defaultCategories() { //dummy values lang para sa testing
@@ -69,6 +63,8 @@ public class Inventory {
         categories.add(new Category("C002","Antibiotics","Medicine for bacterial infections"));
         categories.add(new Category("C003","Personal Care","Hygiene and Care Products"));
         categories.add(new Category("C004","Pain Reliever","Alleviates Pain"));
+        categories.add(new Category("C005","Antipyretic","Fever Reducer"));
+
     }
 
 
