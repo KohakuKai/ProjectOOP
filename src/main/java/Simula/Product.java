@@ -3,6 +3,8 @@ package Simula;
 import java.util.ArrayList;
 
 public abstract class Product {
+
+    private static int currentIDNumber = 1;
     private String productID, productName, genericName, brand, unit;
     private double sellingPrice;
     private int reorderLevel;
@@ -10,9 +12,9 @@ public abstract class Product {
     private Category category;
     private ArrayList<Batch> batches = new ArrayList<>();
 
-    //constructor
-    Product(String productID, String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
-        this.productID = productID;
+    //2.) constructor para sa pag aadd mismo ng user ng products
+    Product (String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
+        this.productID = String.format("P%04d",currentIDNumber++); //automatic nag g generate yung id, hindi na kailangan pang i type
         this.productName = productName;
         this.genericName = genericName;
         this.brand = brand;
@@ -20,6 +22,12 @@ public abstract class Product {
         this.sellingPrice = sellingPrice;
         this.reorderLevel = reorderLevel;
         this.category = category;
+
+        int lastID = Integer.parseInt(productID.substring(1)); //Kinuha lang dito yung "0001" mula sa "P0001"
+        if(lastID>= currentIDNumber) { //pede to tanggalin pagkawala na yung dummytable
+            currentIDNumber = lastID+1;
+        }
+
     }
 
     //mga getter
@@ -123,11 +131,31 @@ public abstract class Product {
 
     public void checkExpiration(){
         for(Batch b : batches){
+            String status;
+
+            if(b.isExpired()) {
+                status = "EXPIRED";
+            }
+            else if(b.isNearExpiration()) {
+                status = "NEAR EXPIRATION";
+            }
+            else {
+                status = "OK";
+            }
+
             System.out.println("Batch ID: " + b.getBatchID());
             System.out.println("Expiration date: " + b.getExpirationDate());
             System.out.println("Date received: " + b.getDateReceived());
-            System.out.println("Expired: " + b.isExpired() +"\n");
+            System.out.println("Batch Quantity: "+b.getQuantity());
+            System.out.println("Status: "+ status + "\n");
         }
+    }
+
+    public boolean isNearExpiration() {
+        for(Batch b : batches) {
+            if(b.isNearExpiration()) return true;
+        }
+        return false;
     }
 
 }

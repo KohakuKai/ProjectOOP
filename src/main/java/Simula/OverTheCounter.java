@@ -2,8 +2,8 @@ package Simula;
 
 public class OverTheCounter extends Medicine {
 
-    OverTheCounter(String productID, String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
-        super(productID, productName, genericName, brand, unit, sellingPrice,reorderLevel, category);
+    OverTheCounter( String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
+        super( productName, genericName, brand, unit, sellingPrice,reorderLevel, category);
     }
 
     @Override

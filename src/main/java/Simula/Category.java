@@ -1,13 +1,19 @@
 package Simula;
 
 public class Category {
+    private static int currentIDNumber = 1;
     private String Category_ID, Category_Name, Description;
     // mga attributes
 
-    Category(String Category_ID, String Category_Name, String Description){
-        this.Category_ID = Category_ID;
+    Category( String Category_Name, String Description){
+        this.Category_ID = String.format("C%03d", currentIDNumber++);
         this.Category_Name = Category_Name;     //constructor
         this.Description = Description;
+
+        int lastID = Integer.parseInt(getCategory_ID().substring(1)); //Kinuha lang dito yung "0001" mula sa "P0001"
+        if(lastID>= currentIDNumber) { //pede to tanggalin pagkawala na yung dummytable
+            currentIDNumber = lastID+1;
+        }
     }
 
     //mga getter

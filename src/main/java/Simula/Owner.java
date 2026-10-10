@@ -102,7 +102,7 @@ public class Owner extends Employee {
                             "[1]Add Batch\n" +
                             "[2]Add Stock\n" +
                             "[3]Reduce Stock\n" +
-                            "[4]View a Product's Batch  es\n" +
+                            "[4]View a Product's Batches\n" +
                             "Choice: ");
                     int choice4 = in.nextInt();
                     in.nextLine();
@@ -234,9 +234,6 @@ public class Owner extends Employee {
 
         System.out.println("=== Add Product ===\n");
 
-        System.out.print("Product ID: ");
-        String productID = in.nextLine().trim().toUpperCase();
-
         System.out.print("Product Name: ");
         String productName = in.nextLine().trim();
 
@@ -258,11 +255,11 @@ public class Owner extends Employee {
         in.nextLine();
 
         System.out.print("Category ID: ");
-        String categoryID = in.nextLine().trim();
+        String categoryID = in.nextLine().trim().toUpperCase();
 
         Category category = manager.getInventory().findCategoryById(categoryID); //dito hinanap yugn actual category object using String CategoryID
 
-        if(productID.isEmpty() || productName.isEmpty() || sellingPrice<0 || reorderLevel <0 || category ==null) { //validation kung tama ba yung details nilagay sa fields
+        if( productName.isEmpty() || sellingPrice<0 || reorderLevel <0 || category ==null) { //validation kung tama ba yung details nilagay sa fields
             System.out.println("Invalid Input in one of the Fields. Please Try Again.");
             return;
         }
@@ -283,11 +280,11 @@ public class Owner extends Employee {
                 switch(choice2) {
 
                     case 1: {
-                         newProduct = new OverTheCounter(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                         newProduct = new OverTheCounter(productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
                         break;
                     }
                     case 2: {
-                         newProduct = new PrescriptionMedicine(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                         newProduct = new PrescriptionMedicine(productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
                         break;
                     }
                     case 3: {
@@ -301,7 +298,7 @@ public class Owner extends Employee {
                 break;
             }
             case 2 : { //kung Essentials, diretso create na
-                 newProduct = new Essentials(productID,productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                 newProduct = new Essentials(productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
                 break;
             }
             case 3 : {
@@ -348,21 +345,18 @@ public class Owner extends Employee {
 
         System.out.println("=== Add Category ===\n");
 
-        System.out.print("Category ID: ");
-        String categoryID = in.nextLine().trim().toUpperCase();
-
         System.out.print("Category Name: ");
         String categoryName = in.nextLine().trim();
 
         System.out.print("Category Description: ");
         String description = in.nextLine().trim();
 
-        if(categoryID.isEmpty() || categoryName.isEmpty()) {
+        if( categoryName.isEmpty()) {
             System.out.println("Category ID and Category Name are Required!");
             return;
         }
 
-        Category newCategory = new Category(categoryID,categoryName,description); //dito gumawa ng bagong object
+        Category newCategory = new Category(categoryName,description); //dito gumawa ng bagong object
 
         if(manager.getInventory().addCategory(this,newCategory)) { //dito pinasok yung object(eto yung inventory class)
             System.out.println("\nCategory Added Successfully!");
@@ -390,6 +384,7 @@ public class Owner extends Employee {
     }
 
     private void addBatch(){
+
         System.out.print("Enter Product ID: ");
         String ProductID = in.nextLine().trim().toUpperCase();
 
@@ -402,8 +397,7 @@ public class Owner extends Employee {
         }
 
         //pag initialize ng variables
-        System.out.print("Enter batch ID: ");
-        String batchID = in.nextLine().trim().toUpperCase();
+
         System.out.print("Enter quantity: ");
         int quantity = in.nextInt(); in.nextLine();
         System.out.print("Enter year of expiration: ");
@@ -418,7 +412,7 @@ public class Owner extends Employee {
             return;
         }
 
-        Batch addbatch = new Batch(batchID, quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
+        Batch addbatch = new Batch( quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
         if(product.addBatch(addbatch)) {
             System.out.println("Batch added successfully!");
         }
@@ -453,7 +447,11 @@ public class Owner extends Employee {
         int amount = in.nextInt();
         in.nextLine();
 
-        batch.increaseQuantity(amount);
+        if(batch.increaseQuantity(amount))
+            System.out.println("Stock Increased Succesfully!");
+
+        else
+            System.out.println("Invalid Amount.");
 
     }
 
@@ -483,7 +481,10 @@ public class Owner extends Employee {
         int amount = in.nextInt();
         in.nextLine();
 
-        batch.reduceQuantity(amount);
+        if(batch.reduceQuantity(amount))
+            System.out.println("Stock Reduced Succesfully!");
+        else
+            System.out.println("Invalid Amount.");
 
     }
 
