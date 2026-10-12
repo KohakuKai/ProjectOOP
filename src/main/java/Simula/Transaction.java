@@ -9,6 +9,7 @@ public abstract class Transaction {
     private String transactionID;
     private LocalDate transactionDate;
     private Employee employee;
+    private Inventory inventory;
 
     private final static double VAT = 0.12;
     private final static double SENIOR_DISCOUNT = 0.20;
@@ -16,10 +17,16 @@ public abstract class Transaction {
 
     private ArrayList<TransactionDetail> transactionDetails = new ArrayList<>();
 
-    Transaction( Employee employee) {
-        this.transactionID = String.format("T%04d", currentIDNumber++);
+    Transaction(Employee employee, Inventory inventory) {
+        this.transactionID = String.format("T%03d", currentIDNumber++);
         this.transactionDate = LocalDate.now();
         this.employee = employee;
+        this.inventory = inventory;
+    }
+
+    //getter
+    public Employee getEmployee() {
+        return employee;
     }
 
     public abstract String getTransactionType();

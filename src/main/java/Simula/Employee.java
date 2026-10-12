@@ -6,12 +6,17 @@ public abstract class Employee {
 
     protected static final Scanner in = new Scanner(System.in); //share share na lahat ng subclass sa isang scanner, para walang duplicate scanners
 
+    //protected final StartUp manager; // para share na rin ng pharmacist
+
     private String name;
     private String position; // "Owner", "Pharmacist", or "Staff"
     private String username;
     private String password;
     private static int nextEmpID = 1001;
     private String empID;
+
+    private TransactionDetail transactionDetail;
+
 
     public Employee(String name, String position, String password, String username) {
         this.empID = String.valueOf(nextEmpID++);
@@ -83,4 +88,8 @@ public abstract class Employee {
         else System.out.println("Password does not match!");
 
     }
+
+    //mga shared methods dito---------------------------------------------------------------------------
+
+
 }

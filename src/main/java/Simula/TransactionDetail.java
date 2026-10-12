@@ -10,7 +10,7 @@ public class TransactionDetail {
     private Product product;
 
     public TransactionDetail( int quantity, double unitPrice, Product product) {
-        this.transactionDetailId = String.format("TD&%04d",currentIDNumber++);
+        this.transactionDetailId = String.format("TD%03d",currentIDNumber++);
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.product = product;
@@ -29,5 +29,6 @@ public class TransactionDetail {
     public void setQuantity(int newQuantity) { quantity = newQuantity; }
     public void setUnitPrice(int newUnitPrice) { unitPrice = newUnitPrice; }
     public void setProduct(Product newProduct) { product = newProduct; }
+
 
 }

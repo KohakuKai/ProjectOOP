@@ -14,7 +14,7 @@ public abstract class Product {
 
     //2.) constructor para sa pag aadd mismo ng user ng products
     Product (String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
-        this.productID = String.format("P%04d",currentIDNumber++); //automatic nag g generate yung id, hindi na kailangan pang i type
+        this.productID = String.format("P%03d",currentIDNumber++); //automatic nag g generate yung id, hindi na kailangan pang i type
         this.productName = productName;
         this.genericName = genericName;
         this.brand = brand;
@@ -105,7 +105,7 @@ public abstract class Product {
         int ctr = 1;
         int total = 0;
         for(Batch b : batches){
-            System.out.println("Batch" + ctr + ": " + b.getQuantity());
+            System.out.println("Batch " + ctr + ": " + b.getQuantity());
             total += b.getQuantity();
         }
         return total;

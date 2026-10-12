@@ -13,6 +13,7 @@ public class Owner extends Employee {
 
     }
 
+
     @Override
     public void showDashboard() {
         while (true) {
@@ -23,8 +24,9 @@ public class Owner extends Employee {
                     "[2] Manage Products\n" +
                     "[3] Manage Categories\n" +
                     "[4] Manage Stocks\n" +
-                    "[5] Change Password\n" +
-                    "[6] Logout\n" +
+                    "[5] Sell product\n" +
+                    "[6] Change Password\n" +
+                    "[7] Logout\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
@@ -133,11 +135,15 @@ public class Owner extends Employee {
                     break;
                 }
                 case 5:{
+                    sellProduct();
+                    break;
+                }
+                case 6:{
                     changePassword();
                     break;
                 }
 
-                case 6: {
+                case 7: {
                     System.out.println("Logging out...");
                     return;
                 }
@@ -505,6 +511,54 @@ public class Owner extends Employee {
         System.out.println("\n=== Batch Details ===");
         product.checkExpiration();
     }
+
+
+    private void sellProduct() {
+        Sale receipt = new Sale(this, manager.getInventory());
+
+        System.out.println("\n=== SELL PRODUCT ===");
+        System.out.print("Enter Product ID: ");
+        String productID = in.nextLine();
+
+        Product product = manager.getInventory().findProductById(productID);
+
+        if (product == null) {
+            System.out.println("Product not found.");
+            return;
+        }
+
+        System.out.println("Product Name: " + product.getProductName());
+        System.out.println("Selling Price: " + product.getSellingPrice());
+        System.out.println("Available Stock: " + product.getTotalStock());
+
+        System.out.print("Enter Quantity: ");
+        int quantity = in.nextInt();
+        in.nextLine();
+
+        if (quantity <= 0) {
+            System.out.println("Invalid quantity.");
+            return;
+        }
+
+        if (quantity > product.getTotalStock()) {
+            System.out.println("Insufficient stock.");
+            return;
+        }
+
+        receipt.addTransactionDetail(
+                quantity,
+                product.getSellingPrice(),
+                product
+        );
+
+        System.out.println("\n=== RECEIPT ===");
+        System.out.println("Receipt No.: " + receipt.getReceiptNo());
+        System.out.println("Product: " + product.getProductName());
+        System.out.println("Quantity: " + quantity);
+        System.out.println("Unit Price: " + product.getSellingPrice());
+        System.out.println("Subtotal: " + receipt.getTotalPrice());
+    }
+
 
 }
 

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class Inventory {
 
+    //mga controllers
     private ArrayList<Product> products = new ArrayList<>();
     private ArrayList<Category> categories = new ArrayList<>();
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public Inventory() {
         defaultCategories();
@@ -55,7 +57,18 @@ public class Inventory {
         return null; //pagkawalang nahanap null i rereturn
     }
 
-    private void defaultProducts() {
+
+
+
+
+
+
+
+
+
+    //dito sa baba mga dummy data--------------------------------------------------------------------------------------------
+
+        private void defaultProducts() {
 
         products.add(new OverTheCounter("Biogesic","Paracetamol","Unilab","Tablet",7,50,findCategoryById("C005")));
         products.add(new OverTheCounter("Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",50,50,findCategoryById("C001")));
