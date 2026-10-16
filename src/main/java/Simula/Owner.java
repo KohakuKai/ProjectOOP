@@ -5,7 +5,6 @@ import java.util.Locale;
 
 public class Owner extends Employee {
 
-
     private final StartUp manager;
 
     public Owner(String name, StartUp manager, String password, String username) {
@@ -13,7 +12,6 @@ public class Owner extends Employee {
         this.manager = manager;
 
     }
-
 
     @Override
     public void showDashboard() {
@@ -27,7 +25,8 @@ public class Owner extends Employee {
                     "[4] Manage Stocks\n" +
                     "[5] Sell product\n" +
                     "[6] Change Password\n" +
-                    "[7] Logout\n" +
+                    "[7] View Profile\n" +
+                    "[8] Logout\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
@@ -145,6 +144,11 @@ public class Owner extends Employee {
                 }
 
                 case 7: {
+                    displayProfile();
+                    break;
+                }
+
+                case 8: {
                     System.out.println("Logging out...");
                     return;
                 }
@@ -189,8 +193,14 @@ public class Owner extends Employee {
         System.out.println("Position: " + newEmployee.getPosition());
     }
     private void displayEmployees() {
+        System.out.printf("%-10s | %-20s | %-15s%n",
+                "ID", "Name", "Position");
+
         for (Employee employee : manager.getEmployees()) {
-            System.out.println(employee);
+            System.out.printf("%-10s | %-20s | %-15s%n",
+                    employee.getEmpID(),
+                    employee.getName(),
+                    employee.getPosition());
         }
     }
 
@@ -559,6 +569,13 @@ public class Owner extends Employee {
         System.out.println("Quantity: " + quantity);
         System.out.println("Unit Price: " + product.getSellingPrice());
         System.out.println("Subtotal: " + receipt.getTotalPrice());
+    }
+    private LocalDate startDate = LocalDate.now();
+
+    @Override
+    public void displayProfile() {
+        super.displayProfile();
+        System.out.println("Start Date: " + startDate);
     }
 
 
