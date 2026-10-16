@@ -1,5 +1,6 @@
 package Simula;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Pharmacist extends Employee {
@@ -10,27 +11,44 @@ public class Pharmacist extends Employee {
 
     @Override
     public void showDashboard() {
-        System.out.println("\n=== PHARMACIST DASHBOARD ===");
-        System.out.println(this);
+        while (true) {
+            System.out.println("\n=== PHARMACIST DASHBOARD ===");
+            System.out.println(this);
 
-        System.out.println("[1] Change Password");
-        System.out.println("[2] Logout");
-        System.out.print("Choice: ");
+            System.out.println("[1] Change Password");
+            System.out.println("[2] View Profile");
+            System.out.println("[0] Logout");
+            System.out.print("Choice: ");
 
-        int choice = in.nextInt();
-        in.nextLine();
+            int choice = in.nextInt();
+            in.nextLine();
 
-        switch (choice) {
-            case 1:
-                changePassword();
-                break;
+            switch (choice) {
+                case 1: {
+                    changePassword();
+                    break;
+                }
 
-            case 2:
-                System.out.println("Logging out...");
-                return;
 
-            default:
-                System.out.println("Invalid choice. Please try again.");
+                case 2:  {
+                    displayProfile();
+                    break;
+                }
+
+                case 0:
+                    System.out.println("Logging out...");
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
+    }
+    private LocalDate hireDate = LocalDate.now();
+
+    @Override
+    public void displayProfile() {
+        super.displayProfile();
+        System.out.println("Hire Date: " + hireDate);
     }
 }

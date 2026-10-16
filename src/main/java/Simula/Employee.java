@@ -15,6 +15,7 @@ public abstract class Employee {
     private static int nextEmpID = 1001;
     private String empID;
 
+
     private TransactionDetail transactionDetail;
 
 
@@ -91,5 +92,13 @@ public abstract class Employee {
 
     //mga shared methods dito---------------------------------------------------------------------------
 
+    public void displayProfile() {
+        System.out.println("\n=== MY PROFILE ===");
+        System.out.println("Employee ID: " + getEmpID());
+        System.out.println("Name: " + getName());
+        System.out.println("Position: " + getPosition());
+        System.out.println("Username: " + getUsername());
+        System.out.println("Password: " + getPassword());
 
+    }
 }
