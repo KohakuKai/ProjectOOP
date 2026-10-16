@@ -10,7 +10,7 @@ public class StartUp {
 
     public StartUp() { // dito lalagay yung owner
         registeredEmployees.add(
-                new Owner("ownerName", this, "ownerPassword", "ownerUsername")
+                new Owner("ownerName", this, "ownerPassword", "ownerUsername", inventory)
         );
     }
 

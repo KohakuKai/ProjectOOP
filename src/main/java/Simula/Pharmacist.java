@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Pharmacist extends Employee {
 
-    public Pharmacist(String name, String password, String username) {
-        super(name, "Pharmacist",password, username);
+    public Pharmacist(String name, String password, String username, Inventory inventory) {
+        super(name, "Pharmacist",password, username, inventory);
     }
 
     @Override

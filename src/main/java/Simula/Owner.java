@@ -5,13 +5,15 @@ import java.util.Locale;
 
 public class Owner extends Employee {
 
+
     private final StartUp manager;
 
-    public Owner(String name, StartUp manager, String password, String username) {
-        super(name, "Owner", password, username);
+    public Owner(String name, StartUp manager, String password, String username,Inventory inventory) {
+        super(name, "Owner", password, username, inventory);
         this.manager = manager;
 
     }
+
 
     @Override
     public void showDashboard() {
@@ -25,8 +27,7 @@ public class Owner extends Employee {
                     "[4] Manage Stocks\n" +
                     "[5] Sell product\n" +
                     "[6] Change Password\n" +
-                    "[7] View Profile\n" +
-                    "[8] Logout\n" +
+                    "[7] Logout\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
@@ -144,11 +145,6 @@ public class Owner extends Employee {
                 }
 
                 case 7: {
-                    displayProfile();
-                    break;
-                }
-
-                case 8: {
                     System.out.println("Logging out...");
                     return;
                 }
@@ -193,14 +189,8 @@ public class Owner extends Employee {
         System.out.println("Position: " + newEmployee.getPosition());
     }
     private void displayEmployees() {
-        System.out.printf("%-10s | %-20s | %-15s%n",
-                "ID", "Name", "Position");
-
         for (Employee employee : manager.getEmployees()) {
-            System.out.printf("%-10s | %-20s | %-15s%n",
-                    employee.getEmpID(),
-                    employee.getName(),
-                    employee.getPosition());
+            System.out.println(employee);
         }
     }
 
@@ -233,13 +223,13 @@ public class Owner extends Employee {
                                         String username, String password) {
         switch (choice) {
             case 1:
-                return new Owner(name,manager, password, username);
+                return new Owner(name,manager, password, username,inventory);
 
             case 2:
-                return new Pharmacist(name, password, username);
+                return new Pharmacist(name, password, username,inventory);
 
             case 3:
-                return new Staff(name, password, username);
+                return new Staff(name, password, username,inventory);
 
             default:
                 return null;
@@ -338,26 +328,6 @@ public class Owner extends Employee {
     }
 
 
-    private void displayProducts () {
-
-        System.out.println("=== Display Products ===\n");
-
-        int counter = 1;
-        for(Product p : manager.getInventory().viewProducts()) {
-            System.out.println("\nPRODUCT#"+counter +
-                    "\nProduct ID: " + p.getProductID() +
-                    "\nProduct Name: " + p.getProductName() +
-                    "\nGeneric Name: " + p.getGenericName() +
-                    "\nBrand : " + p.getBrand() +
-                    "\nUnit: " + p.getUnit() +
-                    "\nSelling Price: P" + p.getSellingPrice()+
-                    "\nReorder Level: " + p.getReorderLevel() +
-                    "\nCategory: "+p.getCategory().getCategory_Name());
-            counter++;
-        }
-
-    }
-
     //methods ng Category
     private void addCategory() {
 
@@ -385,21 +355,6 @@ public class Owner extends Employee {
 
     }
 
-    private void displayCategories() {
-
-        System.out.println("=== Display Categories ===");
-        int counter = 1;
-
-        for(Category c : manager.getInventory().viewCategories()) {
-            System.out.println("\nCATEGORY#"+counter+
-                    "\nCategory ID: "+ c.getCategory_ID() +
-                    "\nCategory Name: "+ c.getCategory_Name()+
-                    "\nCategory Description: "+ c.getDescription());
-            counter++;
-
-        }
-
-    }
 
     private void addBatch(){
 
@@ -506,77 +461,6 @@ public class Owner extends Employee {
 
     }
 
-    private void viewProductBatchDetails() {
-        System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().trim().toUpperCase();
-
-        Product product = manager.getInventory().findProductById(productID);
-
-        if (product == null) {
-            System.out.println("Product not found!");
-            return;
-        }
-
-        System.out.println("\n=== Product Details ===");
-        product.getInfo();
-
-        System.out.println("\n=== Batch Details ===");
-        product.checkExpiration();
-    }
-
-
-    private void sellProduct() {
-        Sale receipt = new Sale(this, manager.getInventory());
-
-        System.out.println("\n=== SELL PRODUCT ===");
-        System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().trim().toUpperCase();
-
-        Product product = manager.getInventory().findProductById(productID);
-
-        if (product == null) {
-            System.out.println("Product not found.");
-            return;
-        }
-
-        System.out.println("Product Name: " + product.getProductName());
-        System.out.println("Selling Price: " + product.getSellingPrice());
-        System.out.println("Available Stock: " + product.getTotalStock());
-
-        System.out.print("Enter Quantity: ");
-        int quantity = in.nextInt();
-        in.nextLine();
-
-        if (quantity <= 0) {
-            System.out.println("Invalid quantity.");
-            return;
-        }
-
-        if (quantity > product.getTotalStock()) {
-            System.out.println("Insufficient stock.");
-            return;
-        }
-
-        receipt.addTransactionDetail(
-                quantity,
-                product.getSellingPrice(),
-                product
-        );
-
-        System.out.println("\n=== RECEIPT ===");
-        System.out.println("Receipt No.: " + receipt.getReceiptNo());
-        System.out.println("Product: " + product.getProductName());
-        System.out.println("Quantity: " + quantity);
-        System.out.println("Unit Price: " + product.getSellingPrice());
-        System.out.println("Subtotal: " + receipt.getTotalPrice());
-    }
-    private LocalDate startDate = LocalDate.now();
-
-    @Override
-    public void displayProfile() {
-        super.displayProfile();
-        System.out.println("Start Date: " + startDate);
-    }
 
 
 }

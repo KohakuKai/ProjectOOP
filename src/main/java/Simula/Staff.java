@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Staff extends Employee {
 
-    public Staff(String name, String password, String username) {
-        super(name, "Staff", password, username);
+    public Staff(String name, String password, String username, Inventory inventory) {
+        super(name, "Staff", password, username, inventory);
     }
 
     @Override
