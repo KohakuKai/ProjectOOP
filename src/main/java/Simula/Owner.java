@@ -1,6 +1,7 @@
 package Simula;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 public class Owner extends Employee {
 
@@ -340,7 +341,8 @@ public class Owner extends Employee {
                     "\nBrand : " + p.getBrand() +
                     "\nUnit: " + p.getUnit() +
                     "\nSelling Price: P" + p.getSellingPrice()+
-                    "\nReorder Level: " + p.getReorderLevel());
+                    "\nReorder Level: " + p.getReorderLevel() +
+                    "\nCategory: "+p.getCategory().getCategory_Name());
             counter++;
         }
 
@@ -518,7 +520,7 @@ public class Owner extends Employee {
 
         System.out.println("\n=== SELL PRODUCT ===");
         System.out.print("Enter Product ID: ");
-        String productID = in.nextLine();
+        String productID = in.nextLine().trim().toUpperCase();
 
         Product product = manager.getInventory().findProductById(productID);
 
