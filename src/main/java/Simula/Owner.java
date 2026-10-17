@@ -5,6 +5,7 @@ import java.util.Locale;
 
 public class Owner extends Employee {
 
+    //katamad
 
     private final StartUp manager;
 
