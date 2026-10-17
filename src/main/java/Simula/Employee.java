@@ -14,10 +14,7 @@ public abstract class Employee {
     private String password;
     private static int nextEmpID = 1001;
     private String empID;
-    protected Inventory inventory;
-
-    private TransactionDetail transactionDetail;
-
+    protected final Inventory inventory;
 
     public Employee(String name, String position, String password, String username, Inventory inventory) {
         this.empID = String.valueOf(nextEmpID++);
@@ -122,6 +119,11 @@ public abstract class Employee {
             return;
         }
 
+        if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
+            System.out.println("Only the Owner or a Pharmacist can sell prescription medicine.");
+            return;
+        }
+
         System.out.println("Product Name: " + product.getProductName());
         System.out.println("Selling Price: " + product.getSellingPrice());
         System.out.println("Available Stock: " + product.getTotalStock());
@@ -140,35 +142,33 @@ public abstract class Employee {
             return;
         }
 
-        receipt.addTransactionDetail(
-                quantity,
-                product.getSellingPrice(),
-                product
-        );
+        receipt.addTransactionDetail(quantity, product.getSellingPrice(), product);
+
+        if(!inventory.recordSale(receipt)) {
+            System.out.println("Sale Failed!(Not enough Stock, Expired Batch, or not Allowed)");
+            return;
+        }
 
         System.out.println("\n=== RECEIPT ===");
-        System.out.println("Receipt No.: " + receipt.getReceiptNo());
+        System.out.println("Transaction ID: "+ receipt.getTransactionID());
+        System.out.println("Transaction Type: "+ receipt.getTransactionType());
+        System.out.println("Sale No.: " + receipt.getSaleNo());
         System.out.println("Product: " + product.getProductName());
         System.out.println("Quantity: " + quantity);
         System.out.println("Unit Price: " + product.getSellingPrice());
-        System.out.println("Subtotal: " + receipt.getTotalPrice());
-
-
-    }
-
-    protected void reduceBatchQuantity(Product product, int quantity) {
-
-
-
+        System.out.println("Subtotal: " + receipt.getSubTotalPrice());
+        System.out.println("VAT(12%): "+ receipt.getVATAmount());
+        System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
 
     }
+
 
     protected void displayProducts () {
 
         System.out.println("=== Display Products ===\n");
 
         int counter = 1;
-        for(Product p : inventory.viewProducts()) {
+        for(Product p : inventory.getProducts()) {
             System.out.println("\nPRODUCT#"+counter +
                     "\nProduct ID: " + p.getProductID() +
                     "\nProduct Name: " + p.getProductName() +
@@ -190,7 +190,7 @@ public abstract class Employee {
         System.out.println("=== Display Categories ===");
         int counter = 1;
 
-        for(Category c : inventory.viewCategories()) {
+        for(Category c : inventory.getCategories()) {
             System.out.println("\nCATEGORY#"+counter+
                     "\nCategory ID: "+ c.getCategory_ID() +
                     "\nCategory Name: "+ c.getCategory_Name()+
@@ -220,6 +220,28 @@ public abstract class Employee {
 
         System.out.println("\n=== Batch Details ===");
         product.checkExpiration();
+    }
+
+
+    //TRANSACTION METHODS
+
+    protected void viewTransactionHistory() {
+
+        int counter = 1;
+        System.out.println("=== Transaction History ===\n");
+        for(Transaction t : inventory.getTransactions()) {
+
+            System.out.println("              "+ counter + "             ");
+            System.out.println("Transaction ID: "+ t.getTransactionID());
+            System.out.println("Transaction type: "+ t.getTransactionType());
+            System.out.println("Transaction date: "+ t.getTransactionID());
+            System.out.println("Transaction by: "+ t.getEmployee().getName());
+            counter++;
+
+        }
+
+        if(counter == 0) System.out.println("\tNothing to see here...");
+
     }
 
 

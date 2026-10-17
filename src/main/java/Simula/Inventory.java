@@ -1,6 +1,7 @@
 package Simula;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Inventory {
 
@@ -14,8 +15,8 @@ public class Inventory {
         defaultProducts();
     }
 
-    //Product Methods
-    public ArrayList<Product> viewProducts() {
+    //Product Methods ------------------------------------------------------
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
@@ -38,8 +39,8 @@ public class Inventory {
     }
 
 
-    //Category Methods
-    public ArrayList<Category> viewCategories() { return categories; }
+    //Category Methods -------------------------------------------------------------
+    public ArrayList<Category> getCategories() { return categories; }
 
     //Add category
     public boolean addCategory(Employee employee,Category newCategory) {
@@ -58,17 +59,66 @@ public class Inventory {
     }
 
 
+    //Transaction/Stock methods -------------------------------------------------------------------------
 
+    public ArrayList<Transaction> getTransactions() {return transactions;}
 
+    public boolean recordSale(Sale sale) {
+        if(sale ==null || sale.viewTransactionDetails().isEmpty()) return false; //chceck kung null or empty
 
+        ArrayList<TransactionDetail> productLines  = sale.viewTransactionDetails(); //para sa mamaya to, pag p print na yung kada individual transaction detail
 
+        for(TransactionDetail line : productLines) {
+            Product p = line.getProduct(); //kinuha yung product sa transactionDetail na yon
 
+            if(!products.contains(p)) return false; //pagka yung p is wala sa arraylist na products, return false
+            if(p instanceof Medicine && !((Medicine) p).soldBy(sale.getEmployee())) return false; //if medicine sya tapos hindi sya sold by pharmacist/owner , yung (Medicine) p, casting sya, DOWNCASTING
 
+            int totalNeeded = 0; //total ng isang product accross the entire transaction
+            for(TransactionDetail otherLines : productLines) { //traverse yung transactionDetail uli, titignan kung may kasame yung current product
+                if(otherLines.getProduct() == p)  //condition na naghahanap if may ka same product
+                    totalNeeded += otherLines.getQuantity(); //if meron, i aadd dito
+            }
+            if(getSellableStocks(p) < totalNeeded ) return false; //pagka kulang yung sellableStock, cancel
+        }
 
+        for(TransactionDetail line : productLines) {
+            reduceBatchQuantity(line.getProduct(),line.getQuantity());
+        }
+        transactions.add(sale);
+        return  true;
+    }
 
-    //dito sa baba mga dummy data--------------------------------------------------------------------------------------------
+    private int getSellableStocks(Product p) {  //kukunin yung amount na hindi expired na product
+        int total = 0;
 
-        private void defaultProducts() {
+        for(Batch b : p.getBatches()) {
+            if(!b.isExpired())   total+=b.getQuantity();
+        }
+        return total;
+
+    }
+
+    private void reduceBatchQuantity(Product product, int quantity) {
+
+        ArrayList<Batch> sortedBatch = product.getBatches();  //bagong ArrayLIst, dito lang ilalagay yung sorted na batch by expiration date
+        sortedBatch.sort(Comparator.comparing(Batch::getExpirationDate)); //comaparator na object, i sosort sya by soonest expiration date
+
+        for(Batch b : sortedBatch) {
+            if(quantity ==0 ) break; //kapag zero yung nilagay na irereduce, end the loop
+            if(b.isExpired() || b.getQuantity() == 0) continue; //kapag expired or walang laman yung batch, skip current batch
+
+            int quantityToReduce = Math.min(quantity, b.getQuantity()); //pipili kung yung ibabawas ba na number ay yung quantity(eto yung nasa method mismo) or b.getquantity(pagkakunwari mas maliit na yung quantity ng nasa batch kesa sa dapat iremove, pipiliin muna to)
+            b.reduceQuantity(quantityToReduce); //pagreduce na ng quantity
+            quantity -= quantityToReduce; //inupdate yung quantity kung ilan yung binawas, tapos next iteration na
+
+        }
+
+    }
+
+    //dito sa baba mga dummy objects--------------------------------------------------------------------------------------------
+
+    private void defaultProducts() {
 
         products.add(new OverTheCounter("Biogesic","Paracetamol","Unilab","Tablet",7,50,findCategoryById("C005")));
         products.add(new OverTheCounter("Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",50,50,findCategoryById("C001")));

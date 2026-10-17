@@ -105,7 +105,6 @@ public abstract class Product {
         int ctr = 1;
         int total = 0;
         for(Batch b : batches){
-            System.out.println("Batch " + ctr + ": " + b.getQuantity());
             total += b.getQuantity();
         }
         return total;
@@ -156,6 +155,10 @@ public abstract class Product {
             if(b.isNearExpiration()) return true;
         }
         return false;
+    }
+
+    public ArrayList<Batch> getBatches() {
+        return batches;
     }
 
 }

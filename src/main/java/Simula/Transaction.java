@@ -28,6 +28,9 @@ public abstract class Transaction {
     public Employee getEmployee() {
         return employee;
     }
+    public String getTransactionID() { return transactionID;}
+    public LocalDate getTransactionDate() {return transactionDate;}
+
 
     public abstract String getTransactionType();
 
@@ -41,12 +44,21 @@ public abstract class Transaction {
         return transactionDetails;
     }
 
-    public double getTotalPrice() {
+    public double getSubTotalPrice() {
         double total =0;
         for(TransactionDetail td : transactionDetails) {
             total += td.getSubTotal();
         }
+
         return total;
+    }
+
+    public double getVATAmount() {
+      return getSubTotalPrice() * VAT;
+    }
+
+    public double getTotalWithVAT () {
+        return getSubTotalPrice() + getVATAmount();
     }
 
 }

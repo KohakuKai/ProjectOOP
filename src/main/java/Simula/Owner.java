@@ -31,9 +31,10 @@ public class Owner extends Employee {
                     "\t[4] Manage Stocks\n" +
                     "\nTRANSACT\n" +
                     "\t[5] Sell product\n" +
+                    "\t[6] View Transaction History\n "+
                     "\nACCOUNT\n" +
-                    "\t[6] Change Password\n" +
-                    "\t[7] Logout\n" +
+                    "\t[7] Change Password\n" +
+                    "\t[8] Logout\n" +
                     "\n=================================\n" +
                     "Choice: ");
             int choice = in.nextInt();
@@ -120,6 +121,7 @@ public class Owner extends Employee {
                             "[2]Add Stock\n" +
                             "[3]Reduce Stock\n" +
                             "[4]View a Product's Batches\n" +
+                            "[0] Exit\n"+
                             "Choice: ");
                     int choice4 = in.nextInt();
                     in.nextLine();
@@ -141,6 +143,11 @@ public class Owner extends Employee {
                             viewProductBatchDetails();
                             break;
                         }
+
+                        case 0: {
+                            break;
+                        }
+
                         default:{
                             System.out.println("Invalid input. Try Again");
                             break;
@@ -153,12 +160,18 @@ public class Owner extends Employee {
                     sellProduct();
                     break;
                 }
+
                 case 6:{
+                    viewTransactionHistory();
+                    break;
+                }
+
+                case 7:{
                     changePassword();
                     break;
                 }
 
-                case 7: {
+                case 8: {
                     System.out.println("Logging out...");
                     return;
                 }
@@ -489,8 +502,6 @@ public class Owner extends Employee {
             System.out.println("Invalid Amount.");
 
     }
-
-
 
 }
 
