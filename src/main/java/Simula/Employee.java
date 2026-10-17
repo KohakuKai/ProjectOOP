@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public abstract class Employee {
 
+    String line = "-".repeat(110);
+    String border = "=".repeat(33);
+    String mborder = "~".repeat(33);
+
     protected static final Scanner in = new Scanner(System.in); //share share na lahat ng subclass sa isang scanner, para walang duplicate scanners
 
     //protected final StartUp manager; // para share na rin ng pharmacist
@@ -74,7 +78,7 @@ public abstract class Employee {
 
     //pang pause sa action bago bumalik sa dashboard
     public void pause() {
-        System.out.print("\nPress Enter to return to dashboard...");
+        System.out.print("Press [Enter] to exit.");
         in.nextLine();
     }
 
@@ -171,8 +175,6 @@ public abstract class Employee {
 
     protected void displayProducts () {
 
-        System.out.println("=== Display Products ===\n");
-
         int counter = 1;
         for(Product p : inventory.getProducts()) {
             System.out.println("\nPRODUCT#"+counter +
@@ -188,6 +190,9 @@ public abstract class Employee {
         }
 
     }
+
+
+
 
     //CATEGORIES METHODS
 
