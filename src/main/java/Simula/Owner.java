@@ -701,7 +701,6 @@ public class Owner extends Employee {
                 "\nVAT: "+ purchase.getVATAmount()+
                 "\nTotal(with VAT): "+ purchase.getTotalWithVAT() + "\n");
 
-
     }
 
 }

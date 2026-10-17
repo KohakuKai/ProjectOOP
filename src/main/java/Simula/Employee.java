@@ -83,8 +83,8 @@ public abstract class Employee {
     }
     //pang pause sa action bago bumalik sa dashboard
     public void pause() {
-        System.out.print("Press [Enter] to exit.");
-        in.nextLine();
+        System.out.println("Press [Enter] to exit.");
+        String junk = in.nextLine();
     }
 
     //ACCOUNT METHODS --------------------------------------------------------------
@@ -187,8 +187,8 @@ public abstract class Employee {
         System.out.println("Quantity: " + quantity);
         System.out.println("Unit Price: " + product.getSellingPrice());
         System.out.println("Subtotal: " + receipt.getSubTotalPrice());
-        System.out.println("VAT: "+ receipt.getVATAmount());
-        if(!pwd || !senior)System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
+        if(!pwd && !senior)System.out.println("VAT: "+ receipt.getVATAmount());
+        if(!pwd && !senior)System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
         if(pwd) System.out.println("Total(with PWD Discount): " + receipt.getTotalWithPwdDiscount());
         if(senior) System.out.println("Total(with Senior Discount): " + receipt.getTotalWithSeniorDiscount());
 
