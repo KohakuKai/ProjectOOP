@@ -195,19 +195,50 @@ public abstract class Employee {
 
         int counter = 1;
         for(Product p : inventory.getProducts()) {
-            System.out.println("\nPRODUCT#"+counter +
+            System.out.print("\n=================================\nPRODUCT#"+counter +
                     "\nProduct ID: " + p.getProductID() +
                     "\nProduct Name: " + p.getProductName() +
-                    "\nGeneric Name: " + p.getGenericName() +
-                    "\nBrand : " + p.getBrand() +
-                    "\nUnit: " + p.getUnit() +
-                    "\nSelling Price: P" + p.getSellingPrice()+
-                    "\nReorder Level: " + p.getReorderLevel() +
-                    "\nCategory: "+p.getCategory().getCategory_Name());
+                    "\nSelling Price: P" + p.getSellingPrice() + "\n");
             counter++;
         }
 
+        System.out.print("\n=================================\n[1]View More Product Details\n[0]Exit\n=================================\nChoice:");
+        int choice = in.nextInt(); in.nextLine();
+
+        switch (choice) {
+            case 1 : displayMoreProductDetails();
+            break;
+            case 0 : break;
+            default:
+                System.out.println("Invalid Input!");
+                break;
+        }
+
     }
+
+    protected void displayMoreProductDetails() {
+
+        System.out.print("Product ID: ");
+        String productID = in.nextLine().trim().toUpperCase();
+
+        Product product = inventory.findProductById(productID);
+
+        if(product == null) {
+            System.out.println("Product not Found!");
+            return;
+        }
+
+        System.out.println("\n=================================\n\t"+ product.getProductName()+ " Details");
+        System.out.println("\nProduct ID: "+ product.getProductID() +
+                "\nProduct Name: " + product.getProductName() +
+                "\nGeneric Name: " + product.getGenericName() +
+                "\nBrand : " + product.getBrand() +
+                "\nUnit: " + product.getUnit() +
+                "\nSelling Price: " + product.getSellingPrice() +
+                "\nReorder Level: "+ product.getReorderLevel() + "\n"
+                );
+    }
+
 
 
 
