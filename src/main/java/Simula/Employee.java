@@ -175,7 +175,7 @@ public abstract class Employee {
         receipt.addTransactionDetail(quantity, product.getSellingPrice(), product);
 
         if(!inventory.recordSale(receipt)) {
-            System.out.println("Sale Failed!(Not enough Stock, Expired Batch, or not Allowed)");
+            System.out.println("Sale Failed! Not enough Stock, Expired Batch, or not Allowed ");
             return;
         }
 
@@ -188,13 +188,13 @@ public abstract class Employee {
         System.out.println("Unit Price: " + product.getSellingPrice());
         System.out.println("Subtotal: " + receipt.getSubTotalPrice());
         System.out.println("VAT: "+ receipt.getVATAmount());
-        System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
+        if(!pwd || !senior)System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
         if(pwd) System.out.println("Total(with PWD Discount): " + receipt.getTotalWithPwdDiscount());
         if(senior) System.out.println("Total(with Senior Discount): " + receipt.getTotalWithSeniorDiscount());
 
+        System.out.println();
+
     }
-
-
 
     protected void displayProducts () {
 
@@ -296,11 +296,11 @@ public abstract class Employee {
         System.out.println("=== Transaction History ===\n");
         for(Transaction t : inventory.getTransactions()) {
 
-            System.out.println("              "+ counter + "             ");
+            System.out.println("\t\t   "+ counter );
             System.out.println("Transaction ID: "+ t.getTransactionID());
             System.out.println("Transaction type: "+ t.getTransactionType());
-            System.out.println("Transaction date: "+ t.getTransactionID());
-            System.out.println("Transaction by: "+ t.getEmployee().getName());
+            System.out.println("Transaction date: "+ t.getTransactionDate());
+            System.out.println("Transaction by: "+ t.getEmployee().getName() + "\n");
             counter++;
 
         }

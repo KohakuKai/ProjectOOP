@@ -1,6 +1,7 @@
 package Simula;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class Owner extends Employee {
@@ -30,11 +31,12 @@ public class Owner extends Employee {
                     "\t[3] Manage Categories\n" +
                     "\t[4] Manage Stocks\n" +
                     "TRANSACT\n" +
-                    "\t[5] Sell product\n" +
-                    "\t[6] View Transaction History\n "+
+                    "\t[5] Sell Product\n" +
+                    "\t[6] Purchase Product\n" +
+                    "\t[7] View Transaction History\n "+
                     "ACCOUNT\n" +
-                    "\t[7] Change Password\n" +
-                    "\t[8] Logout\n" +
+                    "\t[8] Change Password\n" +
+                    "\t[9] Logout\n" +
                     border + "\n" +
                     "Choice: ");
             int choice = in.nextInt();
@@ -135,9 +137,9 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.println("\t\tMANAGE STOCKS");
                     System.out.println(border);
-                    System.out.println("\t[1]Add Batch\n" +
-                            "\t[2]Add Stock\n" +
-                            "\t[3]Reduce Stock\n" +
+                    System.out.print("\t[1]Add Batch\n" +
+                            "\t[2]Add Stock(Manual Add)\n" +
+                            "\t[3]Reduce Stock(Manual Remove)\n" +
                             "\t[4]View a Product's Batches\n" +
                             "\t[0] Exit\n"+
                             "Choice: ");
@@ -186,19 +188,25 @@ public class Owner extends Employee {
                     break;
                 }
 
-                case 6:{
-                    viewTransactionHistory();
+                case 6 : {
+                    purchaseProduct();
                     pause();
                     break;
                 }
 
                 case 7:{
+                    viewTransactionHistory();
+                    pause();
+                    break;
+                }
+
+                case 8:{
                     changePassword();
                     pause();
                     break;
                 }
 
-                case 8: {
+                case 9: {
                     System.out.println(mborder);
                     System.out.println("Logging out...");
                     System.out.println(mborder);
@@ -603,6 +611,97 @@ public class Owner extends Employee {
         System.out.println("Invalid Amount.");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
+    }
+
+    private void purchaseProduct() {
+
+        Purchase purchase = new Purchase(this, inventory);
+
+        boolean end = false;
+
+        while(!end) {    //Loop to, add lang ng add ng product sa checkout hanggang mag input ng 0, tapos don matatapos
+
+            System.out.print("Product ID(Enter 0 to end): ");
+            String productId = in.nextLine().trim().toUpperCase();
+            if(productId.equals("0")) {
+                end = true;
+                break;
+            }
+
+            Product product = inventory.findProductById(productId);
+
+            if(product ==null ) {
+                System.out.println("Product not Found!");
+                continue;
+            }
+
+            System.out.print("Quantity: ");
+            int quantity = in.nextInt(); in.nextLine();
+
+            System.out.print("Unit Purchase Cost: ");
+            double unitPurchaseCost = in.nextDouble(); in.nextLine();
+
+            System.out.print("Expiration Year: ");
+            int year = in.nextInt(); in.nextLine();
+
+            System.out.print("Expiration Month: ");
+            int month = in.nextInt(); in.nextLine();
+
+            System.out.print("Expiration day: ");
+            int day = in.nextInt(); in.nextLine();
+
+            if(quantity<=0) {
+                System.out.println("Invalid Quantity");
+                continue;
+            }
+
+            if(month<1 || month>12 || day <1 || day > 31) {
+                System.out.println("Invalid Date");
+                continue;
+            }
+
+            LocalDate expiration = LocalDate.of(year,month,day);
+
+            if(purchase.addPurchaseLine(quantity,unitPurchaseCost,product,expiration)) { //pagg add eto sa TransactionDetail ArrayList
+                System.out.println("\nAdded to Checkout!\n");
+            }
+            else {
+                System.out.println("Input Failed! Invalid Quantity, Cost, or Expiration Date");
+            }
+
+            System.out.println("=================================");
+
+        }
+
+        if(purchase.getTransactionDetails().isEmpty()) { //kapag 0 agad pinindot at walang na add
+            System.out.println("No Products Added");
+            return;
+        }
+
+        if(!inventory.recordPurchase(purchase)) { //pagrecord na ng purchase, pag d nag go through mag eerror
+            System.out.println("Purchased Failed");
+            return;
+        }
+
+        ArrayList <TransactionDetail> lines  = purchase.getTransactionDetails(); //para lang to sa pagn print ng receipt
+        ArrayList<LocalDate> expirationDates = purchase.getExpirationDates(); //para lang to sa pag print ng receipt
+
+        System.out.println("\n=== RECEIPT ===");
+        System.out.println("Transaction ID: "+ purchase.getTransactionID());
+        System.out.println("Transaction Type: "+ purchase.getTransactionType());
+        System.out.println("Purchase No.: " + purchase.getPurchaseOrderNo());
+
+        System.out.println("\n=================================");
+        for (int i=0; i<lines.size();i++) { //etong for loop nato para lang sa individual products, pinapakita yung Product name | quantity x price = subtotal | expirationDate
+            TransactionDetail line = lines.get(i);
+            System.out.println( line.getProduct().getProductName() + " | " + line.getQuantity() + " x " + line.getUnitPrice() + " = " + line.getSubTotal() + " | Exp:" + expirationDates.get(i) +"");
+        }
+
+        System.out.println("=================================\nSubtotal: "+ purchase.getSubTotalPrice() +
+                "\nVAT: "+ purchase.getVATAmount()+
+                "\nTotal(with VAT): "+ purchase.getTotalWithVAT() + "\n");
+
+
     }
 
 }

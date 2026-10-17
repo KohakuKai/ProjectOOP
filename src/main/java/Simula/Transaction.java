@@ -37,12 +37,11 @@ public abstract class Transaction {
     public abstract String getTransactionType();
 
     public boolean addTransactionDetail(int quantity, double unitPrice, Product product) {
-        if(product == null || quantity <=0 || unitPrice<0)  return false;
-
-        transactionDetails.add(new TransactionDetail(quantity,unitPrice,product)); return true;
+        if(product == null || quantity <=0 || unitPrice<0)  return false; //makes sure na hindi null yung mga input
+        transactionDetails.add(new TransactionDetail(quantity,unitPrice,product)); return true; //eto na yung pag add sa arrayList na <>transactionDetails
     }
 
-    public ArrayList<TransactionDetail> viewTransactionDetails() {
+    public ArrayList<TransactionDetail> getTransactionDetails() {
         return transactionDetails;
     }
 

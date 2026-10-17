@@ -1,5 +1,6 @@
 package Simula;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -64,9 +65,9 @@ public class Inventory {
     public ArrayList<Transaction> getTransactions() {return transactions;}
 
     public boolean recordSale(Sale sale) {
-        if(sale ==null || sale.viewTransactionDetails().isEmpty()) return false; //chceck kung null or empty
+        if(sale ==null || sale.getTransactionDetails().isEmpty()) return false; //chceck kung null or empty
 
-        ArrayList<TransactionDetail> productLines  = sale.viewTransactionDetails(); //para sa mamaya to, pag p print na yung kada individual transaction detail
+        ArrayList<TransactionDetail> productLines  = sale.getTransactionDetails(); //para sa mamaya to, pag p print na yung kada individual transaction detail
 
         for(TransactionDetail line : productLines) {
             Product p = line.getProduct(); //kinuha yung product sa transactionDetail na yon
@@ -115,6 +116,28 @@ public class Inventory {
         }
 
     }
+
+    public boolean recordPurchase(Purchase purchase) {
+
+        if(purchase ==null || purchase.getTransactionDetails().isEmpty()) return false; //if walang laman yung purchase or if walang laman yung TransactionDetails arraylist ni Purchase
+        if(!(purchase.getEmployee() instanceof  Owner)) return false; //pagka hindi si owner yung gumawa ng purchase
+
+        ArrayList<TransactionDetail> lines = purchase.getTransactionDetails();
+        ArrayList<LocalDate> expirationDates = purchase.getExpirationDates();
+
+        for(TransactionDetail line : lines) {
+            if(!products.contains(line.getProduct())) return false; //chinecheck kung nasa products ArrayList yung nasa purchase
+        }
+
+        for(int i=0; i< lines.size();i++) {
+            Product product = lines.get(i).getProduct(); //kinukuha yung product ng specific na productLine sa transactionDetail
+            product.addBatch(new Batch(lines.get(i).getQuantity(),product,expirationDates.get(i))); // yung addBatch na method lang to, tapos yung arguements ay yung input ni user sa menu
+        }
+
+        transactions.add(purchase);
+        return true;
+
+        }
 
     //dito sa baba mga dummy objects--------------------------------------------------------------------------------------------
 
