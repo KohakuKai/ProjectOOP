@@ -75,7 +75,12 @@ public abstract class Employee {
     }
 
     //mga shared methods dito---------------------------------------------------------------------------
+    public void tag() {
+        String firstName = getName().trim().split(" ")[0];
+        String userInfo = "[" + firstName + "|" + getPosition() + "]";
 
+        System.out.printf("\n%33s\n", userInfo);
+    }
     //pang pause sa action bago bumalik sa dashboard
     public void pause() {
         System.out.print("Press [Enter] to exit.");

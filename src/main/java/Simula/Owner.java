@@ -5,9 +5,6 @@ import java.util.Locale;
 
 public class Owner extends Employee {
 
-    String firstName = getName().trim().split(" ")[0];
-    String userInfo = "[" + firstName + "|" + getPosition() + "]";
-
 
     private final StartUp manager;
 
@@ -21,7 +18,7 @@ public class Owner extends Employee {
     @Override
     public void showDashboard() {
         while (true) {
-            System.out.printf("\n%33s\n", userInfo);
+            tag();
             System.out.println(border);
             System.out.println("\t\t\tPHARMACY");
             System.out.println(border);
@@ -47,7 +44,7 @@ public class Owner extends Employee {
             switch (choice) {
                 case 1: {
 
-                    System.out.printf("\n%33s\n", userInfo);
+                    tag();
                     System.out.println(border);
                     System.out.println("\t\tMANAGE EMPLOYEE");
                     System.out.println(border);
@@ -85,7 +82,7 @@ public class Owner extends Employee {
 
                 case 2 :{
 
-                    System.out.printf("\n%33s\n", userInfo);
+                    tag();
                     System.out.println(border);
                     System.out.println("\t\tMANAGE PRODUCTS");
                     System.out.println(border);
@@ -110,7 +107,7 @@ public class Owner extends Employee {
 
                 case 3 : {
 
-                    System.out.printf("\n%33s\n", userInfo);
+                    tag();
                     System.out.println(border);
                     System.out.println("\t\tMANAGE CATEGORIES");
                     System.out.println(border);
@@ -134,7 +131,7 @@ public class Owner extends Employee {
 
                 }
                 case 4:{
-                    System.out.printf("\n%33s\n", userInfo);
+                    tag();
                     System.out.println(border);
                     System.out.println("\t\tMANAGE STOCKS");
                     System.out.println(border);
@@ -220,7 +217,7 @@ public class Owner extends Employee {
 
     //create employee ng owner yan ah
     private void createEmployee() {
-        System.out.printf("\n%33s\n", userInfo);
+        tag();
         System.out.println(border);
         System.out.println("\t\tCREATE EMPLOYEE");
         System.out.println(border);
@@ -259,7 +256,7 @@ public class Owner extends Employee {
         System.out.println(mborder);
     }
     private void displayEmployees() {
-        System.out.printf("\n%33s\n", userInfo);
+        tag();
         System.out.println(border);
         System.out.println("\t\tDISPLAY EMPLOYEE");
         System.out.println(border);
@@ -278,7 +275,7 @@ public class Owner extends Employee {
 
     //delete employee
     private void deleteEmployee() {
-        System.out.printf("\n%33s\n", userInfo);
+        tag();
         System.out.println(border);
         System.out.println("\t\tDELETE EMPLOYEE");
         System.out.println(border);
@@ -341,7 +338,7 @@ public class Owner extends Employee {
     //Product Methods
     private void addProduct() {
 
-        System.out.printf("\n%33s\n", userInfo);
+        tag();
         System.out.println(border);
         System.out.println("\t\tADD PRODUCT");
         System.out.println(border);
@@ -446,7 +443,7 @@ public class Owner extends Employee {
     //methods ng Category
     private void addCategory() {
 
-        System.out.printf("\n%33s\n", userInfo);
+        tag();
         System.out.println("=================================");
         System.out.println("\t\tADD CATEGORY");
         System.out.println("=================================");
