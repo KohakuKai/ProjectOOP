@@ -18,30 +18,44 @@ public class Owner extends Employee {
     @Override
     public void showDashboard() {
         while (true) {
-            System.out.println("\n=== OWNER DASHBOARD ===");
-            System.out.println(this);
+            System.out.print("\n" + this);
+            System.out.println("=================================");
+            System.out.println("\t\t\tPHARMACY");
+            System.out.println("=================================");
 
-            System.out.print("\n[1] Manage Employee\n" +
-                    "[2] Manage Products\n" +
-                    "[3] Manage Categories\n" +
-                    "[4] Manage Stocks\n" +
-                    "[5] Sell product\n" +
-                    "[6] Change Password\n" +
-                    "[7] Logout\n" +
+            System.out.print("PERSON\n"+
+                    "\t[1] Manage Employee\n" +
+                    "\nINVENTORY\n"+
+                    "\t[2] Manage Products\n" +
+                    "\t[3] Manage Categories\n" +
+                    "\t[4] Manage Stocks\n" +
+                    "\nTRANSACT\n" +
+                    "\t[5] Sell product\n" +
+                    "\nACCOUNT\n" +
+                    "\t[6] Change Password\n" +
+                    "\t[7] Logout\n" +
+                    "\n=================================\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
+            System.out.println("=================================\n");
 
             switch (choice) {
                 case 1: {
 
-                    System.out.print("\n[1] Create Employee\n" +
-                            "[2] Delete Employee\n" +
-                            "[3] View Employee\n" +
-                            "[0] Exit\n" +
+                    System.out.print("\n" + this);
+                    System.out.println("=================================");
+                    System.out.println("\t\tMANAGE EMPLOYEE");
+                    System.out.println("=================================");
+                    System.out.print("\t[1] Create Employee\n" +
+                            "\t[2] Delete Employee\n" +
+                            "\t[3] View Employee\n" +
+                            "\t[0] Exit\n" +
+                            "\n=================================\n" +
                             "Choice: ");
                     int temp = in.nextInt();
                     in.nextLine();
+                    System.out.println("=================================\n");
                     switch (temp) {
                         case 1: {
                             createEmployee();
@@ -159,7 +173,12 @@ public class Owner extends Employee {
 
     //create employee ng owner yan ah
     private void createEmployee() {
-        System.out.print("\nEnter employee name: ");
+        System.out.print("\n" + this);
+        System.out.println("=================================");
+        System.out.println("\t\tCREATE EMPLOYEE");
+        System.out.println("=================================");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.print("Enter employee name: ");
         String name = in.nextLine().trim();
 
         System.out.print("Enter employee username: ");
@@ -169,12 +188,14 @@ public class Owner extends Employee {
         String password = in.nextLine();
 
         System.out.println("\nAssign position:");
-        System.out.println("[1] Owner");
-        System.out.println("[2] Pharmacist");
-        System.out.println("[3] Staff");
+        System.out.println("\t[1] Owner");
+        System.out.println("\t[2] Pharmacist");
+        System.out.println("\t[3] Staff");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.print("Choice: ");
         int choice = in.nextInt();
         in.nextLine(); // consume the leftover Enter
+        System.out.println("=================================\n");
 
         Employee newEmployee = createUserByChoice(choice, name, username, password);
         if (newEmployee == null) {
@@ -183,15 +204,23 @@ public class Owner extends Employee {
         }
 
         manager.getEmployees().add(newEmployee);
-
+        System.out.println("----------------------------------");
         System.out.println("Employee created successfully!");
         System.out.println("Employee ID: " + newEmployee.getEmpID());
         System.out.println("Position: " + newEmployee.getPosition());
+        System.out.println("----------------------------------");
     }
     private void displayEmployees() {
+        System.out.print("\n" + this);
+        System.out.println("=================================");
+        System.out.println("\t\tDISPLAY EMPLOYEE");
+        System.out.println("=================================");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         for (Employee employee : manager.getEmployees()) {
-            System.out.println(employee);
+            System.out.print(employee);
         }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("=================================\n");
     }
 
     //delete employee
