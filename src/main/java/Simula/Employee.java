@@ -153,17 +153,18 @@ public abstract class Employee {
         //taga check ng discount
         boolean pwd = false;
         boolean senior = false;
-        System.out.println("Customer Discount:\n" +
+        System.out.print("\nCustomer Discount:\n" +
                 "[1] PWD\n" +
                 "[2] Senior\n" +
                 "[3] No Discount\n" +
                 "Enter Input: ");
         int customerDiscount = in.nextInt();
+        in.nextLine();
         switch(customerDiscount){
             case 1: pwd = true; break;
             case 2: senior = true; break;
             case 3: break;
-            default: System.out.println("Invalid Choice! try again..."); sellProduct();
+            default: System.out.println("Invalid Choice! try again..."); break;
         }
 
         receipt.addTransactionDetail(quantity, product.getSellingPrice(), product);
@@ -187,6 +188,7 @@ public abstract class Employee {
         if(senior) System.out.println("Total(with Senior Discount): " + receipt.getTotalWithSeniorDiscount());
 
     }
+
 
 
     protected void displayProducts () {
