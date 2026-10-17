@@ -30,7 +30,9 @@ public abstract class Transaction {
     }
     public String getTransactionID() { return transactionID;}
     public LocalDate getTransactionDate() {return transactionDate;}
-
+    public static double getVAT() {
+        return VAT;
+    }
 
     public abstract String getTransactionType();
 
@@ -56,9 +58,14 @@ public abstract class Transaction {
     public double getVATAmount() {
       return getSubTotalPrice() * VAT;
     }
-
     public double getTotalWithVAT () {
         return getSubTotalPrice() + getVATAmount();
     }
 
+    public double getTotalWithPwdDiscount() {
+        return getTotalWithVAT() - (getSubTotalPrice() * PWD_DISCOUNT);
+    }
+    public double getTotalWithSeniorDiscount() {
+        return getTotalWithVAT() - (getSubTotalPrice() * SENIOR_DISCOUNT);
+    }
 }

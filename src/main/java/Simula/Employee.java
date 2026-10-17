@@ -137,15 +137,29 @@ public abstract class Employee {
         System.out.print("Enter Quantity: ");
         int quantity = in.nextInt();
         in.nextLine();
-
         if (quantity <= 0) {
             System.out.println("Invalid quantity.");
             return;
         }
-
         if (quantity > product.getTotalStock()) {
             System.out.println("Insufficient stock.");
             return;
+        }
+
+        //taga check ng discount
+        boolean pwd = false;
+        boolean senior = false;
+        System.out.println("Customer Discount:\n" +
+                "[1] PWD\n" +
+                "[2] Senior\n" +
+                "[3] No Discount\n" +
+                "Enter Input: ");
+        int customerDiscount = in.nextInt();
+        switch(customerDiscount){
+            case 1: pwd = true; break;
+            case 2: senior = true; break;
+            case 3: break;
+            default: System.out.println("Invalid Choice! try again..."); sellProduct();
         }
 
         receipt.addTransactionDetail(quantity, product.getSellingPrice(), product);
@@ -163,8 +177,10 @@ public abstract class Employee {
         System.out.println("Quantity: " + quantity);
         System.out.println("Unit Price: " + product.getSellingPrice());
         System.out.println("Subtotal: " + receipt.getSubTotalPrice());
-        System.out.println("VAT(12%): "+ receipt.getVATAmount());
+        System.out.println("VAT: "+ receipt.getVATAmount());
         System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
+        if(pwd) System.out.println("Total(with PWD Discount): " + receipt.getTotalWithPwdDiscount());
+        if(senior) System.out.println("Total(with Senior Discount): " + receipt.getTotalWithSeniorDiscount());
 
     }
 
