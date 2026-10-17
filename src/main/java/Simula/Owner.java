@@ -25,17 +25,17 @@ public class Owner extends Employee {
 
             System.out.print("PERSON\n"+
                     "\t[1] Manage Employee\n" +
-                    "\nINVENTORY\n"+
+                    "INVENTORY\n"+
                     "\t[2] Manage Products\n" +
                     "\t[3] Manage Categories\n" +
                     "\t[4] Manage Stocks\n" +
-                    "\nTRANSACT\n" +
+                    "TRANSACT\n" +
                     "\t[5] Sell product\n" +
                     "\t[6] View Transaction History\n "+
-                    "\nACCOUNT\n" +
+                    "ACCOUNT\n" +
                     "\t[7] Change Password\n" +
                     "\t[8] Logout\n" +
-                    "\n=================================\n" +
+                    "=================================\n" +
                     "Choice: ");
             int choice = in.nextInt();
             in.nextLine(); // consume the leftover Enter
@@ -52,7 +52,7 @@ public class Owner extends Employee {
                             "\t[2] Delete Employee\n" +
                             "\t[3] View Employee\n" +
                             "\t[0] Exit\n" +
-                            "\n=================================\n" +
+                            "=================================\n" +
                             "Choice: ");
                     int temp = in.nextInt();
                     in.nextLine();
@@ -190,7 +190,6 @@ public class Owner extends Employee {
         System.out.println("=================================");
         System.out.println("\t\tCREATE EMPLOYEE");
         System.out.println("=================================");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.print("Enter employee name: ");
         String name = in.nextLine().trim();
 
@@ -204,7 +203,7 @@ public class Owner extends Employee {
         System.out.println("\t[1] Owner");
         System.out.println("\t[2] Pharmacist");
         System.out.println("\t[3] Staff");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("=================================");
         System.out.print("Choice: ");
         int choice = in.nextInt();
         in.nextLine(); // consume the leftover Enter
@@ -217,22 +216,21 @@ public class Owner extends Employee {
         }
 
         manager.getEmployees().add(newEmployee);
-        System.out.println("----------------------------------");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("Employee created successfully!");
         System.out.println("Employee ID: " + newEmployee.getEmpID());
         System.out.println("Position: " + newEmployee.getPosition());
-        System.out.println("----------------------------------");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
     private void displayEmployees() {
         System.out.print("\n" + this);
         System.out.println("=================================");
         System.out.println("\t\tDISPLAY EMPLOYEE");
         System.out.println("=================================");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("ID NO.\t|\tNAME\t|\tPOSITION");
         for (Employee employee : manager.getEmployees()) {
             System.out.print(employee);
         }
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("=================================\n");
     }
 
