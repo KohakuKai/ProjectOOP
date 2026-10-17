@@ -61,14 +61,17 @@ public class Owner extends Employee {
                     switch (temp) {
                         case 1: {
                             createEmployee();
+                            pause();
                             break;
                         }
                         case 2: {
                             deleteEmployee();
+                            pause();
                             break;
                         }
                         case 3: {
                             displayEmployees();
+                            pause();
                             break;
                         }
                         case 0: {
@@ -86,8 +89,8 @@ public class Owner extends Employee {
 
                     switch(choice2) {
 
-                        case 1 : addProduct(); break;
-                        case 2 : displayProducts(); break;
+                        case 1 : addProduct(); pause(); break;
+                        case 2 : displayProducts(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println("Invalid input. Try Again");
@@ -105,8 +108,8 @@ public class Owner extends Employee {
 
                     switch(choice2) {
 
-                        case 1 : addCategory(); break;
-                        case 2 : displayCategories(); break;
+                        case 1 : addCategory(); pause(); break;
+                        case 2 : displayCategories(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println("Invalid input. Try Again");
@@ -130,18 +133,22 @@ public class Owner extends Employee {
                     switch(choice4){
                         case 1:{
                             addBatch();
+                            pause();
                             break;
                         }
                         case 2:{
                             addSupply();
+                            pause();
                             break;
                         }
                         case 3:{
                             reduceSupply();
+                            pause();
                             break;
                         }
                         case 4:{
                             viewProductBatchDetails();
+                            pause();
                             break;
                         }
 
@@ -159,16 +166,19 @@ public class Owner extends Employee {
                 }
                 case 5:{
                     sellProduct();
+                    pause();
                     break;
                 }
 
                 case 6:{
                     viewTransactionHistory();
+                    pause();
                     break;
                 }
 
                 case 7:{
                     changePassword();
+                    pause();
                     break;
                 }
 
@@ -224,13 +234,20 @@ public class Owner extends Employee {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
     private void displayEmployees() {
-        System.out.print("\n" + this);
+        String firstName = getName().trim().split(" ")[0];
+        String userInfo = "[" + firstName + "   |   " + getPosition() + "]";
+        System.out.printf("\n%33s\n", userInfo);
         System.out.println("=================================");
         System.out.println("\t\tDISPLAY EMPLOYEE");
         System.out.println("=================================");
-        System.out.println("ID NO.\t|\tNAME\t|\tPOSITION");
+        System.out.printf("%-7s | %-15s | %-15s%n",
+                "ID NO.", "NAME", "POSITION");
+
         for (Employee employee : manager.getEmployees()) {
-            System.out.print(employee);
+            System.out.printf("%-7s | %-15s | %-15s%n",
+                    employee.getEmpID(),
+                    employee.getName(),
+                    employee.getPosition());
         }
         System.out.println("=================================\n");
     }

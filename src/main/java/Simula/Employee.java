@@ -72,6 +72,12 @@ public abstract class Employee {
 
     //mga shared methods dito---------------------------------------------------------------------------
 
+    //pang pause sa action bago bumalik sa dashboard
+    public void pause() {
+        System.out.print("\nPress Enter to return to dashboard...");
+        in.nextLine();
+    }
+
     //ACCOUNT METHODS --------------------------------------------------------------
 
     protected void changePassword() {
