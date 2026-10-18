@@ -11,34 +11,68 @@ public class Staff extends Employee {
     @Override
     public void showDashboard() {
         while (true) {
-            System.out.println("\n=== STAFF DASHBOARD ===");
-            System.out.println(this);
+            tag();
+            System.out.println(border);
+            System.out.println("\t\tPHARMACY");
+            System.out.println(border);
 
-            System.out.println("[1] Change Password");
-            System.out.println("[2] View Profile");
-            System.out.println("[0] Logout");
-            System.out.print("Choice: ");
+            displayStockAlerts();
+
+            System.out.print("INVENTORY\n"
+                    + "\t[1] View Products\n"
+                    + "\t[2] View Categories\n"
+                    + "\t[3] View Product Batches\n"
+                    + "TRANSACT\n"
+                    + "\t[4] Sell Product\n"
+                    + "\t[5] View Transaction History\n"
+                    + "ACCOUNT\n"
+                    + "\t[6] Change Password\n"
+                    + "\t[7] View Profile\n"
+                    + "\t[0] Logout\n"
+                    + border + "\nChoice: ");
 
             int choice = in.nextInt();
             in.nextLine();
 
             switch (choice) {
-                case 1:{
+                case 1:
+                    displayProducts();
+                    pause();
+                    break;
+
+                case 2:
+                    displayCategories();
+                    pause();
+                    break;
+
+                case 3:
+                    viewProductBatchDetails();
+                    pause();
+                    break;
+
+                case 4:
+                    sellProduct();
+                    pause();
+                    break;
+
+                case 5:
+                    viewTransactionHistory();
+                    pause();
+                    break;
+
+                case 6:
                     changePassword();
+                    pause();
                     break;
-                }
 
-                case 2: {
+                case 7:
                     displayProfile();
+                    pause();
                     break;
-                }
 
-                case 0: {
+                case 0:
                     System.out.println("Logging out...");
                     return;
-                }
-
-
 
                 default:
                     System.out.println("Invalid choice. Please try again.");

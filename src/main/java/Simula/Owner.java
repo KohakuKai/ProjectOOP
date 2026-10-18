@@ -24,6 +24,8 @@ public class Owner extends Employee {
             System.out.println("\t\t\t\tPHARMACY");
             System.out.println(border);
 
+            displayStockAlerts();
+
             System.out.print("PERSON\n"+
                     "\t[1] Manage Employees\n" +
                     "INVENTORY\n"+

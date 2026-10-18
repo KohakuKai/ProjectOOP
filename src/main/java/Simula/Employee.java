@@ -77,14 +77,14 @@ public abstract class Employee {
     }
 
     //mga shared methods dito---------------------------------------------------------------------------
-    public void tag() {
+    protected void tag() {
         String firstName = getName().trim().split(" ")[0];
         String userInfo = "[" + firstName + "|" + getPosition() + "]";
 
         System.out.printf("\n%40s\n", userInfo);
     }
     //pang pause sa action bago bumalik sa dashboard
-    public void pause() {
+    protected void pause() {
         System.out.print("Press [Enter] to exit.");
         String junk = in.nextLine();
     }
@@ -349,6 +349,41 @@ public abstract class Employee {
 
         if(counter == 0) System.out.println("\tNothing to see here...");
 
+    }
+
+    //checker ng low stock and expired
+
+    protected void displayStockAlerts() {
+        int expiredProducts = 0;
+        int lowStockProducts = 0;
+
+        for (Product product: inventory.getProducts()) {
+            boolean hasExpiredStock = false;
+            int usableStock = 0;
+
+            for (Batch batch: product.getBatches()) {
+                if (batch.isExpired()) {
+                    if (batch.getQuantity() > 0) {
+                        hasExpiredStock = true;
+                    }
+                }
+                else {
+                    usableStock += batch.getQuantity();
+                }
+            }
+            if (hasExpiredStock) {
+                expiredProducts++;
+            }
+
+            if (usableStock < product.getReorderLevel()) {
+                lowStockProducts++;
+            }
+        }
+
+        System.out.println(line);
+        System.out.println("Products with expired stock: " + expiredProducts);
+        System.out.println("Low stock products: " + lowStockProducts);
+        System.out.println(line);
     }
 
 
