@@ -1,12 +1,14 @@
 package Simula;
 
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.Scanner;
 
 public abstract class Employee {
 
-    String line = "-".repeat(110);
-    String border = "=".repeat(33);
-    String mborder = "~".repeat(33);
+    String line = "-".repeat(50);
+    String border = "=".repeat(50);
+    String mborder = "~".repeat(50);
 
     protected static final Scanner in = new Scanner(System.in); //share share na lahat ng subclass sa isang scanner, para walang duplicate scanners
 
@@ -79,11 +81,11 @@ public abstract class Employee {
         String firstName = getName().trim().split(" ")[0];
         String userInfo = "[" + firstName + "|" + getPosition() + "]";
 
-        System.out.printf("\n%33s\n", userInfo);
+        System.out.printf("\n%40s\n", userInfo);
     }
     //pang pause sa action bago bumalik sa dashboard
     public void pause() {
-        System.out.println("Press [Enter] to exit.");
+        System.out.print("Press [Enter] to exit.");
         String junk = in.nextLine();
     }
 
@@ -91,7 +93,9 @@ public abstract class Employee {
 
     protected void changePassword() {
 
-        System.out.print("\n=== CHANGE PASSWORD ===\nEnter Current password: ");
+        System.out.print("\n"+border);
+        System.out.printf("%27s%n", "CHANGE PASSWORD");
+        System.out.println("\n" + border + "\nEnter Current password: ");
         String checkPassword = in.nextLine();
 
         if(checkPassword.equals(this.getPassword())) {
@@ -100,15 +104,23 @@ public abstract class Employee {
             String newPassword = in.nextLine();
 
             setPassword(newPassword);
+            System.out.println(mborder);
             System.out.println("Password changed successfully!");
+            System.out.println(mborder);
         }
 
-        else System.out.println("Password does not match!");
+        else {
+            System.out.println(mborder);
+            System.out.println("Password does not match!");
+            System.out.println(mborder);
+        }
 
     }
 
     protected void displayProfile() {
-        System.out.println("\n=== MY PROFILE ===");
+        System.out.println("\n" + border);
+        System.out.printf("%27s%n", "MY PROFILE");
+        System.out.println(border);
         System.out.println("Employee ID: " + getEmpID());
         System.out.println("Name: " + getName());
         System.out.println("Position: " + getPosition());
@@ -123,19 +135,23 @@ public abstract class Employee {
     protected void sellProduct() {
         Sale receipt = new Sale(this, inventory);
 
-        System.out.println("\n=== SELL PRODUCT ===");
+        System.out.println("\n" + border);
+        System.out.printf("%27s%n", "SELL PRODUCT");
+        System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
 
         Product product = inventory.findProductById(productID);
 
         if (product == null) {
+            System.out.println(mborder);
             System.out.println("Product not found.");
+            System.out.println(mborder);
             return;
         }
 
         if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
-            System.out.println("Only the Owner or a Pharmacist can sell prescription medicine.");
+            System.out.println(mborder + "\nOnly the Owner or a Pharmacist can sell prescription medicine." + mborder);
             return;
         }
 
@@ -147,11 +163,15 @@ public abstract class Employee {
         int quantity = in.nextInt();
         in.nextLine();
         if (quantity <= 0) {
+            System.out.println(mborder);
             System.out.println("Invalid quantity.");
+            System.out.println(mborder);
             return;
         }
         if (quantity > product.getTotalStock()) {
+            System.out.println(mborder);
             System.out.println("Insufficient stock.");
+            System.out.println(mborder);
             return;
         }
 
@@ -169,17 +189,19 @@ public abstract class Employee {
             case 1: pwd = true; break;
             case 2: senior = true; break;
             case 3: break;
-            default: System.out.println("Invalid Choice! try again..."); break;
+            default: System.out.println(mborder+"\nInvalid Choice! try again...\n"+mborder); break;
         }
 
         receipt.addTransactionDetail(quantity, product.getSellingPrice(), product);
 
         if(!inventory.recordSale(receipt)) {
+            System.out.println(mborder);
             System.out.println("Sale Failed! Not enough Stock, Expired Batch, or not Allowed ");
+            System.out.println(mborder);
             return;
         }
 
-        System.out.println("\n=== RECEIPT ===");
+        System.out.printf("%27s%n", "RECEIPT");
         System.out.println("Transaction ID: "+ receipt.getTransactionID());
         System.out.println("Transaction Type: "+ receipt.getTransactionType());
         System.out.println("Sale No.: " + receipt.getSaleNo());
@@ -199,23 +221,30 @@ public abstract class Employee {
     protected void displayProducts () {
 
         int counter = 1;
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "DISPLAY PRODUCTS");
+        System.out.println(border);
+        System.out.printf("%-4s %-6s %-26s %10s%n", "#", "ID", "NAME", "PRICE");
+        System.out.println(line);
         for(Product p : inventory.getProducts()) {
-            System.out.print("\n=================================\nPRODUCT#"+counter +
-                    "\nProduct ID: " + p.getProductID() +
-                    "\nProduct Name: " + p.getProductName() +
-                    "\nSelling Price: P" + p.getSellingPrice() + "\n");
+            System.out.printf("%-4d %-6s %-26.26s %10.2f%n", counter, p.getProductID(), p.getProductName(),p.getSellingPrice() );
             counter++;
         }
+        System.out.println(line);
 
-        System.out.print("\n=================================\n[1]View More Product Details\n[0]Exit\n=================================\nChoice:");
+        System.out.print("\t[1]View More Product Details\n\t[0]Exit\n"+border+"\nChoice:");
         int choice = in.nextInt(); in.nextLine();
+        System.out.println(border);
 
         switch (choice) {
             case 1 : displayMoreProductDetails();
             break;
             case 0 : break;
             default:
+                System.out.println(mborder);
                 System.out.println("Invalid Input!");
+                System.out.println(mborder);
                 break;
         }
 
@@ -223,25 +252,33 @@ public abstract class Employee {
 
     protected void displayMoreProductDetails() {
 
+        System.out.print("\n");
+        System.out.println(line);
         System.out.print("Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
+        System.out.println(line);
 
         Product product = inventory.findProductById(productID);
 
         if(product == null) {
+            System.out.println(mborder);
             System.out.println("Product not Found!");
+            System.out.println(mborder);
             return;
         }
 
-        System.out.println("\n=================================\n\t"+ product.getProductName()+ " Details");
-        System.out.println("\nProduct ID: "+ product.getProductID() +
-                "\nProduct Name: " + product.getProductName() +
-                "\nGeneric Name: " + product.getGenericName() +
-                "\nBrand : " + product.getBrand() +
-                "\nUnit: " + product.getUnit() +
-                "\nSelling Price: " + product.getSellingPrice() +
-                "\nReorder Level: "+ product.getReorderLevel() + "\n"
-                );
+        tag();
+        System.out.println(border);
+        System.out.println("\t\tPRODUCT DETAILS");
+        System.out.println(border);
+        System.out.printf("%-15s: %s%n",   "Product ID",     product.getProductID());
+        System.out.printf("%-15s: %s%n",   "Product Name",   product.getProductName());
+        System.out.printf("%-15s: %s%n",   "Generic Name",   product.getGenericName());
+        System.out.printf("%-15s: %s%n",   "Brand",          product.getBrand());
+        System.out.printf("%-15s: %s%n",   "Unit",           product.getUnit());
+        System.out.printf("%-15s: %.2f%n", "Selling Price",  product.getSellingPrice());
+        System.out.printf("%-15s: %d%n",   "Reorder Level",  product.getReorderLevel());
+        System.out.println(border);
     }
 
 
@@ -252,7 +289,9 @@ public abstract class Employee {
 
     protected void displayCategories() {
 
-        System.out.println("=== Display Categories ===");
+        System.out.println(border);
+        System.out.println("DISPLAY CATEGORIES");
+        System.out.println(border);
         int counter = 1;
 
         for(Category c : inventory.getCategories()) {
@@ -276,7 +315,9 @@ public abstract class Employee {
         Product product = inventory.findProductById(productID);
 
         if (product == null) {
+            System.out.println(mborder);
             System.out.println("Product not found!");
+            System.out.println(mborder);
             return;
         }
 

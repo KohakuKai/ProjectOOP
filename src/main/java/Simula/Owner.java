@@ -21,11 +21,11 @@ public class Owner extends Employee {
         while (true) {
             tag();
             System.out.println(border);
-            System.out.println("\t\t\tPHARMACY");
+            System.out.println("\t\t\t\tPHARMACY");
             System.out.println(border);
 
             System.out.print("PERSON\n"+
-                    "\t[1] Manage Employee\n" +
+                    "\t[1] Manage Employees\n" +
                     "INVENTORY\n"+
                     "\t[2] Manage Products\n" +
                     "\t[3] Manage Categories\n" +
@@ -48,7 +48,7 @@ public class Owner extends Employee {
 
                     tag();
                     System.out.println(border);
-                    System.out.println("\t\tMANAGE EMPLOYEE");
+                    System.out.printf("%27s%n", "MANAGE EMPLOYEES");
                     System.out.println(border);
                     System.out.print("\t[1] Create Employee\n" +
                             "\t[2] View Employee\n" +
@@ -86,11 +86,12 @@ public class Owner extends Employee {
 
                     tag();
                     System.out.println(border);
-                    System.out.println("\t\tMANAGE PRODUCTS");
+                    System.out.printf("%27s%n", "MANAGE PRODUCTS");
                     System.out.println(border);
                     System.out.print("\t[1]Add Product\n\t[2]Display Products\n\t[0] Exit\n"+border+"\nChoice:");
                     int choice2 = in.nextInt();
                     in.nextLine();
+                    System.out.println(border+"\n");
 
                     switch(choice2) {
 
@@ -111,11 +112,12 @@ public class Owner extends Employee {
 
                     tag();
                     System.out.println(border);
-                    System.out.println("\t\tMANAGE CATEGORIES");
+                    System.out.printf("%27s%n", "MANAGE CATEGORIES");
                     System.out.println(border);
                     System.out.println("\t[1]Add Category\t[2]Display Categories\t[0] Exit\nChoice:");
                     int choice2 = in.nextInt();
                     in.nextLine();
+                    System.out.println(border+"\n");
 
                     switch(choice2) {
 
@@ -135,7 +137,7 @@ public class Owner extends Employee {
                 case 4:{
                     tag();
                     System.out.println(border);
-                    System.out.println("\t\tMANAGE STOCKS");
+                    System.out.printf("%27s%n", "MANAGE STOCKS");
                     System.out.println(border);
                     System.out.print("\t[1]Add Batch\n" +
                             "\t[2]Add Stock(Manual Add)\n" +
@@ -145,6 +147,7 @@ public class Owner extends Employee {
                             "Choice: ");
                     int choice4 = in.nextInt();
                     in.nextLine();
+                    System.out.println(border+"\n");
 
                     switch(choice4){
                         case 1:{
@@ -227,7 +230,7 @@ public class Owner extends Employee {
     private void createEmployee() {
         tag();
         System.out.println(border);
-        System.out.println("\t\tCREATE EMPLOYEE");
+        System.out.printf("%27s%n", "CREATE EMPLOYEE");
         System.out.println(border);
         System.out.print("Enter employee name: ");
         String name = in.nextLine().trim();
@@ -266,7 +269,7 @@ public class Owner extends Employee {
     private void displayEmployees() {
         tag();
         System.out.println(border);
-        System.out.println("\t\tDISPLAY EMPLOYEE");
+        System.out.printf("%27s%n", "DISPLAY EMPLOYEES");
         System.out.println(border);
         System.out.printf("%-7s  %-15s  %-15s%n",
                 "ID NO.", "NAME", "POSITION");
@@ -285,13 +288,13 @@ public class Owner extends Employee {
     private void deleteEmployee() {
         tag();
         System.out.println(border);
-        System.out.println("\t\tDELETE EMPLOYEE");
+        System.out.printf("%27s%n", "DELETE EMPLOYEE");
         System.out.println(border);
-        System.out.printf("%-7s | %-15s | %-15s%n",
+        System.out.printf("%-7s  %-15s  %-15s%n",
                 "ID NO.", "NAME", "POSITION");
 
         for (Employee employee : manager.getEmployees()) {
-            System.out.printf("%-7s | %-15s | %-15s%n",
+            System.out.printf("%-7s  %-15s  %-15s%n",
                     employee.getEmpID(),
                     employee.getName(),
                     employee.getPosition());
@@ -348,7 +351,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.println("\t\tADD PRODUCT");
+        System.out.printf("%27s%n", "ADD PRODUCT");
         System.out.println(border);
 
         System.out.print("Product Name: ");
@@ -383,28 +386,34 @@ public class Owner extends Employee {
             return;
         }
 
-        System.out.print("\nProduct Type:\n[1]Medicine\n[2]Essentials\n[3]Exit\nChoice: "); //pagpili ng product type
-        int choice  = in.nextInt();
-        in.nextLine();
+        System.out.println(line+"\nProduct Type:\n\t[1]Medicine\n\t[2]Essentials\n\t[3]Exit");//pagpili ng product type
+        System.out.print("Choice: ");
+        int choice = in.nextInt();
+        in.nextLine(); // consume the leftover Enter
+        System.out.println(line);
 
         Product newProduct = null;
         switch(choice) {
 
             case 1 : {
 
-                System.out.print("\nMedicine Type:\n[1]Over-The-Counter\n[2]Prescription Medicine\n[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
+                System.out.print(line+"\nMedicine Type:\n\t[1]Over-The-Counter\n\t[2]Prescription Medicine\n\t[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
                 int choice2  = in.nextInt();
                 in.nextLine();
+                System.out.println(line);
+
 
                 switch(choice2) {
 
                     case 1: {
                          newProduct = new OverTheCounter(productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                        System.out.println(border);
                         break;
                     }
                     case 2: {
                          newProduct = new PrescriptionMedicine(productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
-                        break;
+                        System.out.println(border);
+                         break;
                     }
                     case 3: {
                         break;
@@ -420,6 +429,7 @@ public class Owner extends Employee {
             }
             case 2 : { //kung Essentials, diretso create na
                  newProduct = new Essentials(productName,genericName,brand,unit,sellingPrice,reorderLevel,category);
+                System.out.println(border);
                 break;
             }
             case 3 : {
@@ -435,7 +445,7 @@ public class Owner extends Employee {
 
         if(newProduct!= null) {
             if (manager.getInventory().addProduct(this, newProduct)) {
-                System.out.println(mborder);
+                System.out.println("\n"+mborder);
                 System.out.println("Product Added Successfully");
                 System.out.println(mborder);
             } else {
@@ -452,9 +462,9 @@ public class Owner extends Employee {
     private void addCategory() {
 
         tag();
-        System.out.println("=================================");
-        System.out.println("\t\tADD CATEGORY");
-        System.out.println("=================================");
+        System.out.println(border);
+        System.out.printf("%27s%n", "ADD CATEGORY");
+        System.out.println(border);
 
         System.out.print("Category Name: ");
         String categoryName = in.nextLine().trim();
@@ -463,21 +473,21 @@ public class Owner extends Employee {
         String description = in.nextLine().trim();
 
         if( categoryName.isEmpty()) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Category ID and Category Name are Required!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
         Category newCategory = new Category(categoryName,description); //dito gumawa ng bagong object
 
         if(manager.getInventory().addCategory(this,newCategory)) { //dito pinasok yung object(eto yung inventory class)
-            System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + "\nCategory Added Successfully!" +"\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("\n" + mborder + "\nCategory Added Successfully!" +"\n"+mborder);
         }
         else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Unable to Add the Category!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
         }
 
     }
@@ -492,9 +502,9 @@ public class Owner extends Employee {
         Product product = manager.getInventory().findProductById(ProductID);
 
         if(product == null){
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Unable to find product!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
@@ -510,22 +520,22 @@ public class Owner extends Employee {
         int dayExpiration = in.nextInt(); in.nextLine();
 
         if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.print("Invalid Date");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
         Batch addbatch = new Batch( quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
         if(product.addBatch(addbatch)) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Batch added successfully!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
         }
         else{
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Failed to add new batch");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
         }
     }
 
@@ -537,9 +547,9 @@ public class Owner extends Employee {
                 .findProductById(productID);
 
         if (product == null) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Product not found!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
@@ -549,9 +559,9 @@ public class Owner extends Employee {
         Batch batch = product.findBatchById(batchID);
 
         if (batch == null) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Batch not found!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
@@ -560,14 +570,14 @@ public class Owner extends Employee {
         in.nextLine();
 
         if(batch.increaseQuantity(amount)) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("Stock Increased Succesfully!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
+            System.out.println("Stock Increased Successfully!");
+            System.out.println(mborder);
         }
         else {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Invalid Amount.");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
         }
     }
 
@@ -579,9 +589,9 @@ public class Owner extends Employee {
                 .findProductById(productID);
 
         if (product == null) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Product not found!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
@@ -591,9 +601,9 @@ public class Owner extends Employee {
         Batch batch = product.findBatchById(batchID);
 
         if (batch == null) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Batch not found!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             return;
         }
 
@@ -602,14 +612,14 @@ public class Owner extends Employee {
         in.nextLine();
 
         if (batch.reduceQuantity(amount)) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
             System.out.println("Stock Reduced Succesfully!");
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
         }
         else{
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Invalid Amount.");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(mborder);
+            System.out.println("Invalid Amount.");
+            System.out.println(mborder);
         }
     }
 
@@ -631,7 +641,9 @@ public class Owner extends Employee {
             Product product = inventory.findProductById(productId);
 
             if(product ==null ) {
+                System.out.println(mborder);
                 System.out.println("Product not Found!");
+                System.out.println(mborder);
                 continue;
             }
 
@@ -651,53 +663,63 @@ public class Owner extends Employee {
             int day = in.nextInt(); in.nextLine();
 
             if(quantity<=0) {
+                System.out.println(mborder);
                 System.out.println("Invalid Quantity");
+                System.out.println(mborder);
                 continue;
             }
 
             if(month<1 || month>12 || day <1 || day > 31) {
+                System.out.println(mborder);
                 System.out.println("Invalid Date");
+                System.out.println(mborder);
                 continue;
             }
 
             LocalDate expiration = LocalDate.of(year,month,day);
 
             if(purchase.addPurchaseLine(quantity,unitPurchaseCost,product,expiration)) { //pagg add eto sa TransactionDetail ArrayList
-                System.out.println("\nAdded to Checkout!\n");
+                System.out.println("\n" + mborder + "Added to Checkout!" + mborder +"\n");
             }
             else {
+                System.out.println(mborder);
                 System.out.println("Input Failed! Invalid Quantity, Cost, or Expiration Date");
+                System.out.println(mborder);
             }
 
-            System.out.println("=================================");
+            System.out.println(border);
 
         }
 
         if(purchase.getTransactionDetails().isEmpty()) { //kapag 0 agad pinindot at walang na add
+            System.out.println(mborder);
             System.out.println("No Products Added");
+            System.out.println(mborder);
             return;
         }
 
         if(!inventory.recordPurchase(purchase)) { //pagrecord na ng purchase, pag d nag go through mag eerror
+            System.out.println(mborder);
             System.out.println("Purchased Failed");
+            System.out.println(mborder);
             return;
         }
 
         ArrayList <TransactionDetail> lines  = purchase.getTransactionDetails(); //para lang to sa pagn print ng receipt
         ArrayList<LocalDate> expirationDates = purchase.getExpirationDates(); //para lang to sa pag print ng receipt
 
-        System.out.println("\n=== RECEIPT ===");
+        System.out.printf("%27s%n", "RECEIPT");
         System.out.println("Transaction ID: "+ purchase.getTransactionID());
         System.out.println("Transaction Type: "+ purchase.getTransactionType());
         System.out.println("Purchase No.: " + purchase.getPurchaseOrderNo());
 
-        System.out.println("\n=================================");
+        System.out.println("\n" + border);
         for (int i=0; i<lines.size();i++) { //etong for loop nato para lang sa individual products, pinapakita yung Product name | quantity x price = subtotal | expirationDate
             TransactionDetail line = lines.get(i);
             System.out.println( line.getProduct().getProductName() + " | " + line.getQuantity() + " x " + line.getUnitPrice() + " = " + line.getSubTotal() + " | Exp:" + expirationDates.get(i) +"");
         }
 
-        System.out.println("=================================\nSubtotal: "+ purchase.getSubTotalPrice() +
+        System.out.println(mborder+"\nSubtotal: "+ purchase.getSubTotalPrice() +
                 "\nVAT: "+ purchase.getVATAmount()+
                 "\nTotal(with VAT): "+ purchase.getTotalWithVAT() + "\n");
 

@@ -25,10 +25,10 @@ public class StartUp {
         while (true) {
             System.out.println("\n=================================");
             System.out.println("\t\tPHARMACY SYSTEM");
-            System.out.println("=================================\n");
+            System.out.println("=================================");
             System.out.println("\t[1] Log In");
             System.out.println("\t[2] Exit");
-            System.out.println("\n=================================");
+            System.out.println("=================================");
             System.out.print("Type here: ");
             choice = in.nextInt();
             in.nextLine(); // nawawala name pag wala to
