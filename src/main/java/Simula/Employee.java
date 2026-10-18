@@ -289,19 +289,20 @@ public abstract class Employee {
 
     protected void displayCategories() {
 
-        System.out.println(border);
-        System.out.println("DISPLAY CATEGORIES");
-        System.out.println(border);
         int counter = 1;
-
+        tag();
+        System.out.println(border);
+        System.out.println("\t\t\tDISPLAY CATEGORIES");
+        System.out.println(border);
+        System.out.printf("%-3s %-6s %-13s %-21.25s%n", "#", "ID", "NAME", "DESCRIPTION");
+        System.out.println(line);
         for(Category c : inventory.getCategories()) {
-            System.out.println("\nCATEGORY#"+counter+
-                    "\nCategory ID: "+ c.getCategory_ID() +
-                    "\nCategory Name: "+ c.getCategory_Name()+
-                    "\nCategory Description: "+ c.getDescription());
+            System.out.printf("%-3d %-6s %-13.15s %-21.25s%n", counter, c.getCategory_ID(),
+            c.getCategory_Name(), c.getDescription());
             counter++;
-
         }
+        System.out.println(line);
+        System.out.println(border);
 
     }
 

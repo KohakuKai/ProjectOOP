@@ -114,7 +114,7 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.printf("%27s%n", "MANAGE CATEGORIES");
                     System.out.println(border);
-                    System.out.println("\t[1]Add Category\t[2]Display Categories\t[0] Exit\nChoice:");
+                    System.out.print("\t[1]Add Category\n\t[2]Display Categories\n\t[0] Exit\n"+border+"\nChoice:");
                     int choice2 = in.nextInt();
                     in.nextLine();
                     System.out.println(border+"\n");
@@ -143,8 +143,8 @@ public class Owner extends Employee {
                             "\t[2]Add Stock(Manual Add)\n" +
                             "\t[3]Reduce Stock(Manual Remove)\n" +
                             "\t[4]View a Product's Batches\n" +
-                            "\t[0] Exit\n"+
-                            "Choice: ");
+                            "\t[0] Exit\n"+ border +
+                            "\nChoice: ");
                     int choice4 = in.nextInt();
                     in.nextLine();
                     System.out.println(border+"\n");
@@ -471,9 +471,10 @@ public class Owner extends Employee {
 
         System.out.print("Category Description: ");
         String description = in.nextLine().trim();
+        System.out.println(border);
 
         if( categoryName.isEmpty()) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Category ID and Category Name are Required!");
             System.out.println(mborder);
             return;
@@ -495,6 +496,10 @@ public class Owner extends Employee {
 
     private void addBatch(){
 
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "ADD BATCH");
+        System.out.println(border);
         System.out.print("Enter Product ID: ");
         String ProductID = in.nextLine().trim().toUpperCase();
 
@@ -502,6 +507,7 @@ public class Owner extends Employee {
         Product product = manager.getInventory().findProductById(ProductID);
 
         if(product == null){
+            System.out.println(border +"\n");
             System.out.println(mborder);
             System.out.println("Unable to find product!");
             System.out.println(mborder);
@@ -518,28 +524,33 @@ public class Owner extends Employee {
         int monthExpiration = in.nextInt(); in.nextLine();
         System.out.print("Enter day of expiration: ");
         int dayExpiration = in.nextInt(); in.nextLine();
+        System.out.println(border);
 
         if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
-            System.out.println(mborder);
-            System.out.print("Invalid Date");
+            System.out.println("\n"+ mborder);
+            System.out.println("Invalid Date");
             System.out.println(mborder);
             return;
         }
 
         Batch addbatch = new Batch( quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
         if(product.addBatch(addbatch)) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Batch added successfully!");
             System.out.println(mborder);
         }
         else{
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Failed to add new batch");
             System.out.println(mborder);
         }
     }
 
     private void addSupply() {
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "ADD STOCK");
+        System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
 
@@ -547,7 +558,7 @@ public class Owner extends Employee {
                 .findProductById(productID);
 
         if (product == null) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Product not found!");
             System.out.println(mborder);
             return;
@@ -559,7 +570,7 @@ public class Owner extends Employee {
         Batch batch = product.findBatchById(batchID);
 
         if (batch == null) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Batch not found!");
             System.out.println(mborder);
             return;
@@ -568,28 +579,34 @@ public class Owner extends Employee {
         System.out.print("Enter quantity to add: ");
         int amount = in.nextInt();
         in.nextLine();
+        System.out.println(border);
 
         if(batch.increaseQuantity(amount)) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Stock Increased Successfully!");
             System.out.println(mborder);
         }
         else {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Invalid Amount.");
             System.out.println(mborder);
         }
     }
 
     private void reduceSupply() {
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "REDUCE STOCK");
+        System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
+        System.out.println(border);
 
         Product product = manager.getInventory()
                 .findProductById(productID);
 
         if (product == null) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Product not found!");
             System.out.println(mborder);
             return;
@@ -601,7 +618,7 @@ public class Owner extends Employee {
         Batch batch = product.findBatchById(batchID);
 
         if (batch == null) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Batch not found!");
             System.out.println(mborder);
             return;
@@ -612,12 +629,12 @@ public class Owner extends Employee {
         in.nextLine();
 
         if (batch.reduceQuantity(amount)) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Stock Reduced Succesfully!");
             System.out.println(mborder);
         }
         else{
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Invalid Amount.");
             System.out.println(mborder);
         }

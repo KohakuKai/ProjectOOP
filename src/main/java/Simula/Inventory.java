@@ -151,7 +151,7 @@ public class Inventory {
 
     private void defaultCategories() { //dummy values lang para sa testing
         categories.add(new Category("Vitamins","Makes the body stronger"));
-        categories.add(new Category("Antibiotics","Medicine for bacterial infections"));
+        categories.add(new Category("Antibiotics","Kills harmful bacteria"));
         categories.add(new Category("Personal Care","Hygiene and Care Products"));
         categories.add(new Category("Pain Reliever","Alleviates Pain"));
         categories.add(new Category("Antipyretic","Fever Reducer"));
