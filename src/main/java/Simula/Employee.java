@@ -2,6 +2,7 @@ package Simula;
 
 import jdk.swing.interop.SwingInterOpUtils;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public abstract class Employee {
@@ -380,11 +381,24 @@ public abstract class Employee {
             }
         }
 
-        System.out.println(line);
-        System.out.println("Products with expired stock: " + expiredProducts);
-        System.out.println("Low stock products: " + lowStockProducts);
-        System.out.println(line);
+        if (expiredProducts>0 && lowStockProducts>0){
+            System.out.println(line);
+            System.out.printf("%27s%n", "!ALERTS!");
+            System.out.print("[EXPIRED] "+expiredProducts+" items");
+            System.out.printf("%25s%n", "[LOW] "+lowStockProducts+" items");
+            System.out.println(line);
+        }
+        else if (expiredProducts>0 && lowStockProducts==0) {
+            System.out.println(line);
+            System.out.printf("%27s%n", "!ALERTS!");
+            System.out.println("[EXPIRED] "+expiredProducts+" items");
+            System.out.println(line);
+        }
+        else if (expiredProducts==0 && lowStockProducts>0){
+            System.out.println(line);
+            System.out.printf("%27s%n", "!ALERTS!");
+            System.out.println("[LOW] "+lowStockProducts+" items");
+            System.out.println(line);
+        }
     }
-
-
 }
