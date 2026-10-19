@@ -305,7 +305,8 @@ public class Owner extends Employee {
 
         System.out.print("Enter employee ID to delete: ");
         String empID = in.nextLine().trim();
-        System.out.println("\n");
+        System.out.println(border);
+        System.out.println();
 
         for (Employee employee : manager.getEmployees()) {
             if (employee.getEmpID().equals(empID)) {
@@ -418,6 +419,10 @@ public class Owner extends Employee {
                          break;
                     }
                     case 3: {
+                        System.out.println(border);
+                        System.out.println("\n" +mborder);
+                        System.out.println("Task Cancelled!");
+                        System.out.println(mborder);
                         break;
                     }
                     default: {
@@ -435,6 +440,10 @@ public class Owner extends Employee {
                 break;
             }
             case 3 : {
+                System.out.println(border);
+                System.out.println("\n" +mborder);
+                System.out.println("Task Cancelled!");
+                System.out.println(mborder);
                 break;
             }
             default: {
@@ -560,6 +569,7 @@ public class Owner extends Employee {
                 .findProductById(productID);
 
         if (product == null) {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Product not found!");
             System.out.println(mborder);
@@ -572,6 +582,7 @@ public class Owner extends Employee {
         Batch batch = product.findBatchById(batchID);
 
         if (batch == null) {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Batch not found!");
             System.out.println(mborder);
@@ -584,11 +595,13 @@ public class Owner extends Employee {
         System.out.println(border);
 
         if(batch.increaseQuantity(amount)) {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Stock Increased Successfully!");
             System.out.println(mborder);
         }
         else {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Invalid Amount.");
             System.out.println(mborder);
@@ -602,12 +615,12 @@ public class Owner extends Employee {
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
-        System.out.println(border);
 
         Product product = manager.getInventory()
                 .findProductById(productID);
 
         if (product == null) {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Product not found!");
             System.out.println(mborder);
@@ -620,6 +633,7 @@ public class Owner extends Employee {
         Batch batch = product.findBatchById(batchID);
 
         if (batch == null) {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Batch not found!");
             System.out.println(mborder);
@@ -631,11 +645,13 @@ public class Owner extends Employee {
         in.nextLine();
 
         if (batch.reduceQuantity(amount)) {
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Stock Reduced Succesfully!");
             System.out.println(mborder);
         }
         else{
+            System.out.println(border);
             System.out.println("\n"+mborder);
             System.out.println("Invalid Amount.");
             System.out.println(mborder);

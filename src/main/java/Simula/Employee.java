@@ -1,4 +1,4 @@
-package Simula;
+package Simula;import java.time.LocalDateTime;
 
 import jdk.swing.interop.SwingInterOpUtils;
 
@@ -136,6 +136,7 @@ public abstract class Employee {
     protected void sellProduct() {
         Sale receipt = new Sale(this, inventory);
 
+        tag();
         System.out.println("\n" + border);
         System.out.printf("%27s%n", "SELL PRODUCT");
         System.out.println(border);
@@ -145,6 +146,7 @@ public abstract class Employee {
         Product product = inventory.findProductById(productID);
 
         if (product == null) {
+            System.out.println(border+"\n");
             System.out.println(mborder);
             System.out.println("Product not found.");
             System.out.println(mborder);
@@ -152,7 +154,7 @@ public abstract class Employee {
         }
 
         if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
-            System.out.println(mborder + "\nOnly the Owner or a Pharmacist can sell prescription medicine." + mborder);
+            System.out.println(border + "\n\n"+mborder + "\nOnly the Owner or a Pharmacist can sell prescription medicine." + mborder);
             return;
         }
 
@@ -164,12 +166,14 @@ public abstract class Employee {
         int quantity = in.nextInt();
         in.nextLine();
         if (quantity <= 0) {
+            System.out.println(border+"\n");
             System.out.println(mborder);
             System.out.println("Invalid quantity.");
             System.out.println(mborder);
             return;
         }
         if (quantity > product.getTotalStock()) {
+            System.out.println(border+"\n");
             System.out.println(mborder);
             System.out.println("Insufficient stock.");
             System.out.println(mborder);
@@ -180,9 +184,9 @@ public abstract class Employee {
         boolean pwd = false;
         boolean senior = false;
         System.out.print("\nCustomer Discount:\n" +
-                "[1] PWD\n" +
-                "[2] Senior\n" +
-                "[3] No Discount\n" +
+                "\t[1] PWD\n" +
+                "\t[2] Senior\n" +
+                "\t[3] No Discount\n" +
                 "Enter Input: ");
         int customerDiscount = in.nextInt();
         in.nextLine();
@@ -190,26 +194,33 @@ public abstract class Employee {
             case 1: pwd = true; break;
             case 2: senior = true; break;
             case 3: break;
-            default: System.out.println(mborder+"\nInvalid Choice! try again...\n"+mborder); break;
+            default: System.out.println(border + "\n\n"+mborder+"\nInvalid Choice! try again...\n"+mborder); break;
         }
 
         receipt.addTransactionDetail(quantity, product.getSellingPrice(), product);
 
         if(!inventory.recordSale(receipt)) {
+            System.out.println(border+"\n");
             System.out.println(mborder);
             System.out.println("Sale Failed! Not enough Stock, Expired Batch, or not Allowed ");
             System.out.println(mborder);
             return;
         }
 
+        System.out.println(border);
         System.out.printf("%27s%n", "RECEIPT");
+        System.out.println(border);
         System.out.println("Transaction ID: "+ receipt.getTransactionID());
+        System.out.println("Date:           " + LocalDateTime.now());
+        System.out.println("Cashier:        " + getName()+ " (" +getPosition() + ")");
         System.out.println("Transaction Type: "+ receipt.getTransactionType());
         System.out.println("Sale No.: " + receipt.getSaleNo());
+        System.out.println(line);
         System.out.println("Product: " + product.getProductName());
         System.out.println("Quantity: " + quantity);
         System.out.println("Unit Price: " + product.getSellingPrice());
         System.out.println("Subtotal: " + receipt.getSubTotalPrice());
+        System.out.println(line);
         if(!pwd && !senior)System.out.println("VAT: "+ receipt.getVATAmount());
         if(!pwd && !senior)System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
         if(pwd) System.out.println("Total(with PWD Discount): " + receipt.getTotalWithPwdDiscount());
@@ -272,13 +283,7 @@ public abstract class Employee {
         System.out.println(border);
         System.out.println("\t\tPRODUCT DETAILS");
         System.out.println(border);
-        System.out.printf("%-15s: %s%n",   "Product ID",     product.getProductID());
-        System.out.printf("%-15s: %s%n",   "Product Name",   product.getProductName());
-        System.out.printf("%-15s: %s%n",   "Generic Name",   product.getGenericName());
-        System.out.printf("%-15s: %s%n",   "Brand",          product.getBrand());
-        System.out.printf("%-15s: %s%n",   "Unit",           product.getUnit());
-        System.out.printf("%-15s: %.2f%n", "Selling Price",  product.getSellingPrice());
-        System.out.printf("%-15s: %d%n",   "Reorder Level",  product.getReorderLevel());
+        product.getInfo();
         System.out.println(border);
     }
 
@@ -311,6 +316,10 @@ public abstract class Employee {
     //BATCH METHODS
 
     protected void viewProductBatchDetails() {
+        tag();
+        System.out.println(border);
+        System.out.println("\t\t\tPRODUCT BATCHES");
+        System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
 
@@ -323,11 +332,16 @@ public abstract class Employee {
             return;
         }
 
-        System.out.println("\n=== Product Details ===");
+        System.out.println(line);
+        System.out.println("\t\t\tPRODUCT DETAILS");
         product.getInfo();
+        System.out.printf("%-15s: %d%n", "Total Stock: ", product.getTotalStock());
 
-        System.out.println("\n=== Batch Details ===");
+        System.out.println(line);
+        System.out.println("\t\t\tBATCH DETAILS");
         product.checkExpiration();
+        System.out.println(line);
+        System.out.println(border);
     }
 
 

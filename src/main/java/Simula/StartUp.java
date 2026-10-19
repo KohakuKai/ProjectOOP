@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 public class StartUp {
 
+    String line = "-".repeat(50);
+    String border = "=".repeat(50);
+    String mborder = "~".repeat(50);
+
     private ArrayList<Employee> registeredEmployees = new ArrayList<>();
     private Scanner in = new Scanner(System.in);
 
@@ -23,16 +27,16 @@ public class StartUp {
     public void start() {
         int choice = 0;
         while (true) {
-            System.out.println("\n=================================");
+            System.out.println("\n" + border);
             System.out.println("\t\tPHARMACY SYSTEM");
-            System.out.println("=================================");
+            System.out.println(border);
             System.out.println("\t[1] Log In");
             System.out.println("\t[2] Exit");
-            System.out.println("=================================");
+            System.out.println(border);
             System.out.print("Type here: ");
             choice = in.nextInt();
             in.nextLine(); // nawawala name pag wala to
-            System.out.println("=================================\n");
+            System.out.println(border+"\n");
 
 
             switch (choice) {

@@ -117,15 +117,14 @@ public abstract class Product {
 
     //get info method
     public void getInfo(){
-        System.out.println("Product ID: " + productID);
-        System.out.println("Product Name: " + productName);
-        System.out.println("Generic Name: " + genericName);
-        System.out.println("Brand: " + brand);
-        System.out.println("Unit: " + unit);
-        System.out.println("Selling Price: " + sellingPrice);
-        System.out.println("Reorder Level: " + reorderLevel);
-        System.out.println("Category: " + category.getCategory_Name());
-        System.out.println("Total Stock: " + getTotalStock());
+        System.out.printf("%-15s: %s%n",   "Product ID", productID);
+        System.out.printf("%-15s: %s%n",   "Product Name", productName);
+        System.out.printf("%-15s: %s%n",   "Generic Name", genericName);
+        System.out.printf("%-15s: %s%n",   "Brand", brand);
+        System.out.printf("%-15s: %s%n",   "Unit", unit);
+        System.out.printf("%-15s: %.2f%n", "Selling Price", sellingPrice);
+        System.out.printf("%-15s: %d%n",   "Reorder Level", reorderLevel);
+        System.out.printf("%-15s: %s%n", "Category: ", category.getCategory_Name());
     }
 
     public void checkExpiration(){
