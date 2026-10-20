@@ -2,7 +2,6 @@ package Simula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Owner extends Employee {
 

@@ -29,8 +29,6 @@ public class Purchase extends Transaction{
 
 
 
-
-
     @Override
     public String getTransactionType() {
         return "Purchase";

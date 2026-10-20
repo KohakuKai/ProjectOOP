@@ -143,9 +143,15 @@ public class Inventory {
 
     private void defaultProducts() {
 
-        products.add(new OverTheCounter("Biogesic","Paracetamol","Unilab","Tablet",7,50,findCategoryById("C005")));
-        products.add(new OverTheCounter("Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",50,50,findCategoryById("C001")));
+        Product biogesic =new OverTheCounter("Biogesic","Paracetamol","Unilab","Tablet",7,50,findCategoryById("C005"));
+        Product vitaminC = new OverTheCounter("Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",50,50,findCategoryById("C001"));
 
+        biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));
+        vitaminC.addBatch(new Batch(200,vitaminC,LocalDate.parse("2028-09-11")));
+        biogesic.addBatch(new Batch(300,biogesic,LocalDate.parse("2026-11-11")));
+
+        products.add(biogesic);
+        products.add(vitaminC);
 
     }
 
@@ -155,6 +161,22 @@ public class Inventory {
         categories.add(new Category("Personal Care","Hygiene and Care Products"));
         categories.add(new Category("Pain Reliever","Alleviates Pain"));
         categories.add(new Category("Antipyretic","Fever Reducer"));
+
+    }
+
+    public void defaultTransactions(Employee owner) { //sa start up na constructor to ilalagay, kasi kailangan na malaman na owner ang gumamit
+        Product biogesic = products.get(0);
+        Product vitaminC = products.get(1);
+
+        Purchase purchase = new Purchase(owner,this); //transaction1 to
+        purchase.addPurchaseLine(100,3.5,biogesic,LocalDate.parse("2026-10-10"));
+        purchase.addPurchaseLine(200,3,vitaminC,LocalDate.parse("2028-09-11"));
+        recordPurchase(purchase);
+
+        purchase = new Purchase(owner,this); //transactoion2 to
+        purchase.addPurchaseLine(300,3.5,biogesic,LocalDate.parse("2026-11-11"));
+        recordPurchase(purchase);
+
 
     }
 

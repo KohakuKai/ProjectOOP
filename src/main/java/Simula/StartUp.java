@@ -13,9 +13,9 @@ public class StartUp {
     private Scanner in = new Scanner(System.in);
 
     public StartUp() { // dito lalagay yung owner
-        registeredEmployees.add(
-                new Owner("ownerName", this, "ownerPassword", "ownerUsername", inventory)
-        );
+        Owner owner = new Owner("ownerName", this, "ownerPassword", "ownerUsername", inventory);
+        registeredEmployees.add(owner);
+        inventory.defaultTransactions(owner); // para lang to sa predefined na Transcation History
     }
 
     private final Inventory inventory = new Inventory();
