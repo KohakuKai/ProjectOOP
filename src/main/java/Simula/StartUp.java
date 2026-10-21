@@ -34,8 +34,7 @@ public class StartUp {
             System.out.println("\t[2] Exit");
             System.out.println(border);
             System.out.print("Type here: ");
-            choice = in.nextInt();
-            in.nextLine(); // nawawala name pag wala to
+            choice = Employee.userIntInput();//kinuha ko nalang yung nasa employee kaysa gumawa ulit method
             System.out.println(border+"\n");
 
 

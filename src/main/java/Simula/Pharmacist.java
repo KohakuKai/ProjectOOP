@@ -1,7 +1,6 @@
 package Simula;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Pharmacist extends Employee {
 
@@ -32,8 +31,7 @@ public class Pharmacist extends Employee {
                     + "\t[0] Logout\n"
                     + border + "\nChoice: ");
 
-            int choice = in.nextInt();
-            in.nextLine();
+            int choice = userIntInput();
 
             switch (choice) {
                 case 1:

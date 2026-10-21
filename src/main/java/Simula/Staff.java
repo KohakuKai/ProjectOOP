@@ -31,8 +31,7 @@ public class Staff extends Employee {
                     + "\t[0] Logout\n"
                     + border + "\nChoice: ");
 
-            int choice = in.nextInt();
-            in.nextLine();
+            int choice = userIntInput();
 
             switch (choice) {
                 case 1:

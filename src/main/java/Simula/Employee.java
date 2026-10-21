@@ -1,8 +1,10 @@
 package Simula;import java.time.LocalDateTime;
 
 import jdk.swing.interop.SwingInterOpUtils;
-
 import java.sql.SQLOutput;
+
+//tatanggalin ba tong dalawa sa taas?
+
 import java.util.Scanner;
 
 public abstract class Employee {
@@ -90,6 +92,18 @@ public abstract class Employee {
         String junk = in.nextLine();
     }
 
+    //eto gamitin sa scanner para hindi nagcracrash
+    public static int userIntInput(){
+        while(!in.hasNextInt()){
+            System.out.print("Invalid Input!\n" +
+                    "Please Enter a Number: ");
+            in.nextLine();
+        }
+        int input = in.nextInt();
+        in.nextLine();
+        return input;
+    }
+
     //ACCOUNT METHODS --------------------------------------------------------------
 
     protected void changePassword() {
@@ -163,8 +177,7 @@ public abstract class Employee {
         System.out.println("Available Stock: " + product.getTotalStock());
 
         System.out.print("Enter Quantity: ");
-        int quantity = in.nextInt();
-        in.nextLine();
+        int quantity = userIntInput();
         if (quantity <= 0) {
             System.out.println(border+"\n");
             System.out.println(mborder);
@@ -188,8 +201,7 @@ public abstract class Employee {
                 "\t[2] Senior\n" +
                 "\t[3] No Discount\n" +
                 "Enter Input: ");
-        int customerDiscount = in.nextInt();
-        in.nextLine();
+        int customerDiscount = userIntInput();
         switch(customerDiscount){
             case 1: pwd = true; break;
             case 2: senior = true; break;
@@ -246,7 +258,7 @@ public abstract class Employee {
         System.out.println(line);
 
         System.out.print("\t[1]View More Product Details\n\t[0]Exit\n"+border+"\nChoice:");
-        int choice = in.nextInt(); in.nextLine();
+        int choice = userIntInput();
         System.out.println(border);
 
         switch (choice) {

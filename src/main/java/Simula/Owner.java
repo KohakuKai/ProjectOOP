@@ -40,8 +40,7 @@ public class Owner extends Employee {
                     "\t[9] Logout\n" +
                     border + "\n" +
                     "Choice: ");
-            int choice = in.nextInt();
-            in.nextLine(); // consume the leftover Enter
+            int choice = userIntInput();
             System.out.println(border+"\n");
 
             switch (choice) {
@@ -57,8 +56,7 @@ public class Owner extends Employee {
                             "\t[0] Exit\n" +
                             border+ "\n" +
                             "Choice: ");
-                    int temp = in.nextInt();
-                    in.nextLine();
+                    int temp = userIntInput();
                     System.out.println(border+"\n");
                     switch (temp) {
                         case 1: {
@@ -79,6 +77,13 @@ public class Owner extends Employee {
                         case 0: {
                             break;
                         }
+                        default:{
+                            System.out.println(mborder);
+                            System.out.println("Invalid input. Try Again");
+                            System.out.println(mborder);
+                            pause();
+                            break;
+                        }
                     }
                     break;
                 }
@@ -90,8 +95,7 @@ public class Owner extends Employee {
                     System.out.printf("%27s%n", "MANAGE PRODUCTS");
                     System.out.println(border);
                     System.out.print("\t[1]Add Product\n\t[2]Display Products\n\t[0] Exit\n"+border+"\nChoice:");
-                    int choice2 = in.nextInt();
-                    in.nextLine();
+                    int choice2 = userIntInput();
                     System.out.println(border+"\n");
 
                     switch(choice2) {
@@ -103,6 +107,7 @@ public class Owner extends Employee {
                             System.out.println(mborder);
                             System.out.println("Invalid input. Try Again");
                             System.out.println(mborder);
+                            pause();
                             break;
                         }
                     }
@@ -116,8 +121,7 @@ public class Owner extends Employee {
                     System.out.printf("%27s%n", "MANAGE CATEGORIES");
                     System.out.println(border);
                     System.out.print("\t[1]Add Category\n\t[2]Display Categories\n\t[0] Exit\n"+border+"\nChoice:");
-                    int choice2 = in.nextInt();
-                    in.nextLine();
+                    int choice2 = userIntInput();
                     System.out.println(border+"\n");
 
                     switch(choice2) {
@@ -129,6 +133,7 @@ public class Owner extends Employee {
                             System.out.println(mborder);
                             System.out.println("Invalid input. Try Again");
                             System.out.println(mborder);
+                            pause();
                             break;
                         }
                     }
@@ -146,8 +151,7 @@ public class Owner extends Employee {
                             "\t[4]View a Product's Batches\n" +
                             "\t[0] Exit\n"+ border +
                             "\nChoice: ");
-                    int choice4 = in.nextInt();
-                    in.nextLine();
+                    int choice4 = userIntInput();
                     System.out.println(border+"\n");
 
                     switch(choice4){
@@ -180,6 +184,7 @@ public class Owner extends Employee {
                             System.out.println(mborder);
                             System.out.println("Invalid input. Try Again");
                             System.out.println(mborder);
+                            pause();
                             break;
                         }
 
@@ -221,6 +226,7 @@ public class Owner extends Employee {
                     System.out.println(mborder);
                     System.out.println("Invalid choice. Please try again.");
                     System.out.println(mborder);
+                    pause();
                     break;
                 }
             }
@@ -248,8 +254,7 @@ public class Owner extends Employee {
         System.out.println("\t[3] Staff");
         System.out.println(border);
         System.out.print("Choice: ");
-        int choice = in.nextInt();
-        in.nextLine(); // consume the leftover Enter
+        int choice = userIntInput();
         System.out.println(border+"\n");
 
         Employee newEmployee = createUserByChoice(choice, name, username, password);
@@ -373,8 +378,7 @@ public class Owner extends Employee {
         in.nextLine();
 
         System.out.print("Reorder Level: ");
-        int reorderLevel = in.nextInt();
-        in.nextLine();
+        int reorderLevel = userIntInput();
 
         System.out.print("Category ID: ");
         String categoryID = in.nextLine().trim().toUpperCase();
@@ -390,8 +394,7 @@ public class Owner extends Employee {
 
         System.out.println(line+"\nProduct Type:\n\t[1]Medicine\n\t[2]Essentials\n\t[3]Exit");//pagpili ng product type
         System.out.print("Choice: ");
-        int choice = in.nextInt();
-        in.nextLine(); // consume the leftover Enter
+        int choice = userIntInput();
         System.out.println(line);
 
         Product newProduct = null;
@@ -400,8 +403,7 @@ public class Owner extends Employee {
             case 1 : {
 
                 System.out.print(line+"\nMedicine Type:\n\t[1]Over-The-Counter\n\t[2]Prescription Medicine\n\t[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
-                int choice2  = in.nextInt();
-                in.nextLine();
+                int choice2  = userIntInput();
                 System.out.println(line);
 
 
@@ -527,13 +529,13 @@ public class Owner extends Employee {
         //pag initialize ng variables
 
         System.out.print("Enter quantity: ");
-        int quantity = in.nextInt(); in.nextLine();
+        int quantity = userIntInput();
         System.out.print("Enter year of expiration: ");
-        int yearExpiration = in.nextInt(); in.nextLine();
+        int yearExpiration = userIntInput();
         System.out.print("Enter month of expiration: ");
-        int monthExpiration = in.nextInt(); in.nextLine();
+        int monthExpiration = userIntInput();
         System.out.print("Enter day of expiration: ");
-        int dayExpiration = in.nextInt(); in.nextLine();
+        int dayExpiration = userIntInput();
         System.out.println(border);
 
         if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
@@ -589,8 +591,7 @@ public class Owner extends Employee {
         }
 
         System.out.print("Enter quantity to add: ");
-        int amount = in.nextInt();
-        in.nextLine();
+        int amount = userIntInput();
         System.out.println(border);
 
         if(batch.increaseQuantity(amount)) {
@@ -640,8 +641,7 @@ public class Owner extends Employee {
         }
 
         System.out.print("Enter quantity to reduce: ");
-        int amount = in.nextInt();
-        in.nextLine();
+        int amount = userIntInput();
 
         if (batch.reduceQuantity(amount)) {
             System.out.println(border);
@@ -682,19 +682,20 @@ public class Owner extends Employee {
             }
 
             System.out.print("Quantity: ");
-            int quantity = in.nextInt(); in.nextLine();
+            int quantity = userIntInput();
 
             System.out.print("Unit Purchase Cost: ");
-            double unitPurchaseCost = in.nextDouble(); in.nextLine();
+            double unitPurchaseCost = in.nextDouble();
+            in.nextLine();
 
             System.out.print("Expiration Year: ");
-            int year = in.nextInt(); in.nextLine();
+            int year = userIntInput();
 
             System.out.print("Expiration Month: ");
-            int month = in.nextInt(); in.nextLine();
+            int month = userIntInput();
 
             System.out.print("Expiration day: ");
-            int day = in.nextInt(); in.nextLine();
+            int day = userIntInput();
 
             if(quantity<=0) {
                 System.out.println(mborder);
