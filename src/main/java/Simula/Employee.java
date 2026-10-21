@@ -104,6 +104,19 @@ public abstract class Employee {
         return input;
     }
 
+    //pang double
+    public static double userDoubleInput(){
+        while(!in.hasNextDouble()){
+            System.out.print("Invalid Input!\n" +
+                    "Please Enter a Number: ");
+            in.nextLine();
+        }
+
+        double input = in.nextDouble();
+        in.nextLine();
+        return input;
+    }
+
     //ACCOUNT METHODS --------------------------------------------------------------
 
     protected void changePassword() {

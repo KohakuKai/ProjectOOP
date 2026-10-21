@@ -384,8 +384,7 @@ public class Owner extends Employee {
         String unit = in.nextLine().trim();
 
         System.out.print("Selling Price: ");
-        double sellingPrice = in.nextDouble();
-        in.nextLine();
+        double sellingPrice = userDoubleInput();
 
         System.out.print("Reorder Level: ");
         int reorderLevel = userIntInput();
@@ -695,8 +694,7 @@ public class Owner extends Employee {
             int quantity = userIntInput();
 
             System.out.print("Unit Purchase Cost: ");
-            double unitPurchaseCost = in.nextDouble();
-            in.nextLine();
+            double unitPurchaseCost = userDoubleInput();
 
             System.out.print("Expiration Year: ");
             int year = userIntInput();
