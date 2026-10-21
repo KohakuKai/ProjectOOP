@@ -794,14 +794,14 @@ public class Owner extends Employee {
             product.getInfo();
 
             System.out.println(border);
-            System.out.println("[1] Product Name");
-            System.out.println("[2] Generic Name");
-            System.out.println("[3] Brand");
-            System.out.println("[4] Unit");
-            System.out.println("[5] Selling Price");
-            System.out.println("[6] Reorder Level");
-            System.out.println("[7] Category");
-            System.out.println("[0] Exit");
+            System.out.println("[1] Product Name\n" +
+                    "[2] Generic Name\n" +
+                    "[3] Brand\n" +
+                    "[4] Unit\n" +
+                    "[5] Selling Price\n" +
+                    "[6] Reorder Level\n" +
+                    "[7] Category\n" +
+                    "[0] Exit\n");
             System.out.println(border);
             System.out.print("Choose detail to edit: ");
 
@@ -821,7 +821,6 @@ public class Owner extends Employee {
                     product.setProductName(name);
                     break;
                 }
-
                 case 2: {
                     System.out.print("Enter new Generic Name: ");
                     String genericName = in.nextLine().trim();
@@ -834,7 +833,6 @@ public class Owner extends Employee {
                     product.setGenericName(genericName);
                     break;
                 }
-
                 case 3: {
                     System.out.print("Enter new Brand: ");
                     String brand = in.nextLine().trim();
@@ -847,7 +845,6 @@ public class Owner extends Employee {
                     product.setBrand(brand);
                     break;
                 }
-
                 case 4: {
                     System.out.print("Enter new Unit: ");
                     String unit = in.nextLine().trim();
@@ -860,7 +857,6 @@ public class Owner extends Employee {
                     product.setUnit(unit);
                     break;
                 }
-
                 case 5: {
                     System.out.print("Enter new Selling Price: ");
                     double price = userDoubleInput();
@@ -873,7 +869,6 @@ public class Owner extends Employee {
                     product.setSellingPrice(price);
                     break;
                 }
-
                 case 6: {
                     System.out.print("Enter new Reorder Level: ");
                     int reorderLevel = userIntInput();
@@ -886,7 +881,6 @@ public class Owner extends Employee {
                     product.setReorderLevel(reorderLevel);
                     break;
                 }
-
                 case 7: {
                     System.out.print("Enter new Category ID: ");
                     String categoryID = in.nextLine().trim().toUpperCase();
@@ -901,7 +895,6 @@ public class Owner extends Employee {
                     product.setCategory(category);
                     break;
                 }
-
                 case 0:
                     System.out.println(mborder);
                     System.out.println("Product details updated successfully!");
@@ -956,3 +949,4 @@ public class Owner extends Employee {
 
 }
 
+//malapit na tayo mag 1000 lines
