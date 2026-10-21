@@ -57,9 +57,7 @@ public abstract class Product {
     }
 
     //mga setter
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
+    //walang product id kasi bawal yun mabago ata
     public void setProductName(String productName) {
         this.productName = productName;
     }

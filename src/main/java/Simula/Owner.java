@@ -2,6 +2,7 @@ package Simula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Owner extends Employee {
 
@@ -96,7 +97,8 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.print("\t[1]Add Product\n" +
                             "\t[2]Display Products\n" +
-                            "\t[3]Delete Product\n" +
+                            "\t[3]Edit Product Details\n" +
+                            "\t[4]Delete Product\n" +
                             "\t[0] Exit\n" + border +
                             "\nChoice:");
                     int choice2 = userIntInput();
@@ -106,7 +108,8 @@ public class Owner extends Employee {
 
                         case 1 : addProduct(); pause(); break;
                         case 2 : displayProducts(); pause(); break;
-                        case 3 : deleteProduct(); pause(); break;
+                        case 3 : editProductDetails(); pause(); break;
+                        case 4 : deleteProduct(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
@@ -766,6 +769,149 @@ public class Owner extends Employee {
                 "\nVAT: "+ purchase.getVATAmount()+
                 "\nTotal(with VAT): "+ purchase.getTotalWithVAT() + "\n");
 
+    }
+
+    private void editProductDetails(){
+
+        System.out.print("Enter Product ID: ");
+        String productID = in.nextLine().toUpperCase().trim();
+        Product product = inventory.findProductById(productID);
+
+        if (product == null) {
+            System.out.println(mborder);
+            System.out.println("Product ID not found!");
+            System.out.println(mborder);
+            return;
+        }
+
+        //mag rerepeat sya hanggang i exit mo
+        while (true) {
+            tag();
+            System.out.println(border);
+            System.out.printf("%27s%n", "EDIT PRODUCT DETAILS");
+            System.out.println(border);
+
+            product.getInfo();
+
+            System.out.println(border);
+            System.out.println("[1] Product Name");
+            System.out.println("[2] Generic Name");
+            System.out.println("[3] Brand");
+            System.out.println("[4] Unit");
+            System.out.println("[5] Selling Price");
+            System.out.println("[6] Reorder Level");
+            System.out.println("[7] Category");
+            System.out.println("[0] Exit");
+            System.out.println(border);
+            System.out.print("Choose detail to edit: ");
+
+            int choice = userIntInput();
+            System.out.println(border);
+
+            switch (choice) {
+                case 1: {
+                    System.out.print("Enter new Product Name: ");
+                    String name = in.nextLine().trim();
+
+                    if (name.isEmpty()) {
+                        System.out.println("Product name cannot be empty!");
+                        break;
+                    }
+
+                    product.setProductName(name);
+                    break;
+                }
+
+                case 2: {
+                    System.out.print("Enter new Generic Name: ");
+                    String genericName = in.nextLine().trim();
+
+                    if (genericName.isEmpty()) {
+                        System.out.println("Generic name cannot be empty!");
+                        break;
+                    }
+
+                    product.setGenericName(genericName);
+                    break;
+                }
+
+                case 3: {
+                    System.out.print("Enter new Brand: ");
+                    String brand = in.nextLine().trim();
+
+                    if (brand.isEmpty()) {
+                        System.out.println("Brand cannot be empty!");
+                        break;
+                    }
+
+                    product.setBrand(brand);
+                    break;
+                }
+
+                case 4: {
+                    System.out.print("Enter new Unit: ");
+                    String unit = in.nextLine().trim();
+
+                    if (unit.isEmpty()) {
+                        System.out.println("Unit cannot be empty!");
+                        break;
+                    }
+
+                    product.setUnit(unit);
+                    break;
+                }
+
+                case 5: {
+                    System.out.print("Enter new Selling Price: ");
+                    double price = userDoubleInput();
+
+                    if (price < 0) {
+                        System.out.println("Price cannot be negative!");
+                        break;
+                    }
+
+                    product.setSellingPrice(price);
+                    break;
+                }
+
+                case 6: {
+                    System.out.print("Enter new Reorder Level: ");
+                    int reorderLevel = userIntInput();
+
+                    if (reorderLevel < 0) {
+                        System.out.println("Reorder level cannot be negative!");
+                        break;
+                    }
+
+                    product.setReorderLevel(reorderLevel);
+                    break;
+                }
+
+                case 7: {
+                    System.out.print("Enter new Category ID: ");
+                    String categoryID = in.nextLine().trim().toUpperCase();
+
+                    Category category = inventory.findCategoryById(categoryID);
+
+                    if (category == null) {
+                        System.out.println("Category ID not found!");
+                        break;
+                    }
+
+                    product.setCategory(category);
+                    break;
+                }
+
+                case 0:
+                    System.out.println(mborder);
+                    System.out.println("Product details updated successfully!");
+                    System.out.println(mborder);
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
     }
 
     private void deleteProduct() {
