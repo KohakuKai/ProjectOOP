@@ -96,7 +96,7 @@ public abstract class Employee {
     public static int userIntInput(){
         while(!in.hasNextInt()){
             System.out.print("Invalid Input!\n" +
-                    "Please Enter a Number: ");
+                            "Please Enter a Number: ");
             in.nextLine();
         }
         int input = in.nextInt();
@@ -242,6 +242,8 @@ public abstract class Employee {
 
     }
 
+    //PRODUCTS METHODS
+
     protected void displayProducts () {
 
         int counter = 1;
@@ -298,6 +300,7 @@ public abstract class Employee {
         product.getInfo();
         System.out.println(border);
     }
+
 
 
 

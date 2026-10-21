@@ -94,7 +94,11 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.printf("%27s%n", "MANAGE PRODUCTS");
                     System.out.println(border);
-                    System.out.print("\t[1]Add Product\n\t[2]Display Products\n\t[0] Exit\n"+border+"\nChoice:");
+                    System.out.print("\t[1]Add Product\n" +
+                            "\t[2]Display Products\n" +
+                            "\t[3]Delete Product\n" +
+                            "\t[0] Exit\n" + border +
+                            "\nChoice:");
                     int choice2 = userIntInput();
                     System.out.println(border+"\n");
 
@@ -102,6 +106,7 @@ public class Owner extends Employee {
 
                         case 1 : addProduct(); pause(); break;
                         case 2 : displayProducts(); pause(); break;
+                        case 3 : deleteProduct(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
@@ -120,7 +125,11 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.printf("%27s%n", "MANAGE CATEGORIES");
                     System.out.println(border);
-                    System.out.print("\t[1]Add Category\n\t[2]Display Categories\n\t[0] Exit\n"+border+"\nChoice:");
+                    System.out.print("\t[1]Add Category\n" +
+                            "\t[2]Display Categories\n" +
+                            "\t[3]Delete Category\n" +
+                            "\t[0] Exit\n" + border +
+                            "\nChoice:");
                     int choice2 = userIntInput();
                     System.out.println(border+"\n");
 
@@ -128,6 +137,7 @@ public class Owner extends Employee {
 
                         case 1 : addCategory(); pause(); break;
                         case 2 : displayCategories(); pause(); break;
+                        case 3 : deleteCategory(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
@@ -758,6 +768,46 @@ public class Owner extends Employee {
                 "\nVAT: "+ purchase.getVATAmount()+
                 "\nTotal(with VAT): "+ purchase.getTotalWithVAT() + "\n");
 
+    }
+
+    private void deleteProduct() {
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "DELETE PRODUCT");
+        System.out.println(border);
+
+        System.out.print("Enter Product ID: ");
+        String productID = in.nextLine().trim().toUpperCase();
+
+        if (inventory.removeProduct(productID)) {
+            System.out.println(mborder);
+            System.out.println("Product Deleted Successfully!");
+            System.out.println(mborder);
+        } else {
+            System.out.println(mborder);
+            System.out.println("Product ID not found!");
+            System.out.println(mborder);
+        }
+    }
+
+    private void deleteCategory() {
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "DELETE CATEGORY");
+        System.out.println(border);
+
+        System.out.print("Enter Category ID: ");
+        String categoryID = in.nextLine().trim().toUpperCase();
+
+        if (inventory.removeCategory(categoryID)) {
+            System.out.println(mborder);
+            System.out.println("Category Deleted Successfully!");
+            System.out.println(mborder);
+        } else {
+            System.out.println(mborder);
+            System.out.println("Category ID not found!");
+            System.out.println(mborder);
+        }
     }
 
 }

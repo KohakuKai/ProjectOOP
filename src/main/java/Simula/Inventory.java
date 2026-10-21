@@ -39,6 +39,16 @@ public class Inventory {
         return null;
     }
 
+    public boolean removeProduct(String productID) {
+        Product product = findProductById(productID);
+
+        if (product == null) {
+            return false;
+        }
+
+        return products.remove(product);
+    }
+
 
     //Category Methods -------------------------------------------------------------
     public ArrayList<Category> getCategories() { return categories; }
@@ -57,6 +67,16 @@ public class Inventory {
             if(c.getCategory_ID().equals(givenCategoryID)) return c;
         }
         return null; //pagkawalang nahanap null i rereturn
+    }
+
+    public boolean removeCategory(String categoryID) {
+        Category category = findCategoryById(categoryID);
+
+        if (category == null) {
+            return false;
+        }
+
+        return categories.remove(category);
     }
 
 

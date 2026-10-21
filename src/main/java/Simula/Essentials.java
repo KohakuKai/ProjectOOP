@@ -12,5 +12,3 @@ public class Essentials extends Product{
     }
 }
 
-//eto lang talaga lahat ng lalagay rito
-
