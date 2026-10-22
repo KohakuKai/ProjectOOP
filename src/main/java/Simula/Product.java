@@ -8,7 +8,6 @@ public abstract class Product {
     private String productID, productName, genericName, brand, unit;
     private double sellingPrice;
     private int reorderLevel;
-
     private Category category;
     private ArrayList<Batch> batches = new ArrayList<>();
 

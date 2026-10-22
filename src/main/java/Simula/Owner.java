@@ -2,7 +2,6 @@ package Simula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Owner extends Employee {
 
@@ -95,7 +94,7 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.printf("%27s%n", "MANAGE PRODUCTS");
                     System.out.println(border);
-                    System.out.print("\t[1]Add Product\n" +
+                    System.out.print("\t[1]Create Product\n" +
                             "\t[2]Display Products\n" +
                             "\t[3]Delete Product\n" +
                             "\t[0] Exit\n" + border +
@@ -107,7 +106,7 @@ public class Owner extends Employee {
 
                     switch(choice2) {
 
-                        case 1 : addProduct(); pause(); break;
+                        case 1 : createProduct(); pause(); break;
                         case 2 : displayProducts(); pause(); break;
                         case 3 : deleteProduct(); pause(); break;
                         case 0 : break;
@@ -412,11 +411,11 @@ public class Owner extends Employee {
     }
 
     //Product Methods
-    private void addProduct() {
+    private void createProduct() {
 
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "ADD PRODUCT");
+        System.out.printf("%27s%n", "CREATE PRODUCT");
         System.out.println(border);
 
         System.out.print("PRODUCT TYPE\n" +
@@ -439,7 +438,7 @@ public class Owner extends Employee {
 
         String genericName = "";
 
-        if (choice == 1) {
+        if (choice == 1) { //walang generic na attribute for essentials
             System.out.print("Generic Name: ");
             genericName = in.nextLine().trim();
         }
@@ -447,12 +446,10 @@ public class Owner extends Employee {
         System.out.print("Brand: ");
         String brand = in.nextLine().trim();
 
-        String unit = "";
 
-        if (choice == 1) {
-            System.out.print("Unit: ");
-            unit = in.nextLine().trim();
-        }
+        System.out.print("Unit: ");
+        String unit = in.nextLine().trim();
+
 
         System.out.print("Selling Price: ");
         double sellingPrice = userDoubleInput();
@@ -480,7 +477,6 @@ public class Owner extends Employee {
                 System.out.print(line+"\nMedicine Type:\n\t[1]Over-The-Counter\n\t[2]Prescription Medicine\n\t[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
                 int choice2  = userIntInput();
                 System.out.println(line);
-
 
                 switch(choice2) {
 
