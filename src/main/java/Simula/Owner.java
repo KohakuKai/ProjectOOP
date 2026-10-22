@@ -252,8 +252,23 @@ public class Owner extends Employee {
         System.out.println(border);
         System.out.printf("%27s%n", "CREATE EMPLOYEE");
         System.out.println(border);
-        System.out.print("Enter employee name: ");
-        String name = in.nextLine().trim();
+        System.out.print("Enter first name: ");
+        String firstName = in.nextLine().trim();
+
+        System.out.print("Enter middle name: ");
+        String middleName = in.nextLine().trim();
+
+        System.out.print("Enter last name: ");
+        String lastName = in.nextLine().trim();
+
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            System.out.println("First name and last name are required!");
+            return;
+        }
+
+        String name = firstName
+                + (middleName.isEmpty() ? "" : " " + middleName)
+                + " " + lastName;
 
         System.out.print("Enter employee username: ");
         String username = in.nextLine().trim();
@@ -404,17 +419,40 @@ public class Owner extends Employee {
         System.out.printf("%27s%n", "ADD PRODUCT");
         System.out.println(border);
 
+        System.out.print("PRODUCT TYPE\n" +
+                "\t[1] Medicine\n" +
+                "\t[2] Essentials\n" +
+                "\t[0]Exit\n" +border+ "\nChoice: ");
+        int choice = userIntInput();
+        System.out.println(border);
+        if (choice == 0) {
+            return;
+        }
+
+        if (choice != 1 && choice != 2) {
+            System.out.println("Invalid product type!");
+            return;
+        }
+
         System.out.print("Product Name: ");
         String productName = in.nextLine().trim();
 
-        System.out.print("Generic Name: ");
-        String genericName = in.nextLine().trim();
+        String genericName = "";
+
+        if (choice == 1) {
+            System.out.print("Generic Name: ");
+            genericName = in.nextLine().trim();
+        }
 
         System.out.print("Brand: ");
         String brand = in.nextLine().trim();
 
-        System.out.print("Unit: ");
-        String unit = in.nextLine().trim();
+        String unit = "";
+
+        if (choice == 1) {
+            System.out.print("Unit: ");
+            unit = in.nextLine().trim();
+        }
 
         System.out.print("Selling Price: ");
         double sellingPrice = userDoubleInput();
@@ -433,11 +471,6 @@ public class Owner extends Employee {
             System.out.println(mborder);
             return;
         }
-
-        System.out.println(line+"\nProduct Type:\n\t[1]Medicine\n\t[2]Essentials\n\t[3]Exit");//pagpili ng product type
-        System.out.print("Choice: ");
-        int choice = userIntInput();
-        System.out.println(line);
 
         Product newProduct = null;
         switch(choice) {
