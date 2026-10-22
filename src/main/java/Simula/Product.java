@@ -138,6 +138,8 @@ public abstract class Product {
                 status = "OK";
             }
 
+            if(b.getQuantity() <= 0) continue;
+
             System.out.println("Batch ID: " + b.getBatchID());
             System.out.println("Expiration date: " + b.getExpirationDate());
             System.out.println("Date received: " + b.getDateReceived());

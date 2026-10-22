@@ -243,13 +243,22 @@ public abstract class Employee {
         System.out.println(line);
         System.out.println("Product: " + product.getProductName());
         System.out.println("Quantity: " + quantity);
-        System.out.println("Unit Price: " + product.getSellingPrice());
-        System.out.println("Subtotal: " + receipt.getSubTotalPrice());
+        System.out.printf("Unit Price: %.2f%n" , product.getSellingPrice());
+        System.out.printf("Subtotal: %.2f%n" , receipt.getSubTotalPrice());
         System.out.println(line);
-        if(!pwd && !senior)System.out.println("VAT: "+ receipt.getVATAmount());
-        if(!pwd && !senior)System.out.println("Total(with VAT): " + receipt.getTotalWithVAT());
-        if(pwd) System.out.println("Total(with PWD Discount): " + receipt.getTotalWithPwdDiscount());
-        if(senior) System.out.println("Total(with Senior Discount): " + receipt.getTotalWithSeniorDiscount());
+        if(!pwd && !senior) {
+            System.out.printf("VAT(12%%): %.2f%n", receipt.getVATAmount());
+            System.out.printf("Total(with VAT): %.2f%n" , receipt.getTotalWithVAT());
+        }
+
+        if(pwd) {
+            System.out.printf("PWD Discount(20%%): %.2f%n", receipt.getPwdDiscount());
+            System.out.printf("Total(with PWD Discount) %.2f%n" , receipt.getTotalWithPwdDiscount());
+        }
+        if(senior) {
+            System.out.printf("Senior Cirizen Discount(20%%): %.2f%n", receipt.getSeniorDiscount());
+            System.out.printf("Total(with Senior Discount): %.2f%n", receipt.getTotalWithSeniorDiscount());
+        }
 
         System.out.println();
 

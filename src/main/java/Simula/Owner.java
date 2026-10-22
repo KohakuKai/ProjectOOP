@@ -157,7 +157,7 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.printf("%27s%n", "MANAGE STOCKS");
                     System.out.println(border);
-                    System.out.print("\t[1]Add Batch\n" +
+                    System.out.print("\t[1]Add Batch(Manual Add)\n" +
                             "\t[2]Add Stock(Manual Add)\n" +
                             "\t[3]Reduce Stock(Manual Remove)\n" +
                             "\t[4]View a Product's Batches\n" +
@@ -260,7 +260,7 @@ public class Owner extends Employee {
         System.out.print("Enter last name: ");
         String lastName = in.nextLine().trim();
 
-        if (firstName.isEmpty() || lastName.isEmpty()) {
+        if (firstName.isEmpty() || lastName.isEmpty() ) {
             System.out.println("First name and last name are required!");
             return;
         }
@@ -462,7 +462,7 @@ public class Owner extends Employee {
 
         Category category = manager.getInventory().findCategoryById(categoryID); //dito hinanap yugn actual category object using String CategoryID
 
-        if( productName.isEmpty() || sellingPrice<0 || reorderLevel <0 || category ==null) { //validation kung tama ba yung details nilagay sa fields
+        if( productName.isEmpty() || sellingPrice<=0 || reorderLevel <=0 || category ==null) { //validation kung tama ba yung details nilagay sa fields
             System.out.println(mborder);
             System.out.println("Invalid Input in one of the Fields. Please Try Again.");
             System.out.println(mborder);
@@ -612,6 +612,13 @@ public class Owner extends Employee {
         if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
             System.out.println("\n"+ mborder);
             System.out.println("Invalid Date");
+            System.out.println(mborder);
+            return;
+        }
+
+        if(quantity<=0) {
+            System.out.println("\n"+ mborder);
+            System.out.println("Invalid Quantity");
             System.out.println(mborder);
             return;
         }
@@ -813,6 +820,7 @@ public class Owner extends Employee {
         ArrayList <TransactionDetail> lines  = purchase.getTransactionDetails(); //para lang to sa pagn print ng receipt
         ArrayList<LocalDate> expirationDates = purchase.getExpirationDates(); //para lang to sa pag print ng receipt
 
+        System.out.println(border);
         System.out.printf("%27s%n", "RECEIPT");
         System.out.println("Transaction ID: "+ purchase.getTransactionID());
         System.out.println("Transaction Type: "+ purchase.getTransactionType());
@@ -824,9 +832,11 @@ public class Owner extends Employee {
             System.out.println( line.getProduct().getProductName() + " | " + line.getQuantity() + " x " + line.getUnitPrice() + " = " + line.getSubTotal() + " | Exp:" + expirationDates.get(i) +"");
         }
 
-        System.out.println(mborder+"\nSubtotal: "+ purchase.getSubTotalPrice() +
-                "\nVAT: "+ purchase.getVATAmount()+
-                "\nTotal(with VAT): "+ purchase.getTotalWithVAT() + "\n");
+        System.out.println(mborder);
+
+        System.out.printf("\nSubtotal: %.2f%n", purchase.getSubTotalPrice());
+        System.out.printf("VAT(12%%): %.2f%n", purchase.getVATAmount());
+        System.out.printf("Total(with VAT): %.2f%n%n", purchase.getTotalWithVAT());
 
     }
 

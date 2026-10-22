@@ -61,10 +61,9 @@ public abstract class Transaction {
         return getSubTotalPrice() + getVATAmount();
     }
 
-    public double getTotalWithPwdDiscount() {
-        return getTotalWithVAT() - (getSubTotalPrice() * PWD_DISCOUNT);
-    }
-    public double getTotalWithSeniorDiscount() {
-        return getTotalWithVAT() - (getSubTotalPrice() * SENIOR_DISCOUNT);
-    }
+    public double getPwdDiscount() { return getSubTotalPrice() * PWD_DISCOUNT;}
+    public double getTotalWithPwdDiscount() {return getTotalWithVAT() - getPwdDiscount();}
+
+    public double getSeniorDiscount() {return getSubTotalPrice() * SENIOR_DISCOUNT;}
+    public double getTotalWithSeniorDiscount() {return getTotalWithVAT() - getSeniorDiscount();}
 }
