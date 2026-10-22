@@ -97,19 +97,19 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.print("\t[1]Add Product\n" +
                             "\t[2]Display Products\n" +
-                            "\t[3]Edit Product Details\n" +
-                            "\t[4]Delete Product\n" +
+                            "\t[3]Delete Product\n" +
                             "\t[0] Exit\n" + border +
                             "\nChoice:");
                     int choice2 = userIntInput();
                     System.out.println(border+"\n");
 
+                    //case 3 : editProductDetails(); pause(); break;
+
                     switch(choice2) {
 
                         case 1 : addProduct(); pause(); break;
                         case 2 : displayProducts(); pause(); break;
-                        case 3 : editProductDetails(); pause(); break;
-                        case 4 : deleteProduct(); pause(); break;
+                        case 3 : deleteProduct(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
@@ -258,8 +258,38 @@ public class Owner extends Employee {
         System.out.print("Enter employee username: ");
         String username = in.nextLine().trim();
 
-        System.out.print("Enter employee password: ");
-        String password = in.nextLine();
+        String password;
+
+        while(true) {
+            System.out.print("Enter employee password: ");
+            password = in.nextLine();
+
+            if (!password.matches(".*[A-Z].*")) {
+                System.out.println("Password mush have at least one capital letter.");
+            }
+            else if (!password.matches(".*[0-9].*")) {
+                System.out.println("Password must have at least one number.");
+            }
+            else if (!password.matches(".*[^a-zA-Z0-9\\s].*")) {
+                System.out.println("Password must have at least one special character");
+            }
+            else if (password.length() < 10) {
+                System.out.println("Password must have at least 10 characters");
+            }
+            else {
+                break;
+            }
+
+        }
+
+        for (Employee employee : manager.getEmployees()) {
+            if (employee.getName().equalsIgnoreCase(name)
+                    && employee.getUsername().equalsIgnoreCase(username)
+                    && employee.getPassword().equals(password)) {
+                System.out.println("Account already exists.");
+                return;
+            }
+        }
 
         System.out.println("\nAssign position:");
         System.out.println("\t[1] Owner");
@@ -771,7 +801,7 @@ public class Owner extends Employee {
 
     }
 
-    private void editProductDetails(){
+    protected void editProductDetails(){
 
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().toUpperCase().trim();

@@ -312,6 +312,18 @@ public abstract class Employee {
         System.out.println(border);
         product.getInfo();
         System.out.println(border);
+
+        if (this instanceof Owner) {
+            System.out.println("[1] Edit Product Details\n" +
+                    "[0] Exit\nChoice: ");
+            int choice = userIntInput();
+
+            switch (choice) {
+                case 1: {
+                    ((Owner) this).editProductDetails();
+                }
+            }
+        }
     }
 
 
