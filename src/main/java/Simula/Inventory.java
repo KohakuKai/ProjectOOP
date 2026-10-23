@@ -1,5 +1,6 @@
 package Simula;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,6 +38,19 @@ public class Inventory {
             if(p.getProductID().equals(givenProductID)) return p;
         }
         return null;
+    }
+
+    public ArrayList<Product> findProductByName(String givenProductName) {
+
+        ArrayList<Product> matchedProducts = new ArrayList<>();
+
+        for(Product p : products) {
+            if(p.getProductName().toUpperCase().contains(givenProductName)) {
+                matchedProducts.add(p);
+            }
+        }
+
+        return matchedProducts;
     }
 
     public boolean removeProduct(String productID) {
@@ -164,14 +178,17 @@ public class Inventory {
     private void defaultProducts() {
 
         Product biogesic =new OverTheCounter("Biogesic","Paracetamol","Unilab","Tablet",7,50,findCategoryById("C005"));
-        Product vitaminC = new OverTheCounter("Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",50,50,findCategoryById("C001"));
+        Product vitaminC = new OverTheCounter("Ascorbic Acid Vitamin C","Ascorbic Acid","Celine","Syrup",5,50,findCategoryById("C001"));
+        Product bioflu = new OverTheCounter("Bioflu","Paracetamol","Unilab","Tablet",10,50,findCategoryById("C005"));
 
         biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));
         vitaminC.addBatch(new Batch(200,vitaminC,LocalDate.parse("2028-09-11")));
-        biogesic.addBatch(new Batch(300,biogesic,LocalDate.parse("2026-11-11")));
+        biogesic.addBatch(new Batch(300,biogesic,LocalDate.parse("2027-11-11")));
+        bioflu.addBatch(new Batch(200, bioflu,LocalDate.parse("2028-07-11")));
 
         products.add(biogesic);
         products.add(vitaminC);
+        products.add(bioflu);
 
     }
 
@@ -187,6 +204,7 @@ public class Inventory {
     public void defaultTransactions(Employee owner) { //sa start up na constructor to ilalagay, kasi kailangan na malaman na owner ang gumamit
         Product biogesic = products.get(0);
         Product vitaminC = products.get(1);
+        Product bioflu = products.get(2);
 
         Purchase purchase = new Purchase(owner,this); //transaction1 to
         purchase.addPurchaseLine(100,3.5,biogesic,LocalDate.parse("2026-10-10"));
@@ -195,6 +213,10 @@ public class Inventory {
 
         purchase = new Purchase(owner,this); //transactoion2 to
         purchase.addPurchaseLine(300,3.5,biogesic,LocalDate.parse("2026-11-11"));
+        recordPurchase(purchase);
+
+        purchase = new Purchase(owner, this) ;
+        purchase.addPurchaseLine(200,5, bioflu,LocalDate.parse("2028-07-11"));
         recordPurchase(purchase);
 
 

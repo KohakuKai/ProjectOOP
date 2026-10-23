@@ -97,6 +97,7 @@ public class Owner extends Employee {
                     System.out.print("\t[1]Create Product\n" +
                             "\t[2]Display Products\n" +
                             "\t[3]Delete Product\n" +
+                            "\t[4]Search Product\n" +
                             "\t[0] Exit\n" + border +
                             "\nChoice:");
                     int choice2 = userIntInput();
@@ -109,6 +110,7 @@ public class Owner extends Employee {
                         case 1 : createProduct(); pause(); break;
                         case 2 : displayProducts(); pause(); break;
                         case 3 : deleteProduct(); pause(); break;
+                        case 4 : searchProduct(); pause(); break;
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
@@ -157,10 +159,10 @@ public class Owner extends Employee {
                     System.out.println(border);
                     System.out.printf("%27s%n", "MANAGE STOCKS");
                     System.out.println(border);
-                    System.out.print("\t[1]Add Batch(Manual Add)\n" +
+                    System.out.print("\t[1]View a Product's Batches\n" +
                             "\t[2]Add Stock(Manual Add)\n" +
                             "\t[3]Reduce Stock(Manual Remove)\n" +
-                            "\t[4]View a Product's Batches\n" +
+                            "\t[4]Remove All Expired Batches\n"+
                             "\t[0] Exit\n"+ border +
                             "\nChoice: ");
                     int choice4 = userIntInput();
@@ -168,22 +170,26 @@ public class Owner extends Employee {
 
                     switch(choice4){
                         case 1:{
-                            addBatch();
+                            viewProductBatchDetails();
                             pause();
                             break;
                         }
                         case 2:{
-                            addSupply();
+                            addStock();
                             pause();
                             break;
                         }
                         case 3:{
-                            reduceSupply();
+                            reduceStock();
                             pause();
                             break;
                         }
-                        case 4:{
-                            viewProductBatchDetails();
+
+                        case 4 : {
+
+                            System.out.println(border);
+                            System.out.println("\t[Removed] "+removeAllExpiredBatches() + " Batches");
+                            System.out.println(border);
                             pause();
                             break;
                         }
@@ -640,7 +646,7 @@ public class Owner extends Employee {
         }
     }
 
-    private void addSupply() {
+    private void addStock() {
         tag();
         System.out.println(border);
         System.out.printf("%27s%n", "ADD STOCK");
@@ -690,7 +696,7 @@ public class Owner extends Employee {
         }
     }
 
-    private void reduceSupply() {
+    private void reduceStock() {
         tag();
         System.out.println(border);
         System.out.printf("%27s%n", "REDUCE STOCK");
@@ -748,13 +754,13 @@ public class Owner extends Employee {
         while(!end) {    //Loop to, add lang ng add ng product sa checkout hanggang mag input ng 0, tapos don matatapos
 
             System.out.print("Product ID(Enter 0 to end): ");
-            String productId = in.nextLine().trim().toUpperCase();
-            if(productId.equals("0")) {
+            String productID = in.nextLine().trim().toUpperCase();
+            if(productID.equals("0")) {
                 end = true;
                 break;
             }
 
-            Product product = inventory.findProductById(productId);
+            Product product = inventory.findProductById(productID);
 
             if(product ==null ) {
                 System.out.println(mborder);
@@ -842,142 +848,6 @@ public class Owner extends Employee {
         System.out.printf("VAT(12%%): %.2f%n", purchase.getVATAmount());
         System.out.printf("Total(with VAT): %.2f%n%n", purchase.getTotalWithVAT());
 
-    }
-
-    protected void editProductDetails(){
-
-        System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().toUpperCase().trim();
-        Product product = inventory.findProductById(productID);
-
-        if (product == null) {
-            System.out.println(mborder);
-            System.out.println("Product ID not found!");
-            System.out.println(mborder);
-            return;
-        }
-
-        //mag rerepeat sya hanggang i exit mo
-        while (true) {
-            tag();
-            System.out.println(border);
-            System.out.printf("%27s%n", "EDIT PRODUCT DETAILS");
-            System.out.println(border);
-
-            product.getInfo();
-
-            System.out.println(border);
-            System.out.println("[1] Product Name\n" +
-                    "[2] Generic Name\n" +
-                    "[3] Brand\n" +
-                    "[4] Unit\n" +
-                    "[5] Selling Price\n" +
-                    "[6] Reorder Level\n" +
-                    "[7] Category\n" +
-                    "[0] Exit\n");
-            System.out.println(border);
-            System.out.print("Choose detail to edit: ");
-
-            int choice = userIntInput();
-            System.out.println(border);
-
-            switch (choice) {
-                case 1: {
-                    System.out.print("Enter new Product Name: ");
-                    String name = in.nextLine().trim();
-
-                    if (name.isEmpty()) {
-                        System.out.println("Product name cannot be empty!");
-                        break;
-                    }
-
-                    product.setProductName(name);
-                    break;
-                }
-                case 2: {
-                    System.out.print("Enter new Generic Name: ");
-                    String genericName = in.nextLine().trim();
-
-                    if (genericName.isEmpty()) {
-                        System.out.println("Generic name cannot be empty!");
-                        break;
-                    }
-
-                    product.setGenericName(genericName);
-                    break;
-                }
-                case 3: {
-                    System.out.print("Enter new Brand: ");
-                    String brand = in.nextLine().trim();
-
-                    if (brand.isEmpty()) {
-                        System.out.println("Brand cannot be empty!");
-                        break;
-                    }
-
-                    product.setBrand(brand);
-                    break;
-                }
-                case 4: {
-                    System.out.print("Enter new Unit: ");
-                    String unit = in.nextLine().trim();
-
-                    if (unit.isEmpty()) {
-                        System.out.println("Unit cannot be empty!");
-                        break;
-                    }
-
-                    product.setUnit(unit);
-                    break;
-                }
-                case 5: {
-                    System.out.print("Enter new Selling Price: ");
-                    double price = userDoubleInput();
-
-                    if (price < 0) {
-                        System.out.println("Price cannot be negative!");
-                        break;
-                    }
-
-                    product.setSellingPrice(price);
-                    break;
-                }
-                case 6: {
-                    System.out.print("Enter new Reorder Level: ");
-                    int reorderLevel = userIntInput();
-
-                    if (reorderLevel < 0) {
-                        System.out.println("Reorder level cannot be negative!");
-                        break;
-                    }
-
-                    product.setReorderLevel(reorderLevel);
-                    break;
-                }
-                case 7: {
-                    System.out.print("Enter new Category ID: ");
-                    String categoryID = in.nextLine().trim().toUpperCase();
-
-                    Category category = inventory.findCategoryById(categoryID);
-
-                    if (category == null) {
-                        System.out.println("Category ID not found!");
-                        break;
-                    }
-
-                    product.setCategory(category);
-                    break;
-                }
-                case 0:
-                    System.out.println(mborder);
-                    System.out.println("Product details updated successfully!");
-                    System.out.println(mborder);
-                    return;
-
-                default:
-                    System.out.println("Invalid choice!");
-            }
-        }
     }
 
     private void deleteProduct() {

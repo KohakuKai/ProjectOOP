@@ -1,5 +1,6 @@
 package Simula;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public abstract class Product {
@@ -12,8 +13,8 @@ public abstract class Product {
     private ArrayList<Batch> batches = new ArrayList<>();
 
     //2.) constructor para sa pag aadd mismo ng user ng products
-    Product (String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
-        this.productID = String.format("P%03d",currentIDNumber++); //automatic nag g generate yung id, hindi na kailangan pang i type
+    Product(String productName, String genericName, String brand, String unit, double sellingPrice, int reorderLevel, Category category) {
+        this.productID = String.format("P%03d", currentIDNumber++); //automatic nag g generate yung id, hindi na kailangan pang i type
         this.productName = productName;
         this.genericName = genericName;
         this.brand = brand;
@@ -23,8 +24,8 @@ public abstract class Product {
         this.category = category;
 
         int lastID = Integer.parseInt(productID.substring(1)); //Kinuha lang dito yung "0001" mula sa "P0001"
-        if(lastID>= currentIDNumber) { //pede to tanggalin pagkawala na yung dummytable
-            currentIDNumber = lastID+1;
+        if (lastID >= currentIDNumber) { //pede to tanggalin pagkawala na yung dummytable
+            currentIDNumber = lastID + 1;
         }
 
     }
@@ -33,24 +34,31 @@ public abstract class Product {
     public String getProductID() {
         return productID;
     }
+
     public String getProductName() {
         return productName;
     }
+
     public String getGenericName() {
         return genericName;
     }
+
     public String getBrand() {
         return brand;
     }
+
     public String getUnit() {
         return unit;
     }
+
     public double getSellingPrice() {
         return sellingPrice;
     }
+
     public int getReorderLevel() {
         return reorderLevel;
     }
+
     public Category getCategory() {
         return category;
     }
@@ -60,21 +68,27 @@ public abstract class Product {
     public void setProductName(String productName) {
         this.productName = productName;
     }
+
     public void setGenericName(String genericName) {
         this.genericName = genericName;
     }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
+
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
     public void setSellingPrice(double sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
+
     public void setReorderLevel(int reorderLevel) {
         this.reorderLevel = reorderLevel;
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -82,11 +96,12 @@ public abstract class Product {
     //i ooverwrite to
     public abstract String getProductType();
 
-    public boolean addBatch(Batch addBatch){
-        if(addBatch == null) return false;
-        if(findBatchById(addBatch.getBatchID())!= null) return false;
+    public boolean addBatch(Batch addBatch) {
+        if (addBatch == null) return false;
+        if (findBatchById(addBatch.getBatchID()) != null) return false;
 
-        batches.add(addBatch);  return true;
+        batches.add(addBatch);
+        return true;
     }
 
     public Batch findBatchById(String batchID) {
@@ -98,59 +113,57 @@ public abstract class Product {
         return null;
     }
 
-    public int getTotalStock(){
+    public int getTotalStock() {
         int ctr = 1;
         int total = 0;
-        for(Batch b : batches){
+        for (Batch b : batches) {
             total += b.getQuantity();
         }
         return total;
     }
 
     //kailangan na set na reorder level para rito
-    public boolean isBelowReorderLevel(){
+    public boolean isBelowReorderLevel() {
         return getTotalStock() < reorderLevel;
     }
 
     //get info method
-    public void getInfo(){
-        System.out.printf("%-15s: %s%n",   "Product ID", productID);
-        System.out.printf("%-15s: %s%n",   "Product Name", productName);
-        System.out.printf("%-15s: %s%n",   "Generic Name", genericName);
-        System.out.printf("%-15s: %s%n",   "Brand", brand);
-        System.out.printf("%-15s: %s%n",   "Unit", unit);
+    public void getInfo() {
+        System.out.printf("%-15s: %s%n", "Product ID", productID);
+        System.out.printf("%-15s: %s%n", "Product Name", productName);
+        System.out.printf("%-15s: %s%n", "Generic Name", genericName);
+        System.out.printf("%-15s: %s%n", "Brand", brand);
+        System.out.printf("%-15s: %s%n", "Unit", unit);
         System.out.printf("%-15s: %.2f%n", "Selling Price", sellingPrice);
-        System.out.printf("%-15s: %d%n",   "Reorder Level", reorderLevel);
+        System.out.printf("%-15s: %d%n", "Reorder Level", reorderLevel);
         System.out.printf("%-15s: %s%n", "Category: ", category.getCategory_Name());
     }
 
-    public void checkExpiration(){
-        for(Batch b : batches){
+    public void checkExpiration() {
+        for (Batch b : batches) {
             String status;
 
-            if(b.isExpired()) {
+            if (b.isExpired()) {
                 status = "EXPIRED";
-            }
-            else if(b.isNearExpiration()) {
+            } else if (b.isNearExpiration()) {
                 status = "NEAR EXPIRATION";
-            }
-            else {
+            } else {
                 status = "OK";
             }
 
-            if(b.getQuantity() <= 0) continue;
+            if (b.getQuantity() <= 0) continue;
 
             System.out.println("Batch ID: " + b.getBatchID());
             System.out.println("Expiration date: " + b.getExpirationDate());
             System.out.println("Date received: " + b.getDateReceived());
-            System.out.println("Batch Quantity: "+b.getQuantity());
-            System.out.println("Status: "+ status + "\n");
+            System.out.println("Batch Quantity: " + b.getQuantity());
+            System.out.println("Status: " + status + "\n");
         }
     }
 
     public boolean isNearExpiration() {
-        for(Batch b : batches) {
-            if(b.isNearExpiration()) return true;
+        for (Batch b : batches) {
+            if (b.isNearExpiration()) return true;
         }
         return false;
     }
@@ -159,7 +172,22 @@ public abstract class Product {
         return batches;
     }
 
+    public int removeExpiredBatches() {
+
+        int removed = 0;
+        for (int i = 0; i < batches.size(); i++) {
+            if (batches.get(i).isExpired()) {
+                batches.remove(i);
+                removed++;
+            }
+
+        }
+        return removed;
+    }
+
 }
+
+
 
 
 
