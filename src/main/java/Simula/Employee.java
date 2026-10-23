@@ -1,4 +1,6 @@
-package Simula;import java.time.LocalDateTime;
+package Simula;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import jdk.swing.interop.SwingInterOpUtils;
 import java.sql.SQLOutput;
@@ -116,6 +118,7 @@ public abstract class Employee {
         in.nextLine();
         return input;
     }
+
 
     //ACCOUNT METHODS --------------------------------------------------------------
 
@@ -236,7 +239,7 @@ public abstract class Employee {
         System.out.printf("%27s%n", "RECEIPT");
         System.out.println(border);
         System.out.println("Transaction ID: "+ receipt.getTransactionID());
-        System.out.println("Date:           " + LocalDateTime.now());
+        System.out.println("Date:           " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         System.out.println("Cashier:        " + getName()+ " (" +getPosition() + ")");
         System.out.println("Transaction Type: "+ receipt.getTransactionType());
         System.out.println("Sale No.: " + receipt.getSaleNo());

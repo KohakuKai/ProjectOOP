@@ -245,20 +245,28 @@ public class Owner extends Employee {
         }
     }
 
+    private String inputNames(String input) {
+        while(true) {
+            System.out.print(input);
+            String name = in.nextLine().trim();
+
+            if(name.matches("[a-zA-Z ]+")) {
+                return name;
+            }
+
+            System.out.println("Invalid input...");
+        }
+    }
+
     //create employee ng owner yan ah
     private void createEmployee() {
         tag();
         System.out.println(border);
         System.out.printf("%27s%n", "CREATE EMPLOYEE");
         System.out.println(border);
-        System.out.print("Enter first name: ");
-        String firstName = in.nextLine().trim();
-
-        System.out.print("Enter middle name: ");
-        String middleName = in.nextLine().trim();
-
-        System.out.print("Enter last name: ");
-        String lastName = in.nextLine().trim();
+        String firstName = inputNames("Enter first name: ");
+        String middleName = inputNames("Enter middle name: ");
+        String lastName = inputNames("Enter last name: ");
 
         if (firstName.isEmpty() || lastName.isEmpty() ) {
             System.out.println("First name and last name are required!");
@@ -306,9 +314,8 @@ public class Owner extends Employee {
         }
 
         System.out.println("\nAssign position:");
-        System.out.println("\t[1] Owner");
-        System.out.println("\t[2] Pharmacist");
-        System.out.println("\t[3] Staff");
+        System.out.println("\t[1] Pharmacist");
+        System.out.println("\t[2] Staff");
         System.out.println(border);
         System.out.print("Choice: ");
         int choice = userIntInput();
@@ -397,12 +404,9 @@ public class Owner extends Employee {
                                         String username, String password) {
         switch (choice) {
             case 1:
-                return new Owner(name,manager, password, username,inventory);
-
-            case 2:
                 return new Pharmacist(name, password, username,inventory);
 
-            case 3:
+            case 2:
                 return new Staff(name, password, username,inventory);
 
             default:
