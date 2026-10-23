@@ -167,6 +167,8 @@ public abstract class Employee {
 
     protected void sellProduct() {
 
+
+
         tag();
         System.out.println("\n" + border);
         System.out.printf("%27s%n", "SELL PRODUCT");
@@ -178,7 +180,10 @@ public abstract class Employee {
 
         while (!end) {
 
-            System.out.print("Enter Product ID(Enter 0 to end): ");
+            System.out.println("[Enter 0 to End]");
+            searchProductByName();
+
+            System.out.print("Enter Product ID: ");
             String productID = in.nextLine().trim().toUpperCase();
             if(productID.equals("0")) {
                 end = true;
@@ -195,7 +200,8 @@ public abstract class Employee {
                 continue;
             }
 
-            System.out.println("\n[Removed] "+ product.removeExpiredBatches()+ " Batches from "+ product.getProductName()+"\n"); //pangremove ng expired batches para sa product nayon
+            int removed = product.removeExpiredBatches();//pangremove ng expired batches para sa product nayon
+            if(removed>0)System.out.println("\n[Removed] "+ removed+ " Expired Batches from "+ product.getProductName()+"\n");
 
             if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
                 System.out.println(border + "\n\n" + mborder + "\nOnly the Owner or a Pharmacist can sell prescription medicine." + mborder);
@@ -666,29 +672,11 @@ public abstract class Employee {
 
             case 2 : {
 
-                System.out.print("\nProduct Name: ");
-                String productName = in.nextLine().trim().toUpperCase();
-
-                ArrayList<Product> matchedProducts = inventory.findProductByName(productName);
-
-                if(matchedProducts == null) {
-                    System.out.println("No Product Name Found!");
-                    break;
-                }
-
-                System.out.println(border);
-                System.out.printf("%27s%n","SEARCH RESULTS");
-                System.out.println(border);
-                System.out.printf("%-15s %-15s%s%n","ID","Name","Price");
-
-                for(Product p : matchedProducts) {
-                    System.out.printf("%-15s %-15s%.2f%n",p.getProductID(), p.getProductName(),p.getSellingPrice());
-                }
-                System.out.println();
+                searchProductByName();
 
                 System.out.println(border);
                 System.out.print("\t[1]View More Product Details\n\t[0]Exit\n" + border + "\nChoice:");
-                 choice = userIntInput();
+                choice = userIntInput();
                 System.out.println(border);
 
                 switch (choice) {
@@ -704,7 +692,6 @@ public abstract class Employee {
                         break;
                 }
 
-
                 break;
 
             }
@@ -717,6 +704,34 @@ public abstract class Employee {
                 break;
             }
         }
+
+    }
+
+    private void searchProductByName() {
+
+        System.out.print("\nProduct Name: ");
+        String productName = in.nextLine().trim().toUpperCase();
+        if(productName.equals("0")) {
+            return;
+        }
+
+        ArrayList<Product> matchedProducts = inventory.findProductByName(productName);
+
+        if(matchedProducts == null) {
+            System.out.println("No Product Name Found!");
+            return;
+        }
+
+        System.out.println(border);
+        System.out.printf("%27s%n","SEARCH RESULTS");
+        System.out.println(border);
+        System.out.printf("%-15s %-15s%s%n","ID","Name","Price");
+
+        for(Product p : matchedProducts) {
+            System.out.printf("%-15s %-15s%.2f%n",p.getProductID(), p.getProductName(),p.getSellingPrice());
+        }
+        System.out.println();
+
 
     }
 

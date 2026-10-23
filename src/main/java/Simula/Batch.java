@@ -11,7 +11,7 @@ public class Batch {
     private LocalDate dateReceived;
     private int quantity;
 
-    private static int warningDays = 30;
+    private static int warningDays = 150;
     private Product product;
 
     //mga constructor

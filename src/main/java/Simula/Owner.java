@@ -772,8 +772,8 @@ public class Owner extends Employee {
             System.out.print("Quantity: ");
             int quantity = userIntInput();
 
-            System.out.print("Unit Purchase Cost: ");
-            double unitPurchaseCost = userDoubleInput();
+
+            double unitCost = product.getSellingPrice();
 
             System.out.print("Expiration Year: ");
             int year = userIntInput();
@@ -800,7 +800,7 @@ public class Owner extends Employee {
 
             LocalDate expiration = LocalDate.of(year,month,day);
 
-            if(purchase.addPurchaseLine(quantity,unitPurchaseCost,product,expiration)) { //pagg add eto sa TransactionDetail ArrayList
+            if(purchase.addPurchaseLine(quantity,unitCost,product,expiration)) { //pagg add eto sa TransactionDetail ArrayList
                 System.out.println("\n" + mborder + "Added to Checkout!" + mborder +"\n");
             }
             else {
@@ -846,7 +846,8 @@ public class Owner extends Employee {
 
         System.out.printf("\nSubtotal: %.2f%n", purchase.getSubTotalPrice());
         System.out.printf("VAT(12%%): %.2f%n", purchase.getVATAmount());
-        System.out.printf("Total(with VAT): %.2f%n%n", purchase.getTotalWithVAT());
+        System.out.printf("Bulk Discount(20%%): %.2f%n", purchase.getSubTotalPrice()*purchase.getBULKDISCOUNT());
+        System.out.printf("Total: %.2f%n%n", purchase.getTotalWithVAT() - (purchase.getSubTotalPrice()*purchase.getBULKDISCOUNT()));
 
     }
 

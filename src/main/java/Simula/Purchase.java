@@ -8,6 +8,8 @@ public class Purchase extends Transaction{
     private String purchaseOrderNo,purchaseStatus;
     private static int currentNumber =1;
     private ArrayList<LocalDate> expirationDates = new ArrayList<>();  //kaya may ganto sa PURCHASE at wala sa SALE, dahil need itake into account yung expiration dates pag bibilli ng mga gamot
+    private final double BULKDISCOUNT = 0.20;
+
 
     Purchase (Employee employee, Inventory inventory) {
         super(employee, inventory);
@@ -26,6 +28,7 @@ public class Purchase extends Transaction{
     public String getPurchaseOrderNo() { return purchaseOrderNo; }
     public String getPurchaseStatus() { return purchaseStatus; }
 
+    public double getBULKDISCOUNT() {return  BULKDISCOUNT;}
 
 
 
