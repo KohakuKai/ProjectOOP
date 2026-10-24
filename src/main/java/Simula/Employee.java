@@ -167,8 +167,6 @@ public abstract class Employee {
 
     protected void sellProduct() {
 
-
-
         tag();
         System.out.println("\n" + border);
         System.out.printf("%27s%n", "SELL PRODUCT");
@@ -177,13 +175,29 @@ public abstract class Employee {
         Sale receipt = new Sale(this, inventory);
         boolean end = false;
 
-
         while (!end) {
+            System.out.print("\t[1]Input Product ID to Sell\n"+
+                    "\t[2]Search Product Name\n" +
+                    "\t[0]Exit]\n" +
+                    border + "\nChoice:");
+            int choice = userIntInput();
+            System.out.println(border);
 
-            System.out.println("[Enter 0 to End]");
-            searchProductByName();
 
-            System.out.print("Enter Product ID: ");
+            if(choice == 2) {
+                searchProductByName();
+            }
+
+            else if (choice == 0) {
+                break;
+            }
+
+            else if(choice!= 1 || choice!= 2 || choice !=0) {
+                System.out.println("Invalid Input!");
+                continue;
+            }
+
+            System.out.print("Enter Product ID[Enter 0 to End]: ");
             String productID = in.nextLine().trim().toUpperCase();
             if(productID.equals("0")) {
                 end = true;
@@ -707,7 +721,7 @@ public abstract class Employee {
 
     }
 
-    private void searchProductByName() {
+    protected void searchProductByName() {
 
         System.out.print("\nProduct Name: ");
         String productName = in.nextLine().trim().toUpperCase();
