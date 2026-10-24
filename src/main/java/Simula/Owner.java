@@ -37,7 +37,8 @@ public class Owner extends Employee {
                     "\t[7] View Transaction History\n "+
                     "ACCOUNT\n" +
                     "\t[8] Change Password\n" +
-                    "\t[9] Logout\n" +
+                    "\t[9] View Profile\n" +
+                    "\t[10] Logout\n" +
                     border + "\n" +
                     "Choice: ");
             int choice = userIntInput();
@@ -233,7 +234,13 @@ public class Owner extends Employee {
                     break;
                 }
 
-                case 9: {
+                case 9:{
+                    displayProfile();
+                    pause();
+                    break;
+                }
+
+                case 10: {
                     System.out.println(mborder);
                     System.out.println("Logging out...");
                     System.out.println(mborder);
