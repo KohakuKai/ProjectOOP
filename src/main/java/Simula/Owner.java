@@ -37,7 +37,7 @@ public class Owner extends Employee {
                     "\t[7] View Transaction History\n "+
                     "ACCOUNT\n" +
                     "\t[8] Change Password\n" +
-                    "\t[9] View Profile\n" +
+                    "\t[9] View My Profile\n" +
                     "\t[10] Logout\n" +
                     border + "\n" +
                     "Choice: ");
@@ -277,7 +277,6 @@ public class Owner extends Employee {
         System.out.println(border);
         System.out.printf("%27s%n", "CREATE EMPLOYEE");
         System.out.println(border);
-        System.out.println(line);
         String firstName = inputNames("Enter first name: ");
         String middleName = inputNames("Enter middle name: ");
         String lastName = inputNames("Enter last name: ");
@@ -301,16 +300,16 @@ public class Owner extends Employee {
             password = in.nextLine();
 
             if (!password.matches(".*[A-Z].*")) {
-                System.out.println(mborder+"\n!Password mush have at least one capital letter.!\n"+mborder);
+                System.out.println("Password mush have at least one capital letter.");
             }
             else if (!password.matches(".*[0-9].*")) {
-                System.out.println(mborder+"\n!Password must have at least one number.!\n"+mborder);
+                System.out.println("Password must have at least one number.");
             }
             else if (!password.matches(".*[^a-zA-Z0-9\\s].*")) {
-                System.out.println(mborder+"\n!Password must have at least one special character!\n"+mborder);
+                System.out.println("Password must have at least one special character");
             }
             else if (password.length() < 10) {
-                System.out.println(mborder+"\n!Password must have at least 10 characters!\n"+mborder);
+                System.out.println("Password must have at least 10 characters");
             }
             else {
                 break;
@@ -320,14 +319,14 @@ public class Owner extends Employee {
 
         for (Employee employee : manager.getEmployees()) {
             if (employee.getName().equalsIgnoreCase(name)
-                    && employee.getUsername().equalsIgnoreCase(username)) {
-                System.out.println(line+"\n"+border);
-                System.out.println("\n"+ mborder+"\nAccount already exists.\n"+mborder);
+                    && employee.getUsername().equalsIgnoreCase(username)
+                    && employee.getPassword().equals(password)) {
+                System.out.println("Account already exists.");
                 return;
             }
         }
 
-        System.out.println(line+"\nAssign position:");
+        System.out.println("\nAssign position:");
         System.out.println("\t[1] Pharmacist");
         System.out.println("\t[2] Staff");
         System.out.println(border);
@@ -439,9 +438,9 @@ public class Owner extends Employee {
         System.out.print("PRODUCT TYPE\n" +
                 "\t[1] Medicine\n" +
                 "\t[2] Essentials\n" +
-                "\t[0]Exit\n" +line+ "\nChoice: ");
+                "\t[0]Exit\n" +border+ "\nChoice: ");
         int choice = userIntInput();
-        System.out.println(line);
+        System.out.println(border);
         if (choice == 0) {
             return;
         }
@@ -492,11 +491,7 @@ public class Owner extends Employee {
 
             case 1 : {
 
-                System.out.print(line+"\nMedicine Type:\n" +
-                        "\t[1]Over-The-Counter\n" +
-                        "\t[2]Prescription Medicine\n" +
-                        "\t[3]Exit\n"+line+"\nChoice: ");
-                        //if medicine papapiliin kung OTP or PRESCRIPTION
+                System.out.print(line+"\nMedicine Type:\n\t[1]Over-The-Counter\n\t[2]Prescription Medicine\n\t[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
                 int choice2  = userIntInput();
                 System.out.println(line);
 
@@ -759,11 +754,35 @@ public class Owner extends Employee {
 
     private void purchaseProduct() {
 
-        Purchase purchase = new Purchase(this, inventory);
+        tag();
+        System.out.println("\n" + border);
+        System.out.printf("%27s%n", "PURCHASE PRODUCT");
+        System.out.println(border);
 
+        Purchase purchase = new Purchase(this, inventory);
         boolean end = false;
 
-        while(!end) {    //Loop to, add lang ng add ng product sa checkout hanggang mag input ng 0, tapos don matatapos
+        while(!end) {//Loop to, add lang ng add ng product sa checkout hanggang mag input ng 0, tapos don matatapos
+            System.out.print("\t[1]Input Product ID to Purchase\n"+
+                    "\t[2]Search Product Name\n" +
+                    "\t[0]Exit]\n" +
+                    border + "\nChoice:");
+            int choice = userIntInput();
+            System.out.println(border);
+
+            if(choice == 2) {
+                if(!searchProductByName())
+                    continue;
+            }
+
+            else if (choice == 0) {
+                break;
+            }
+
+            else if(choice!= 1) {
+                System.out.println("Invalid Input!");
+                continue;
+            }
 
             System.out.print("Product ID(Enter 0 to end): ");
             String productID = in.nextLine().trim().toUpperCase();
@@ -784,6 +803,12 @@ public class Owner extends Employee {
             System.out.print("Quantity: ");
             int quantity = userIntInput();
 
+            if(quantity<=0) {
+                System.out.println(mborder);
+                System.out.println("Invalid Quantity");
+                System.out.println(mborder);
+                continue;
+            }
 
             double unitCost = product.getSellingPrice();
 
@@ -796,13 +821,6 @@ public class Owner extends Employee {
             System.out.print("Expiration day: ");
             int day = userIntInput();
 
-            if(quantity<=0) {
-                System.out.println(mborder);
-                System.out.println("Invalid Quantity");
-                System.out.println(mborder);
-                continue;
-            }
-
             if(month<1 || month>12 || day <1 || day > 31) {
                 System.out.println(mborder);
                 System.out.println("Invalid Date");
@@ -811,6 +829,14 @@ public class Owner extends Employee {
             }
 
             LocalDate expiration = LocalDate.of(year,month,day);
+            LocalDate minimum = LocalDate.now().plusYears(3);
+
+            if(expiration.isBefore(minimum)) {
+                System.out.println(mborder);
+                System.out.println("Expiration date must be at least 3 years from today");
+                System.out.println(mborder);
+                continue;
+            }
 
             if(purchase.addPurchaseLine(quantity,unitCost,product,expiration)) { //pagg add eto sa TransactionDetail ArrayList
                 System.out.println("\n" + mborder + "Added to Checkout!" + mborder +"\n");
@@ -871,14 +897,13 @@ public class Owner extends Employee {
 
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
-        System.out.println(border);
 
         if (inventory.removeProduct(productID)) {
-            System.out.println("\n"+mborder);
+            System.out.println(mborder);
             System.out.println("Product Deleted Successfully!");
             System.out.println(mborder);
         } else {
-            System.out.println("\n"+mborder);
+            System.out.println(mborder);
             System.out.println("Product ID not found!");
             System.out.println(mborder);
         }
@@ -892,14 +917,13 @@ public class Owner extends Employee {
 
         System.out.print("Enter Category ID: ");
         String categoryID = in.nextLine().trim().toUpperCase();
-        System.out.println(border);
 
         if (inventory.removeCategory(categoryID)) {
-            System.out.println("\n"+mborder);
+            System.out.println(mborder);
             System.out.println("Category Deleted Successfully!");
             System.out.println(mborder);
         } else {
-            System.out.println("\n"+mborder);
+            System.out.println(mborder);
             System.out.println("Category ID not found!");
             System.out.println(mborder);
         }
