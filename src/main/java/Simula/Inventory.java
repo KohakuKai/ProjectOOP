@@ -1,6 +1,5 @@
 package Simula;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -45,12 +44,27 @@ public class Inventory {
         ArrayList<Product> matchedProducts = new ArrayList<>();
 
         for(Product p : products) {
-            if(p.getProductName().toUpperCase().contains(givenProductName)) {
+            if(p.getProductName().toUpperCase().contains(givenProductName)){
                 matchedProducts.add(p);
             }
         }
 
         return matchedProducts;
+    }
+
+    public ArrayList<Product> findProductByCategory(String givenCategoryString) {
+
+        ArrayList<Product> matchedProducts = new ArrayList<>();
+
+        for(Product p : products) {
+            if(p.getCategory().getCategory_Name().toUpperCase().contains(givenCategoryString) || //if match yung category name
+            p.getCategory().getCategory_ID().toUpperCase().equals(givenCategoryString)) { //if match yung category id
+                matchedProducts.add(p);
+            }
+        }
+
+        return matchedProducts;
+
     }
 
     public boolean removeProduct(String productID) {

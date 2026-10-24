@@ -178,7 +178,7 @@ public abstract class Employee {
         while (!end) {
             System.out.print("\t[1]Input Product ID to Sell\n"+
                     "\t[2]Search Product Name\n" +
-                    "\t[0]Exit]\n" +
+                    "\t[3]Checkout\n" +
                     border + "\nChoice:");
             int choice = userIntInput();
             System.out.println(border);
@@ -189,11 +189,11 @@ public abstract class Employee {
                     continue;
             }
 
-            else if (choice == 0) {
+            else if (choice == 3) {
                 break;
             }
 
-            else if(choice!= 1 || choice!= 2 || choice !=0) {
+            else if(choice!= 1 ) {
                 System.out.println("Invalid Input!");
                 continue;
             }
@@ -657,6 +657,7 @@ public abstract class Employee {
 
         System.out.print("\t[1]Search by ID\n" +
                 "\t[2]Search by Name\n" +
+                "\t[3]Search by Category\n" +
                 "\t[0]Exit\n");
         System.out.println(border);
         System.out.print("Choice: ");
@@ -706,12 +707,40 @@ public abstract class Employee {
                             System.out.println(mborder);
                             break;
                     }
+
+
                 }
 
 
 
                 break;
 
+            }
+            case 3 : {
+
+                if(searchProductByCategory()) {
+
+                    System.out.println(border);
+                    System.out.print("\t[1]View More Product Details\n\t[0]Exit\n" + border + "\nChoice:");
+                    choice = userIntInput();
+                    System.out.println(border);
+
+                    switch (choice) {
+                        case 1:
+                            displayMoreProductDetails();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            System.out.println(mborder);
+                            System.out.println("Invalid Input!");
+                            System.out.println(mborder);
+                            break;
+                    }
+
+                }
+
+                break;
             }
 
             case 0 : break;
@@ -736,7 +765,9 @@ public abstract class Employee {
         ArrayList<Product> matchedProducts = inventory.findProductByName(productName);
 
         if(matchedProducts.isEmpty()) {
-            System.out.println("No Product Name Found!");
+            System.out.println(mborder);
+            System.out.println("No Product Name Match!");
+            System.out.println(mborder);
             return false;
         }
 
@@ -751,6 +782,35 @@ public abstract class Employee {
         System.out.println();
 
         return true;
+    }
+
+    protected boolean searchProductByCategory() {
+
+        System.out.print("\nCategory Name/ID: ");
+        String givenCategoryString = in.nextLine().trim().toUpperCase();
+
+        ArrayList<Product> matchedProducts = inventory.findProductByCategory(givenCategoryString);
+
+        if(matchedProducts.isEmpty()) {
+            System.out.println(mborder);
+            System.out.println("No Category Match");
+            System.out.println(mborder);
+            return false;
+        }
+
+        System.out.println(border);
+        System.out.printf("%27s%n","SEARCH RESULTS");
+        System.out.println(border);
+        System.out.printf("%-15s %-15s %-15s %s%n","ID","Name","Price","Category");
+
+        for(Product p : matchedProducts) {
+            System.out.printf("%-15s %-15s %-15s %s%n",p.getProductID(), p.getProductName(),p.getSellingPrice(),p.getCategory().getCategory_Name());
+        }
+        System.out.println();
+
+        return true;
+
+
     }
 
     protected int removeAllExpiredBatches() {

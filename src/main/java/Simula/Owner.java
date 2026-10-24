@@ -765,7 +765,7 @@ public class Owner extends Employee {
         while(!end) {//Loop to, add lang ng add ng product sa checkout hanggang mag input ng 0, tapos don matatapos
             System.out.print("\t[1]Input Product ID to Purchase\n"+
                     "\t[2]Search Product Name\n" +
-                    "\t[0]Exit]\n" +
+                    "\t[3]Checkout\n" +
                     border + "\nChoice:");
             int choice = userIntInput();
             System.out.println(border);
@@ -775,7 +775,7 @@ public class Owner extends Employee {
                     continue;
             }
 
-            else if (choice == 0) {
+            else if (choice == 3) {
                 break;
             }
 
