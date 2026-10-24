@@ -353,7 +353,7 @@ public abstract class Employee {
             case 0:
                 break;
             default:
-                System.out.println(mborder);
+                System.out.println("\n"+mborder);
                 System.out.println("Invalid Input!");
                 System.out.println(mborder);
                 break;
@@ -372,7 +372,7 @@ public abstract class Employee {
         Product product = inventory.findProductById(productID);
 
         if (product == null) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Product not Found!");
             System.out.println(mborder);
             return;
@@ -662,18 +662,21 @@ public abstract class Employee {
         System.out.println(border);
         System.out.print("Choice: ");
         int choice = userIntInput();
-        System.out.printf(border);
+        System.out.println(border);
         switch (choice) {
 
             case 1: {
-
-                System.out.print("\nProduct ID: ");
+                System.out.println(line);
+                System.out.print("Product ID: ");
                 String productID = in.nextLine().trim().toUpperCase();
+                System.out.println(line);
 
                 Product product = inventory.findProductById(productID);
 
                 if (product == null) {
+                    System.out.println("\n"+mborder);
                     System.out.println("ProductID not found!");
+                    System.out.println(mborder);
                     break;
                 }
 
