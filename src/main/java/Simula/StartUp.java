@@ -28,12 +28,12 @@ public class StartUp {
         int choice = 0;
         while (true) {
             System.out.println("\n" + border);
-            System.out.println("\t\tPHARMACY SYSTEM");
+            System.out.printf("%32s\n","PHARMACY SYSTEM");
             System.out.println(border);
             System.out.println("\t[1] Log In");
             System.out.println("\t[2] Exit");
             System.out.println(border);
-            System.out.print("Type here: ");
+            System.out.print("Choice: ");
             choice = Employee.userIntInput();//kinuha ko nalang yung nasa employee kaysa gumawa ulit method
             System.out.println(border+"\n");
 
@@ -77,15 +77,20 @@ public class StartUp {
         System.out.print("Enter your password: ");
         String password = in.nextLine();
 
+        System.out.println(border);
         //ipapasa dito yung ininput then pagbalik, rekta store kay foundUser
         Employee foundEmployee = findUser(username, empID, password);
 
+        System.out.println(mborder);
+
         if (foundEmployee != null) {
             System.out.println("Login successful!");
+            System.out.println(mborder);
             // may override each subclass
             foundEmployee.showDashboard();
         } else {
             System.out.println("No matching account found. Please sign up first.");
+            System.out.println(mborder);
         }
     }
 

@@ -13,7 +13,7 @@ public class Staff extends Employee {
         while (true) {
             tag();
             System.out.println(border);
-            System.out.println("\t\tPHARMACY");
+            System.out.printf("%29s\n","PHARMACY");
             System.out.println(border);
 
             displayStockAlerts();

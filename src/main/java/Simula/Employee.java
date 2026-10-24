@@ -89,7 +89,7 @@ public abstract class Employee {
         String firstName = getName().trim().split(" ")[0];
         String userInfo = "[" + firstName + "|" + getPosition() + "]";
 
-        System.out.printf("\n%40s\n", userInfo);
+        System.out.printf("\n%50s\n", userInfo);
     }
 
     //pang pause sa action bago bumalik sa dashboard
@@ -129,7 +129,7 @@ public abstract class Employee {
     protected void changePassword() {
 
         System.out.print("\n" + border);
-        System.out.printf("%27s%n", "CHANGE PASSWORD");
+        System.out.printf("%32s%n", "CHANGE PASSWORD");
         System.out.println("\n" + border + "\nEnter Current password: ");
         String checkPassword = in.nextLine();
 
@@ -148,12 +148,16 @@ public abstract class Employee {
             System.out.println(mborder);
         }
 
+        System.out.println(border);
+
     }
 
     protected void displayProfile() {
-        System.out.println("\n" + border);
-        System.out.printf("%27s%n", "MY PROFILE");
+        tag();
         System.out.println(border);
+        System.out.printf("%30s\n", "MY PROFILE");
+        System.out.println(border);
+
         System.out.println("Employee ID: " + getEmpID());
         System.out.println("Name: " + getName());
         System.out.println("Position: " + getPosition());
@@ -171,7 +175,7 @@ public abstract class Employee {
 
         tag();
         System.out.println("\n" + border);
-        System.out.printf("%27s%n", "SELL PRODUCT");
+        System.out.printf("%31s%n", "SELL PRODUCT");
         System.out.println(border);
 
         Sale receipt = new Sale(this, inventory);
@@ -253,11 +257,11 @@ public abstract class Employee {
         //taga check ng discount
         boolean pwd = false;
         boolean senior = false;
-        System.out.print("\nCustomer Discount:\n" +
+        System.out.printf("%33s\n","CUSTOMER DISCOUNT\n" +
                 "\t[1] PWD\n" +
                 "\t[2] Senior\n" +
-                "\t[3] No Discount\n" +
-                "Enter Input: ");
+                "\t[3] No Discount\n" + border +
+                "\nChoice: ");
         int customerDiscount = userIntInput();
         switch (customerDiscount) {
             case 1:
@@ -276,11 +280,11 @@ public abstract class Employee {
         ArrayList<TransactionDetail> lines = receipt.getTransactionDetails();
 
         System.out.println(border);
-        System.out.printf("%27s%n", "RECEIPT");
+        System.out.printf("%28s%n", "RECEIPT");
         System.out.println(border);
-        System.out.println("Transaction ID: " + receipt.getTransactionID());
-        System.out.println("Date:           " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        System.out.println("Cashier:        " + getName() + " (" + getPosition() + ")");
+        System.out.println("Transaction ID:   " + receipt.getTransactionID());
+        System.out.println("Date:             " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println("Cashier:          " + getName() + " (" + getPosition() + ")");
         System.out.println("Transaction Type: " + receipt.getTransactionType());
 
         System.out.println(border);
@@ -317,7 +321,7 @@ public abstract class Employee {
         int counter = 1;
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "DISPLAY PRODUCTS");
+        System.out.printf("%33s\n", "DISPLAY PRODUCTS");
         System.out.println(border);
         System.out.printf("%-4s %-6s %-26s %10s%n", "#", "ID", "NAME", "PRICE");
         System.out.println(line);
@@ -327,7 +331,10 @@ public abstract class Employee {
         }
         System.out.println(line);
 
-        System.out.print("\t[1]View More Product Details\n\t[0]Exit\n" + border + "\nChoice:");
+        System.out.print("\t[1] View More Product Details\n" +
+                "\t[0] Exit\n" +
+                border +
+                "\nChoice: ");
         int choice = userIntInput();
         System.out.println(border);
 
@@ -365,45 +372,48 @@ public abstract class Employee {
 
         tag();
         System.out.println(border);
-        System.out.println("\t\tPRODUCT DETAILS");
+        System.out.printf("%32s\n","PRODUCT DETAILS");
         System.out.println(border);
         product.getInfo();
         System.out.println(border);
 
-        if (this instanceof Owner) {
-            System.out.print("[1] Edit Product Details\n" +
-                    "[0] Exit\nChoice: ");
-            int choice = userIntInput();
 
+        if (this instanceof Owner) {
+            System.out.print("\t[1] Edit Product Details\n" +
+                    "\t[0] Exit\n" + border +
+                    "\nChoice: ");
+            int choice = userIntInput();
+            System.out.println(border);
             switch (choice) {
                 case 1: {
                     while (true) {
                         tag();
                         System.out.println(border);
-                        System.out.printf("%27s%n", "EDIT PRODUCT DETAILS");
+                        System.out.printf("%35s%n", "EDIT PRODUCT DETAILS");
                         System.out.println(border);
 
                         product.getInfo();
 
                         System.out.println(border);
-                        System.out.println("[1] Product Name\n" +
-                                "[2] Generic Name\n" +
-                                "[3] Brand\n" +
-                                "[4] Unit\n" +
-                                "[5] Selling Price\n" +
-                                "[6] Reorder Level\n" +
-                                "[7] Category\n" +
-                                "[0] Exit\n");
+                        System.out.println("\t[1] Product Name\n" +
+                                "\t[2] Generic Name\n" +
+                                "\t[3] Brand\n" +
+                                "\t[4] Unit\n" +
+                                "\t[5] Selling Price\n" +
+                                "\t[6] Reorder Level\n" +
+                                "\t[7] Category\n" +
+                                "\t[0] Exit");
                         System.out.println(border);
                         System.out.print("Choose detail to edit: ");
 
-                        choice = userIntInput();
-                        System.out.println(border);
 
+                        choice = userIntInput();
                         switch (choice) {
                             case 1: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Product Name: ");
                                 String name = in.nextLine().trim();
+                                System.out.println(line);
 
                                 if (name.isEmpty()) {
                                     System.out.println("Product name cannot be empty!");
@@ -411,11 +421,14 @@ public abstract class Employee {
                                 }
 
                                 product.setProductName(name);
+                                System.out.println("\n" + mborder + "\nProduct name updated!\n" + mborder);
                                 break;
                             }
                             case 2: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Generic Name: ");
                                 String genericName = in.nextLine().trim();
+                                System.out.println(line);
 
                                 if (genericName.isEmpty()) {
                                     System.out.println("Generic name cannot be empty!");
@@ -423,11 +436,14 @@ public abstract class Employee {
                                 }
 
                                 product.setGenericName(genericName);
+                                System.out.println("\n" + mborder + "\nGeneric name updated!\n" + mborder);
                                 break;
                             }
                             case 3: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Brand: ");
                                 String brand = in.nextLine().trim();
+                                System.out.println(line);
 
                                 if (brand.isEmpty()) {
                                     System.out.println("Brand cannot be empty!");
@@ -435,11 +451,14 @@ public abstract class Employee {
                                 }
 
                                 product.setBrand(brand);
+                                System.out.println("\n" + mborder + "\nBrand name updated!\n" + mborder);
                                 break;
                             }
                             case 4: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Unit: ");
                                 String unit = in.nextLine().trim();
+                                System.out.println(line);
 
                                 if (unit.isEmpty()) {
                                     System.out.println("Unit cannot be empty!");
@@ -447,11 +466,14 @@ public abstract class Employee {
                                 }
 
                                 product.setUnit(unit);
+                                System.out.println("\n" + mborder + "\nUnit updated!\n" + mborder);
                                 break;
                             }
                             case 5: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Selling Price: ");
                                 double price = userDoubleInput();
+                                System.out.println(line);
 
                                 if (price < 0) {
                                     System.out.println("Price cannot be negative!");
@@ -459,11 +481,14 @@ public abstract class Employee {
                                 }
 
                                 product.setSellingPrice(price);
+                                System.out.println("\n" + mborder + "\nSelling price updated!\n" + mborder);
                                 break;
                             }
                             case 6: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Reorder Level: ");
                                 int reorderLevel = userIntInput();
+                                System.out.println(line);
 
                                 if (reorderLevel < 0) {
                                     System.out.println("Reorder level cannot be negative!");
@@ -471,11 +496,14 @@ public abstract class Employee {
                                 }
 
                                 product.setReorderLevel(reorderLevel);
+                                System.out.println("\n" + mborder + "\nReorder level updated!\n" + mborder);
                                 break;
                             }
                             case 7: {
+                                System.out.println(border + "\n\n" +line);
                                 System.out.print("Enter new Category ID: ");
                                 String categoryID = in.nextLine().trim().toUpperCase();
+                                System.out.println(line);
 
                                 Category category = inventory.findCategoryById(categoryID);
 
@@ -485,11 +513,13 @@ public abstract class Employee {
                                 }
 
                                 product.setCategory(category);
+                                System.out.println("\n" + mborder + "\nCategory updated!\n" + mborder);
                                 break;
                             }
                             case 0:
+                                System.out.println(border +"\n");
                                 System.out.println(mborder);
-                                System.out.println("Product details updated successfully!");
+                                System.out.println("Task cancelled!");
                                 System.out.println(mborder);
                                 return;
 
@@ -518,12 +548,12 @@ public abstract class Employee {
         int counter = 1;
         tag();
         System.out.println(border);
-        System.out.println("\t\t\tDISPLAY CATEGORIES");
+        System.out.printf("%34s\n","DISPLAY CATEGORIES");
         System.out.println(border);
-        System.out.printf("%-3s %-6s %-13s %-21.25s%n", "#", "ID", "NAME", "DESCRIPTION");
+        System.out.printf("%-3s %-6s %-15s %-23s%n", "#", "ID", "NAME", "DESCRIPTION");
         System.out.println(line);
         for (Category c : inventory.getCategories()) {
-            System.out.printf("%-3d %-6s %-13.15s %-21.25s%n", counter, c.getCategory_ID(),
+            System.out.printf("%-3d %-6s %-15.15s %-23.23s%n", counter, c.getCategory_ID(),
                     c.getCategory_Name(), c.getDescription());
             counter++;
         }
@@ -538,7 +568,7 @@ public abstract class Employee {
     protected void viewProductBatchDetails() {
         tag();
         System.out.println(border);
-        System.out.println("\t\t\tPRODUCT BATCHES");
+        System.out.printf("%32s\n","PRODUCT BATCHES");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
@@ -553,14 +583,16 @@ public abstract class Employee {
         }
 
         System.out.println(line);
-        System.out.println("\t\t\tPRODUCT DETAILS");
+        System.out.printf("%32s\n","PRODUCT DETAILS");
+        System.out.println(line);
+
         product.getInfo();
         System.out.printf("%-15s: %d%n", "Total Stock: ", product.getTotalStock());
 
         System.out.println(line);
-        System.out.println("\t\t\tBATCH DETAILS");
-        product.checkExpiration();
+        System.out.printf("%31s\n","BATCH DETAILS");
         System.out.println(line);
+        product.checkExpiration();
         System.out.println(border);
     }
 
@@ -570,18 +602,30 @@ public abstract class Employee {
     protected void viewTransactionHistory() {
 
         int counter = 1;
-        System.out.println("=== Transaction History ===\n");
+        tag();
+        System.out.println(border);
+        System.out.printf("%34s\n", "TRANSACTION HISTORY");
+        System.out.println(border)
+        ;
         for (Transaction t : inventory.getTransactions()) {
 
-            System.out.println("\t\t   " + counter);
-            System.out.println("Transaction ID: " + t.getTransactionID());
-            System.out.println("Transaction type: " + t.getTransactionType());
-            System.out.println("Transaction date: " + t.getTransactionDate());
-            System.out.println("Transaction by: " + t.getEmployee().getName() + "\n");
+            System.out.println("Transaction #" + counter);
+            System.out.println(line);
+
+            System.out.printf("%-18s: %s\n",
+                    "Transaction ID", t.getTransactionID());
+            System.out.printf("%-18s: %s\n",
+                    "Transaction Type", t.getTransactionType());
+            System.out.printf("%-18s: %s\n",
+                    "Transaction Date", t.getTransactionDate());
+            System.out.printf("%-18s: %s\n",
+                    "Transaction By", t.getEmployee().getName());
+
+            System.out.println(line);
             counter++;
 
         }
-
+        System.out.println(border);
         if (counter == 0) System.out.println("\tNothing to see here...");
 
     }
@@ -616,18 +660,18 @@ public abstract class Employee {
 
         if (expiredProducts > 0 && lowStockProducts > 0) {
             System.out.println(line);
-            System.out.printf("%27s%n", "!ALERTS!");
+            System.out.printf("%29s%n", "!ALERTS!");
             System.out.print("[EXPIRED] " + expiredProducts + " items");
             System.out.printf("%25s%n", "[LOW] " + lowStockProducts + " items");
             System.out.println(line);
         } else if (expiredProducts > 0 && lowStockProducts == 0) {
             System.out.println(line);
-            System.out.printf("%27s%n", "!ALERTS!");
+            System.out.printf("%29s%n", "!ALERTS!");
             System.out.println("[EXPIRED] " + expiredProducts + " items");
             System.out.println(line);
         } else if (expiredProducts == 0 && lowStockProducts > 0) {
             System.out.println(line);
-            System.out.printf("%27s%n", "!ALERTS!");
+            System.out.printf("%29s%n", "!ALERTS!");
             System.out.println("[LOW] " + lowStockProducts + " items");
             System.out.println(line);
         }
@@ -636,7 +680,7 @@ public abstract class Employee {
     protected void searchProduct() {
 
         System.out.println(border);
-        System.out.printf("%27s%n", "SEARCH PRODUCT");
+        System.out.printf("%32s%n", "SEARCH PRODUCT");
         System.out.println(border);
 
 
@@ -657,7 +701,9 @@ public abstract class Employee {
                 Product product = inventory.findProductById(productID);
 
                 if (product == null) {
+                    System.out.println(mborder);
                     System.out.println("ProductID not found!");
+                    System.out.println(mborder);
                     break;
                 }
 
@@ -675,7 +721,10 @@ public abstract class Employee {
                 searchProductByName();
 
                 System.out.println(border);
-                System.out.print("\t[1]View More Product Details\n\t[0]Exit\n" + border + "\nChoice:");
+                System.out.print("\t[1]View More Product Details\n" +
+                        "\t[0]Exit\n" +
+                        border +
+                        "\nChoice:");
                 choice = userIntInput();
                 System.out.println(border);
 
@@ -723,12 +772,16 @@ public abstract class Employee {
         }
 
         System.out.println(border);
-        System.out.printf("%27s%n","SEARCH RESULTS");
+        System.out.printf("%32s%n","SEARCH RESULTS");
         System.out.println(border);
-        System.out.printf("%-15s %-15s%s%n","ID","Name","Price");
+        System.out.printf("%-7s %-30s %11s\n","ID","Name","Price");
+        System.out.println(line);
 
         for(Product p : matchedProducts) {
-            System.out.printf("%-15s %-15s%.2f%n",p.getProductID(), p.getProductName(),p.getSellingPrice());
+            System.out.printf("%-7s %-30.30s %11.2f%n",
+                    p.getProductID(),
+                    p.getProductName(),
+                    p.getSellingPrice());
         }
         System.out.println();
 
