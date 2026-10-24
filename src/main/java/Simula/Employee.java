@@ -378,7 +378,7 @@ public abstract class Employee {
         Product product = inventory.findProductById(productID);
 
         if (product == null) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Product not Found!");
             System.out.println(mborder);
             return;
@@ -693,6 +693,7 @@ public abstract class Employee {
 
     protected void searchProduct() {
 
+        tag();
         System.out.println(border);
         System.out.printf("%32s%n", "SEARCH PRODUCT");
         System.out.println(border);
@@ -704,23 +705,26 @@ public abstract class Employee {
         System.out.println(border);
         System.out.print("Choice: ");
         int choice = userIntInput();
-        System.out.printf(border);
+        System.out.println(border);
         switch (choice) {
 
             case 1: {
 
-                System.out.print("\nProduct ID: ");
+                System.out.println("\n"+line);
+                System.out.print("Product ID: ");
                 String productID = in.nextLine().trim().toUpperCase();
+                System.out.println(line);
 
                 Product product = inventory.findProductById(productID);
 
                 if (product == null) {
-                    System.out.println(mborder);
+                    System.out.println("\n"+mborder);
                     System.out.println("ProductID not found!");
                     System.out.println(mborder);
                     break;
                 }
 
+                tag();
                 System.out.println(border);
                 System.out.println("\t\tPRODUCT DETAILS");
                 System.out.println(border);
@@ -772,19 +776,24 @@ public abstract class Employee {
 
     protected void searchProductByName() {
 
-        System.out.print("\nProduct Name: ");
+        System.out.print("\n" + line +
+                "\nProduct Name: ");
         String productName = in.nextLine().trim().toUpperCase();
+        System.out.println(line+"\n");
         if(productName.equals("0")) {
             return;
         }
 
         ArrayList<Product> matchedProducts = inventory.findProductByName(productName);
 
-        if(matchedProducts == null) {
-            System.out.println("No Product Name Found!");
+        if(matchedProducts.isEmpty()) {
+            System.out.println(mborder);
+            System.out.println("No Matches Found!");
+            System.out.println(mborder);
             return;
         }
 
+        tag();
         System.out.println(border);
         System.out.printf("%32s%n","SEARCH RESULTS");
         System.out.println(border);
@@ -797,9 +806,6 @@ public abstract class Employee {
                     p.getProductName(),
                     p.getSellingPrice());
         }
-        System.out.println();
-
-
     }
 
     protected int removeAllExpiredBatches() {
