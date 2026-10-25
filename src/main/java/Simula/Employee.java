@@ -941,7 +941,7 @@ public abstract class Employee {
          */
 
         System.out.println(border);
-        System.out.printf("%27s%n","SEARCH RESULTS");
+        System.out.printf("%32s%n","SEARCH RESULTS");
         System.out.println(border);
         System.out.printf("%-8s %-33s%7s%n","ID","Name","Price");
 

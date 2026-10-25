@@ -20,7 +20,7 @@ public class Owner extends Employee {
         while (true) {
             tag();
             System.out.println(border);
-            System.out.println("\t\t\t\tPHARMACY");
+            System.out.printf("%29s\n","PHARMACY");
             System.out.println(border);
 
             displayStockAlerts();
@@ -49,7 +49,7 @@ public class Owner extends Employee {
 
                     tag();
                     System.out.println(border);
-                    System.out.printf("%27s%n", "MANAGE EMPLOYEES");
+                    System.out.printf("%32s%n", "MANAGE EMPLOYEES");
                     System.out.println(border);
                     System.out.print("\t[1] Create Employee\n" +
                             "\t[2] View Employee\n" +
@@ -93,12 +93,12 @@ public class Owner extends Employee {
 
                     tag();
                     System.out.println(border);
-                    System.out.printf("%27s%n", "MANAGE PRODUCTS");
+                    System.out.printf("%32s%n", "MANAGE PRODUCTS");
                     System.out.println(border);
-                    System.out.print("\t[1]Create Product\n" +
-                            "\t[2]Display Products\n" +
-                            "\t[3]Delete Product\n" +
-                            "\t[4]Search Product\n" +
+                    System.out.print("\t[1] Create Product\n" +
+                            "\t[2] Display Products\n" +
+                            "\t[3] Delete Product\n" +
+                            "\t[4] Search Product\n" +
                             "\t[0] Exit\n" + border +
                             "\nChoice:");
                     int choice2 = userIntInput();
@@ -128,11 +128,11 @@ public class Owner extends Employee {
 
                     tag();
                     System.out.println(border);
-                    System.out.printf("%27s%n", "MANAGE CATEGORIES");
+                    System.out.printf("%33s%n", "MANAGE CATEGORIES");
                     System.out.println(border);
-                    System.out.print("\t[1]Add Category\n" +
-                            "\t[2]Display Categories\n" +
-                            "\t[3]Delete Category\n" +
+                    System.out.print("\t[1] Add Category\n" +
+                            "\t[2] Display Categories\n" +
+                            "\t[3] Delete Category\n" +
                             "\t[0] Exit\n" + border +
                             "\nChoice:");
                     int choice2 = userIntInput();
@@ -158,12 +158,12 @@ public class Owner extends Employee {
                 case 4:{
                     tag();
                     System.out.println(border);
-                    System.out.printf("%27s%n", "MANAGE STOCKS");
+                    System.out.printf("%31s%n", "MANAGE STOCKS");
                     System.out.println(border);
-                    System.out.print("\t[1]View a Product's Batches\n" +
-                            "\t[2]Add Stock(Manual Add)\n" +
-                            "\t[3]Reduce Stock(Manual Remove)\n" +
-                            "\t[4]Remove All Expired Batches\n"+
+                    System.out.print("\t[1] View a Product's Batches\n" +
+                            "\t[2] Add Stock(Manual Add)\n" +
+                            "\t[3] Reduce Stock(Manual Remove)\n" +
+                            "\t[4] Remove All Expired Batches\n"+
                             "\t[0] Exit\n"+ border +
                             "\nChoice: ");
                     int choice4 = userIntInput();
@@ -275,7 +275,7 @@ public class Owner extends Employee {
     private void createEmployee() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "CREATE EMPLOYEE");
+        System.out.printf("%32s%n", "CREATE EMPLOYEE");
         System.out.println(border);
         System.out.println(line);
         String firstName = inputNames("Enter first name: ");
@@ -367,7 +367,7 @@ public class Owner extends Employee {
     private void displayEmployees() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "DISPLAY EMPLOYEES");
+        System.out.printf("%33s%n", "DISPLAY EMPLOYEES");
         System.out.println(border);
         System.out.printf("%-10s  %-26s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
@@ -386,7 +386,7 @@ public class Owner extends Employee {
     private void deleteEmployee() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "DELETE EMPLOYEE");
+        System.out.printf("%32s%n", "DELETE EMPLOYEE");
         System.out.println(border);
         System.out.printf("%-7s  %-15s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
@@ -447,7 +447,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "CREATE PRODUCT");
+        System.out.printf("%32s%n", "CREATE PRODUCT");
         System.out.println(border);
 
         System.out.print("PRODUCT TYPE\n" +
@@ -585,7 +585,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "ADD CATEGORY");
+        System.out.printf("%31s%n", "ADD CATEGORY");
         System.out.println(border);
 
         System.out.print("Category Name: ");
@@ -620,7 +620,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "ADD BATCH");
+        System.out.printf("%29s%n", "ADD BATCH");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String ProductID = in.nextLine().trim().toUpperCase();
@@ -678,7 +678,7 @@ public class Owner extends Employee {
     private void addStock() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "ADD STOCK");
+        System.out.printf("%29s%n", "ADD STOCK");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
@@ -728,7 +728,7 @@ public class Owner extends Employee {
     private void reduceStock() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "REDUCE STOCK");
+        System.out.printf("%31s%n", "REDUCE STOCK");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
@@ -778,7 +778,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println("\n" + border);
-        System.out.printf("%27s%n", "PURCHASE PRODUCT");
+        System.out.printf("%33s%n", "PURCHASE PRODUCT");
         System.out.println(border);
 
         Purchase purchase = new Purchase(this, inventory);
@@ -892,7 +892,7 @@ public class Owner extends Employee {
         ArrayList<LocalDate> expirationDates = purchase.getExpirationDates(); //para lang to sa pag print ng receipt
 
         System.out.println(border);
-        System.out.printf("%27s%n", "RECEIPT");
+        System.out.printf("%28s%n", "RECEIPT");
         System.out.println("Transaction ID: "+ purchase.getTransactionID());
         System.out.println("Transaction Type: "+ purchase.getTransactionType());
         System.out.println("Purchase No.: " + purchase.getPurchaseOrderNo());
@@ -915,7 +915,7 @@ public class Owner extends Employee {
     private void deleteProduct() {
         tag();
         System.out.println(border);
-        System.out.printf("%31s%n", "DELETE PRODUCT");
+        System.out.printf("%32s%n", "DELETE PRODUCT");
         System.out.println(border);
 
         while (true) {
@@ -1000,7 +1000,7 @@ public class Owner extends Employee {
     private void deleteCategory() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "DELETE CATEGORY");
+        System.out.printf("%32s%n", "DELETE CATEGORY");
         System.out.println(border);
 
         System.out.print("Enter Category ID: ");
