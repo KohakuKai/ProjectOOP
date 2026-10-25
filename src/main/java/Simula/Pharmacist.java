@@ -69,11 +69,16 @@ public class Pharmacist extends Employee {
                     pause();
                     break;
 
-                case 0:
+                case 0: {
                     System.out.println(mborder);
                     System.out.printf("%32s\n", "Logging out...");
                     System.out.println(mborder);
                     return;
+                }
+
+                case 11 : expiredItemsMenu(); break;
+                case 12 : displayLowStockProducts(); pause(); break;
+
 
                 default:
                     System.out.println(mborder);

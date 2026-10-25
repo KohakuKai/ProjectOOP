@@ -205,7 +205,7 @@ public class Inventory {
         Product tempra = new OverTheCounter("Tempra Drops","Paracetamol","Taisho","Drops",150,15,findCategoryById("C005"));                   // index 7
         // Antibiotics (C002) - prescription
         Product amoxil = new PrescriptionMedicine("Amoxil 500mg","Amoxicillin","GSK","Capsule",14,60,findCategoryById("C002"));               // index 8
-        Product zithromax = new PrescriptionMedicine("Zithromax 500mg","Azithromycin","Pfizer","Tablet",120,20,findCategoryById("C002"));     // index 9
+        Product zithromax = new PrescriptionMedicine("Zithromax 500mg","Azithromycin","Pfizer","Tablet",120,80,findCategoryById("C002"));     // index 9
         Product cipro = new PrescriptionMedicine("Ciprofloxacin 500mg","Ciprofloxacin","Generic","Tablet",20,30,findCategoryById("C002"));    // index 10
         Product augmentin = new PrescriptionMedicine("Augmentin 625mg","Amoxicillin + Clavulanic Acid","GSK","Tablet",65,30,findCategoryById("C002")); // index 11
         // Vitamins (C001)
@@ -238,9 +238,9 @@ public class Inventory {
         // Baby Care (C012) - essentials
         Product babyPowder = new Essentials("Baby Powder","Talcum Powder","Johnson & Johnson","Bottle",110,20,findCategoryById("C012"));     // index 31
         // Medical Devices (C013) - essentials
-        Product thermometer = new Essentials("Digital Thermometer","Digital Thermometer","Omron","Piece",350,10,findCategoryById("C013"));   // index 32
+        Product thermometer = new Essentials("Digital Thermometer","Digital Thermometer","Omron","Piece",350,30,findCategoryById("C013"));   // index 32
 
-        biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));
+        biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));  //EXPIRED
         vitaminC.addBatch(new Batch(200,vitaminC,LocalDate.parse("2028-09-11")));
         biogesic.addBatch(new Batch(300,biogesic,LocalDate.parse("2027-11-11")));
         bioflu.addBatch(new Batch(200, bioflu,LocalDate.parse("2028-07-11")));

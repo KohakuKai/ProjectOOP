@@ -128,9 +128,9 @@ public abstract class Employee {
 
     protected void changePassword() {
 
-        System.out.println("\n" + border);
+        System.out.print("\n" + border);
         System.out.printf("%32s%n", "CHANGE PASSWORD");
-        System.out.print(border + "\nEnter Current password: ");
+        System.out.println("\n" + border + "\nEnter Current password: ");
         String checkPassword = in.nextLine();
 
         if (checkPassword.equals(this.getPassword())) {
@@ -743,19 +743,19 @@ public abstract class Employee {
 
         if (expiredProducts > 0 && lowStockProducts > 0) {
             System.out.println(line);
-            System.out.printf("%29s%n", "!ALERTS!");
-            System.out.print("[EXPIRED] " + expiredProducts + " items");
-            System.out.printf("%25s%n", "[LOW] " + lowStockProducts + " items");
+            System.out.printf("%28s%n", "!ALERTS!");
+            System.out.print("[11] EXPIRED(" + expiredProducts + " items)");
+            System.out.printf("%26s%n", "[12] LOW STOCK(" + lowStockProducts + " items)");
             System.out.println(line);
         } else if (expiredProducts > 0 && lowStockProducts == 0) {
             System.out.println(line);
-            System.out.printf("%29s%n", "!ALERTS!");
-            System.out.println("[EXPIRED] " + expiredProducts + " items");
+            System.out.printf("%28s%n", "!ALERTS!");
+            System.out.println("[11] EXPIRED(" + expiredProducts + " items)");
             System.out.println(line);
         } else if (expiredProducts == 0 && lowStockProducts > 0) {
             System.out.println(line);
-            System.out.printf("%29s%n", "!ALERTS!");
-            System.out.println("[LOW] " + lowStockProducts + " items");
+            System.out.printf("%28s%n", "!ALERTS!");
+            System.out.println("[12] LOW STOCK(" + lowStockProducts + " items)");
             System.out.println(line);
         }
     }
@@ -825,11 +825,7 @@ public abstract class Employee {
                             break;
                     }
 
-
                 }
-
-
-
                 break;
 
             }
@@ -902,7 +898,7 @@ public abstract class Employee {
         }
 
         System.out.println(border);
-        System.out.printf("%32s%n","SEARCH RESULTS");
+        System.out.printf("%27s%n","SEARCH RESULTS");
         System.out.println(border);
         System.out.printf("%-8s %-33s%7s%n","ID","Name","Price");
 
@@ -948,13 +944,44 @@ public abstract class Employee {
 
     }
 
+    protected int returnNearExpiration() {
+
+        if(!(this instanceof Owner)) {
+            System.out.println(mborder);
+            System.out.println("Owner Access Needed!");
+            System.out.println(mborder);
+            return 0;
+        }
+
+        int returnedBatches=0;
+        for(Product p : inventory.getProducts()) {
+
+            ArrayList<Batch> batches = p.getBatches();
+
+            for(int i=0; i<batches.size();i++) {
+                if(batches.get(i).isNearExpiration()) {
+                    batches.remove(i);
+                    returnedBatches++;
+                }
+
+            }
+        }
+        return returnedBatches;
+    }
+
     protected int removeAllExpiredBatches() {
+
+        if(!(this instanceof Owner)) {
+            System.out.println(mborder);
+            System.out.println("Owner Access Needed!");
+            System.out.println(mborder);
+            return 0;
+        }
 
         int removed = 0;
         for (Product p : inventory.getProducts()) {
 
             ArrayList<Batch> batches = p.getBatches();
-
 
             for (int i = 0; i < batches.size(); i++) {
                 if (batches.get(i).isExpired()) {
@@ -967,6 +994,169 @@ public abstract class Employee {
         }
         return removed;
     }
+
+
+    protected void displayExpiredBatches() {
+
+        System.out.println(border);
+        System.out.printf("%31s%n", "EXPIRED BATCHES");
+        System.out.println(border);
+
+        for(Product p : inventory.getProducts()) {
+
+            ArrayList<Batch> batches = p.getBatches();
+
+            for(int i=0;i<batches.size();i++) {
+                if(batches.get(i).isExpired()) {
+                    System.out.printf("%27s%n", p.getProductName() );
+                    System.out.println("\nBatch ID       : " + batches.get(i).getBatchID());
+                    System.out.println("Quantity       : " + batches.get(i).getQuantity());
+                    System.out.println("Expiration Date: " + batches.get(i).getExpirationDate());
+                    System.out.println(mborder);
+
+                }
+
+            }
+
+        }
+
+        System.out.print("\t[1] Remove All Expired Batches\n" +
+                "\t[0] Exit\n" + border +
+                "\nChoice: ");
+        int choice = userIntInput();
+
+        switch (choice) {
+
+            case 1 : System.out.println("[Removed] "+ removeAllExpiredBatches() + " Batches\n"+border); break;
+            case 0 : return;
+            default: {
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+        }
+
+    }
+
+
+
+    protected void displayNearExpiryBatches () {
+
+        System.out.println(border);
+        System.out.printf("%31s%n", "NEAR EXPIRY BATCHES");
+        System.out.println(border);
+
+        for(Product p : inventory.getProducts()) {
+
+            ArrayList<Batch> batches = p.getBatches();
+
+            for(int i =0; i<batches.size();i++) {
+
+                if(batches.get(i).isNearExpiration()) {
+
+                    System.out.printf("%27s%n", p.getProductName() );
+                    System.out.println("\nBatch ID       : " + batches.get(i).getBatchID());
+                    System.out.println("Quantity       : " + batches.get(i).getQuantity());
+                    System.out.println("Expiration Date: " + batches.get(i).getExpirationDate());
+                    System.out.println(mborder);
+
+                }
+
+            }
+
+
+        }
+
+        System.out.print("\t[1] Return All Near Expiry Batches\n" +
+                "\t[0] Exit\n" + border +
+                "\nChoice: ");
+        int choice = userIntInput();
+        System.out.println(border);
+
+        switch (choice) {
+
+            case 1 :
+                System.out.println("[Returned] "+ returnNearExpiration() + " Batches\n"+border); break;
+            case 0 : return;
+            default: {
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+        }
+
+
+    }
+
+    protected void displayLowStockProducts() {
+
+        System.out.println(border);
+        System.out.printf("%31s%n", "LOW STOCK PRODUCTS");
+        System.out.println(border);
+
+        for(Product p : inventory.getProducts()) {
+            int totalProductStock = 0;
+
+            ArrayList<Batch> batches = p.getBatches();
+
+            for(Batch b : batches) {
+                if(!b.isExpired() || !b.isNearExpiration()) {
+                    totalProductStock += b.getQuantity();
+                }
+            }
+
+            if(totalProductStock<p.getReorderLevel()) {
+                int stockNeeded = p.getReorderLevel()-totalProductStock;
+
+                System.out.printf("%27s%n", p.getProductName() );
+                System.out.println("\nProduct ID      : " + p.getProductID());
+                System.out.println("Available Stock : " + totalProductStock);
+                System.out.println("Reorder Level   :  " + p.getReorderLevel());
+                System.out.println("Stock Needed    :" + stockNeeded );
+                System.out.println(mborder);
+
+            }
+
+        }
+
+
+    }
+
+    //MENUS _________________________________________________________________________________________________________________
+
+
+    protected void expiredItemsMenu() {
+
+        System.out.println("\n"+ border);
+
+        System.out.printf("%31s%n", "EXPIRATION" );
+        System.out.print(border +
+                "\n\t[1] View Expired Batches\n" +
+                "\t[2] View Near Expiry Product\n" +
+                "\t[0] Exit\n" + border +
+                "\nChoice: ");
+        int choice = userIntInput();
+
+        switch (choice) {
+
+            case 1 : displayExpiredBatches(); pause(); break;
+            case 2 : displayNearExpiryBatches(); pause(); break;
+            case 0 : ; return;
+            default: {
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+        }
+
+    }
+
 
 
 

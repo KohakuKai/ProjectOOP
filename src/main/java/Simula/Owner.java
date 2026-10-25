@@ -1,5 +1,6 @@
 package Simula;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class Owner extends Employee {
         while (true) {
             tag();
             System.out.println(border);
-            System.out.printf("%29s\n","PHARMACY");
+            System.out.printf("%28s%n","PHARMACY");
             System.out.println(border);
 
             displayStockAlerts();
@@ -45,207 +46,24 @@ public class Owner extends Employee {
             System.out.println(border+"\n");
 
             switch (choice) {
-                case 1: {
-
-                    tag();
-                    System.out.println(border);
-                    System.out.printf("%32s%n", "MANAGE EMPLOYEES");
-                    System.out.println(border);
-                    System.out.print("\t[1] Create Employee\n" +
-                            "\t[2] View Employee\n" +
-                            "\t[3] Delete Employee\n" +
-                            "\t[0] Exit\n" +
-                            border+ "\n" +
-                            "Choice: ");
-                    int temp = userIntInput();
-                    System.out.println(border+"\n");
-                    switch (temp) {
-                        case 1: {
-                            createEmployee();
-                            pause();
-                            break;
-                        }
-                        case 2: {
-                            displayEmployees();
-                            pause();
-                            break;
-                        }
-                        case 3: {
-                            deleteEmployee();
-                            pause();
-                            break;
-                        }
-                        case 0: {
-                            break;
-                        }
-                        default:{
-                            System.out.println(mborder);
-                            System.out.printf("%36s\n", "Invalid input. Try Again");
-                            System.out.println(mborder);
-                            pause();
-                            break;
-                        }
-                    }
-                    break;
-                }
-
-                case 2 :{
-
-                    tag();
-                    System.out.println(border);
-                    System.out.printf("%32s%n", "MANAGE PRODUCTS");
-                    System.out.println(border);
-                    System.out.print("\t[1] Create Product\n" +
-                            "\t[2] Display Products\n" +
-                            "\t[3] Delete Product\n" +
-                            "\t[4] Search Product\n" +
-                            "\t[0] Exit\n" + border +
-                            "\nChoice:");
-                    int choice2 = userIntInput();
-                    System.out.println(border+"\n");
-
-                    //case 3 : editProductDetails(); pause(); break;
-
-                    switch(choice2) {
-
-                        case 1 : createProduct(); pause(); break;
-                        case 2 : displayProducts(); pause(); break;
-                        case 3 : deleteProduct(); pause(); break;
-                        case 4 : searchProduct(); pause(); break;
-                        case 0 : break;
-                        default : {
-                            System.out.println(mborder);
-                            System.out.printf("%36s\n", "Invalid input. Try Again");
-                            System.out.println(mborder);
-                            pause();
-                            break;
-                        }
-                    }
-                    break;
-                }
-
-                case 3 : {
-
-                    tag();
-                    System.out.println(border);
-                    System.out.printf("%33s%n", "MANAGE CATEGORIES");
-                    System.out.println(border);
-                    System.out.print("\t[1] Add Category\n" +
-                            "\t[2] Display Categories\n" +
-                            "\t[3] Delete Category\n" +
-                            "\t[0] Exit\n" + border +
-                            "\nChoice:");
-                    int choice2 = userIntInput();
-                    System.out.println(border+"\n");
-
-                    switch(choice2) {
-
-                        case 1 : addCategory(); pause(); break;
-                        case 2 : displayCategories(); pause(); break;
-                        case 3 : deleteCategory(); pause(); break;
-                        case 0 : break;
-                        default : {
-                            System.out.println(mborder);
-                            System.out.printf("%36s\n", "Invalid input. Try Again");;
-                            System.out.println(mborder);
-                            pause();
-                            break;
-                        }
-                    }
-                    break;
-
-                }
-                case 4:{
-                    tag();
-                    System.out.println(border);
-                    System.out.printf("%31s%n", "MANAGE STOCKS");
-                    System.out.println(border);
-                    System.out.print("\t[1] View a Product's Batches\n" +
-                            "\t[2] Add Stock(Manual Add)\n" +
-                            "\t[3] Reduce Stock(Manual Remove)\n" +
-                            "\t[4] Remove All Expired Batches\n"+
-                            "\t[0] Exit\n"+ border +
-                            "\nChoice: ");
-                    int choice4 = userIntInput();
-                    System.out.println(border+"\n");
-
-                    switch(choice4){
-                        case 1:{
-                            viewProductBatchDetails();
-                            pause();
-                            break;
-                        }
-                        case 2:{
-                            addStock();
-                            pause();
-                            break;
-                        }
-                        case 3:{
-                            reduceStock();
-                            pause();
-                            break;
-                        }
-
-                        case 4 : {
-
-                            System.out.println(border);
-                            System.out.println("\t[Removed] "+removeAllExpiredBatches() + " Batches");
-                            System.out.println(border);
-                            pause();
-                            break;
-                        }
-
-                        case 0: {
-                            break;
-                        }
-
-                        default:{
-                            System.out.println(mborder);
-                            System.out.printf("%36s\n", "Invalid input. Try Again");
-                            System.out.println(mborder);
-                            pause();
-                            break;
-                        }
-
-                    }
-                    break;
-                }
-                case 5:{
-                    sellProduct();
-                    pause();
-                    break;
-                }
-
-                case 6 : {
-                    purchaseProduct();
-                    pause();
-                    break;
-                }
-
-                case 7:{
-                    viewTransactionHistory();
-                    pause();
-                    break;
-                }
-
-                case 8:{
-                    changePassword();
-                    pause();
-                    break;
-                }
-
-                case 9:{
-                    displayProfile();
-                    pause();
-                    break;
-                }
-
+                case 1: manageEmployeeMenu();   break;
+                case 2: manageProductMenu();   break;
+                case 3: manageCategoryMenu();   break;
+                case 4: manageStockMenu();   break;
+                case 5: sellProduct();  pause();  break;
+                case 6 : purchaseProduct();  pause();  break;
+                case 7: viewTransactionHistory();  pause();  break;
+                case 8: changePassword(); pause(); break;
+                case 9: displayProfile(); pause(); break;
                 case 10: {
                     System.out.println(mborder);
                     System.out.printf("%32s\n", "Logging out...");
                     System.out.println(mborder);
                     return;
                 }
+
+                case 11 : expiredItemsMenu(); break;
+                case 12 : displayLowStockProducts(); pause(); break;
 
                 default: {
                     System.out.println(mborder);
@@ -275,7 +93,7 @@ public class Owner extends Employee {
     private void createEmployee() {
         tag();
         System.out.println(border);
-        System.out.printf("%32s%n", "CREATE EMPLOYEE");
+        System.out.printf("%27s%n", "CREATE EMPLOYEE");
         System.out.println(border);
         System.out.println(line);
         String firstName = inputNames("Enter first name: ");
@@ -367,7 +185,7 @@ public class Owner extends Employee {
     private void displayEmployees() {
         tag();
         System.out.println(border);
-        System.out.printf("%33s%n", "DISPLAY EMPLOYEES");
+        System.out.printf("%27s%n", "DISPLAY EMPLOYEES");
         System.out.println(border);
         System.out.printf("%-10s  %-26s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
@@ -386,7 +204,7 @@ public class Owner extends Employee {
     private void deleteEmployee() {
         tag();
         System.out.println(border);
-        System.out.printf("%32s%n", "DELETE EMPLOYEE");
+        System.out.printf("%27s%n", "DELETE EMPLOYEE");
         System.out.println(border);
         System.out.printf("%-7s  %-15s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
@@ -447,7 +265,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.printf("%32s%n", "CREATE PRODUCT");
+        System.out.printf("%27s%n", "CREATE PRODUCT");
         System.out.println(border);
 
         System.out.print("PRODUCT TYPE\n" +
@@ -586,7 +404,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.printf("%31s%n", "ADD CATEGORY");
+        System.out.printf("%27s%n", "ADD CATEGORY");
         System.out.println(border);
 
         System.out.print("Category Name: ");
@@ -623,7 +441,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println(border);
-        System.out.printf("%29s%n", "ADD BATCH");
+        System.out.printf("%27s%n", "ADD BATCH");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String ProductID = in.nextLine().trim().toUpperCase();
@@ -681,7 +499,7 @@ public class Owner extends Employee {
     private void addStock() {
         tag();
         System.out.println(border);
-        System.out.printf("%29s%n", "ADD STOCK");
+        System.out.printf("%27s%n", "ADD STOCK");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
@@ -731,7 +549,7 @@ public class Owner extends Employee {
     private void reduceStock() {
         tag();
         System.out.println(border);
-        System.out.printf("%31s%n", "REDUCE STOCK");
+        System.out.printf("%27s%n", "REDUCE STOCK");
         System.out.println(border);
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
@@ -781,7 +599,7 @@ public class Owner extends Employee {
 
         tag();
         System.out.println("\n" + border);
-        System.out.printf("%33s%n", "PURCHASE PRODUCT");
+        System.out.printf("%27s%n", "PURCHASE PRODUCT");
         System.out.println(border);
 
         Purchase purchase = new Purchase(this, inventory);
@@ -898,7 +716,7 @@ public class Owner extends Employee {
         ArrayList<LocalDate> expirationDates = purchase.getExpirationDates(); //para lang to sa pag print ng receipt
 
         System.out.println(border);
-        System.out.printf("%28s%n", "RECEIPT");
+        System.out.printf("%27s%n", "RECEIPT");
         System.out.println("Transaction ID: "+ purchase.getTransactionID());
         System.out.println("Transaction Type: "+ purchase.getTransactionType());
         System.out.println("Purchase No.: " + purchase.getPurchaseOrderNo());
@@ -921,7 +739,7 @@ public class Owner extends Employee {
     private void deleteProduct() {
         tag();
         System.out.println(border);
-        System.out.printf("%32s%n", "DELETE PRODUCT");
+        System.out.printf("%31s%n", "DELETE PRODUCT");
         System.out.println(border);
 
         while (true) {
@@ -990,7 +808,7 @@ public class Owner extends Employee {
     private void deleteCategory() {
         tag();
         System.out.println(border);
-        System.out.printf("%32s%n", "DELETE CATEGORY");
+        System.out.printf("%27s%n", "DELETE CATEGORY");
         System.out.println(border);
 
         System.out.print("Enter Category ID: ");
@@ -1006,6 +824,167 @@ public class Owner extends Employee {
             System.out.printf("%36s\n", "Category ID not found!");
             System.out.println(mborder);
         }
+    }
+
+
+    //MGA MENUS NA TO --------------------------------------------------------------------------------------------------------------------------------------
+
+    private void manageEmployeeMenu() {
+
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "MANAGE EMPLOYEES");
+        System.out.println(border);
+        System.out.print("\t[1] Create Employee\n" +
+                "\t[2] View Employee\n" +
+                "\t[3] Delete Employee\n" +
+                "\t[0] Exit\n" +
+                border+ "\n" +
+                "Choice: ");
+        int temp = userIntInput();
+        System.out.println(border+"\n");
+        switch (temp) {
+            case 1: {
+                createEmployee();
+                pause();
+                break;
+            }
+            case 2: {
+                displayEmployees();
+                pause();
+                break;
+            }
+            case 3: {
+                deleteEmployee();
+                pause();
+                break;
+            }
+            case 0: {
+                break;
+            }
+            default:{
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+        }
+
+    }
+
+    private void manageProductMenu() {
+
+
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "MANAGE PRODUCTS");
+        System.out.println(border);
+        System.out.print("\t[1]Create Product\n" +
+                "\t[2]Display Products\n" +
+                "\t[3]Delete Product\n" +
+                "\t[4]Search Product\n" +
+                "\t[0] Exit\n" + border +
+                "\nChoice:");
+        int choice2 = userIntInput();
+        System.out.println(border+"\n");
+
+        //case 3 : editProductDetails(); pause(); break;
+
+        switch(choice2) {
+
+            case 1 : createProduct(); pause(); break;
+            case 2 : displayProducts(); pause(); break;
+            case 3 : deleteProduct(); pause(); break;
+            case 4 : searchProduct(); pause(); break;
+            case 0 : break;
+            default : {
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+        }
+
+    }
+
+    private void manageCategoryMenu() {
+
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "MANAGE CATEGORIES");
+        System.out.println(border);
+        System.out.print("\t[1]Add Category\n" +
+                "\t[2]Display Categories\n" +
+                "\t[3]Delete Category\n" +
+                "\t[0] Exit\n" + border +
+                "\nChoice:");
+        int choice2 = userIntInput();
+        System.out.println(border+"\n");
+
+        switch(choice2) {
+
+            case 1 : addCategory(); pause(); break;
+            case 2 : displayCategories(); pause(); break;
+            case 3 : deleteCategory(); pause(); break;
+            case 0 : break;
+            default : {
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");;
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+        }
+
+    }
+
+    private void manageStockMenu() {
+
+        tag();
+        System.out.println(border);
+        System.out.printf("%27s%n", "MANAGE STOCKS");
+        System.out.println(border);
+        System.out.print("\t[1]View a Product's Batches\n" +
+                "\t[2]Add Stock(Manual Add)\n" +
+                "\t[3]Reduce Stock(Manual Remove)\n" +
+                "\t[0] Exit\n"+ border +
+                "\nChoice: ");
+        int choice4 = userIntInput();
+        System.out.println(border+"\n");
+
+        switch(choice4){
+            case 1:{
+                viewProductBatchDetails();
+                pause();
+                break;
+            }
+            case 2:{
+                addStock();
+                pause();
+                break;
+            }
+            case 3:{
+                reduceStock();
+                pause();
+                break;
+            }
+
+            case 0: {
+                break;
+            }
+
+            default:{
+                System.out.println(mborder);
+                System.out.printf("%36s\n", "Invalid input. Try Again");
+                System.out.println(mborder);
+                pause();
+                break;
+            }
+
+        }
+
     }
 
 }
