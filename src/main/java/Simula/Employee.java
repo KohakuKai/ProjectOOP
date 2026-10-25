@@ -140,11 +140,11 @@ public abstract class Employee {
 
             setPassword(newPassword);
             System.out.println(mborder);
-            System.out.println("Password changed successfully!");
+            System.out.printf("%40s\n","Password changed successfully!");
             System.out.println(mborder);
         } else {
             System.out.println(mborder);
-            System.out.println("Password does not match!");
+            System.out.printf("%37s\n","Password does not match!");
             System.out.println(mborder);
         }
 
@@ -181,9 +181,9 @@ public abstract class Employee {
         boolean end = false;
 
         while (!end) {
-            System.out.print("\t[1]Input Product ID to Sell\n"+
-                    "\t[2]Search Product Name\n" +
-                    "\t[3]Checkout\n" +
+            System.out.print("\t[1] Input Product ID to Sell\n"+
+                    "\t[2] Search Product Name\n" +
+                    "\t[3] Checkout\n" +
                     border + "\nChoice: ");
             int choice = userIntInput();
             System.out.println(border);
@@ -206,8 +206,7 @@ public abstract class Employee {
 
             Product product;
             while (true) {
-                System.out.println("[Enter 0 to End]");
-                System.out.print("Enter Prouct ID: ");
+                System.out.print("Product ID [0 to cancel]: ");
                 String productID = in.nextLine().trim().toUpperCase();
 
                 if (productID.equals("0")) {
@@ -228,27 +227,6 @@ public abstract class Employee {
             }
             if (end) break;
 
-            /*
-            System.out.println("[Enter 0 to End]");
-            System.out.print("Enter Product ID: ");
-            String productID = in.nextLine().trim().toUpperCase();
-            System.out.println(border);
-            if(productID.equals("0")) {
-                end = true;
-                break;
-            }
-
-            Product product = inventory.findProductById(productID);
-
-            if (product == null) {
-                System.out.println(border + "\n");
-                System.out.println(mborder);
-                System.out.println("Product not found.");
-                System.out.println(mborder);
-                continue;
-            }
-             */
-
             int removed = product.removeExpiredBatches();//pangremove ng expired batches para sa product nayon
             if(removed>0)System.out.println(
                     "\n"+mborder+"\n[Removed] "+ removed+
@@ -256,7 +234,11 @@ public abstract class Employee {
                     product.getProductName()+"\n"+mborder+"\n");
 
             if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
-                System.out.println(border + "\n\n" + mborder + "\nOnly the Owner or a Pharmacist can sell prescription medicine." + mborder);
+                System.out.println(border + "\n");
+                System.out.println(mborder);
+                System.out.printf("%40s\n", "Only the Owner or a Pharmacist");
+                System.out.printf("%40s\n", "can sell prescription medicine.");
+                System.out.println(mborder);
                 continue;
             }
 
@@ -293,37 +275,15 @@ public abstract class Employee {
                 else break;
             }
 
-            /*
-            System.out.println(line);
-            System.out.println("Product Name: " + product.getProductName());
-            System.out.println("Selling Price: " + product.getSellingPrice());
-            System.out.println("Available Stock: " + product.getTotalStock());
-
-            System.out.print("Enter Quantity: ");
-            int quantity = userIntInput();
-            System.out.println(line);
-            if (quantity <= 0) {
-                System.out.println("\n"+border + "\n");
-                System.out.println(mborder);
-                System.out.println("Invalid quantity.");
-                System.out.println(mborder);
-                continue;
-            }
-            if (quantity > product.getTotalStock()) {
-                System.out.println("\n"+border + "\n");
-                System.out.println(mborder);
-                System.out.println("Insufficient stock.");
-                System.out.println(mborder);
-                continue;
-            }
-             */
-
             if(receipt.addTransactionDetail(quantity, product.getSellingPrice(), product)) {
-                System.out.println("\n" + mborder + "\nAdded to Checkout!\n" + mborder +"\n");
+                System.out.println("\n" + mborder);
+                System.out.printf("%34s\n", "Added to Checkout!");
+                System.out.println(mborder + "\n");
             }
             else {
                 System.out.println(mborder);
-                System.out.println("Input Failed! Invalid Quantity, Cost, or Expiration Date");
+                System.out.printf("%31s\n", "Input Failed!");
+                System.out.printf("%45s\n", "Invalid Quantity, Cost, or Expiration Date");
                 System.out.println(mborder);
             }
 
@@ -355,7 +315,10 @@ public abstract class Employee {
                 case 3:
                     break;
                 default:
-                    System.out.println(border + "\n\n" + mborder + "\nInvalid Choice! try again...\n" + mborder);
+                    System.out.println(border + "\n");
+                    System.out.println(mborder);
+                    System.out.printf("%38s\n", "Invalid Choice! try again...");
+                    System.out.println(mborder);
                     continue;
             }
             break;
@@ -363,7 +326,8 @@ public abstract class Employee {
         if (!inventory.recordSale(receipt)) {
             System.out.println(border + "\n");
             System.out.println(mborder);
-            System.out.println("Sale Failed! Not enough Stock, Expired Batch, or not Allowed ");
+            System.out.printf("%31s\n", "Sale Failed!");
+            System.out.printf("%47s\n", "Not enough Stock, Expired Batch, or not Allowed");
             System.out.println(mborder);
             return;
         }
@@ -442,7 +406,7 @@ public abstract class Employee {
                 break;
             default:
                 System.out.println(mborder);
-                System.out.println("Invalid Input!");
+                System.out.printf("%32s\n", "Invalid Input!");
                 System.out.println(mborder);
                 break;
         }
@@ -461,7 +425,7 @@ public abstract class Employee {
 
         if (product == null) {
             System.out.println("\n"+mborder);
-            System.out.println("Product not Found!");
+            System.out.printf("%34s\n", "Product not Found!");
             System.out.println(mborder);
             return;
         }
@@ -518,7 +482,9 @@ public abstract class Employee {
                                 }
 
                                 product.setProductName(name);
-                                System.out.println("\n" + mborder + "\nProduct name updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%35s\n", "Product name updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 2: {
@@ -533,7 +499,9 @@ public abstract class Employee {
                                 }
 
                                 product.setGenericName(genericName);
-                                System.out.println("\n" + mborder + "\nGeneric name updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%35s\n", "Generic name updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 3: {
@@ -548,7 +516,9 @@ public abstract class Employee {
                                 }
 
                                 product.setBrand(brand);
-                                System.out.println("\n" + mborder + "\nBrand name updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%34s\n", "Brand name updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 4: {
@@ -563,7 +533,9 @@ public abstract class Employee {
                                 }
 
                                 product.setUnit(unit);
-                                System.out.println("\n" + mborder + "\nUnit updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%31s\n", "Unit updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 5: {
@@ -578,7 +550,9 @@ public abstract class Employee {
                                 }
 
                                 product.setSellingPrice(price);
-                                System.out.println("\n" + mborder + "\nSelling price updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%36s\n", "Selling price updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 6: {
@@ -593,7 +567,9 @@ public abstract class Employee {
                                 }
 
                                 product.setReorderLevel(reorderLevel);
-                                System.out.println("\n" + mborder + "\nReorder level updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%36s\n", "Reorder level updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 7: {
@@ -610,13 +586,15 @@ public abstract class Employee {
                                 }
 
                                 product.setCategory(category);
-                                System.out.println("\n" + mborder + "\nCategory updated!\n" + mborder);
+                                System.out.println("\n" + mborder);
+                                System.out.printf("%33s\n", "Category updated!");
+                                System.out.println(mborder);
                                 break;
                             }
                             case 0:
                                 System.out.println(border +"\n");
                                 System.out.println(mborder);
-                                System.out.println("Task cancelled!");
+                                System.out.printf("%32s\n", "Task cancelled!");
                                 System.out.println(mborder);
                                 return;
 
@@ -629,7 +607,7 @@ public abstract class Employee {
                 case 2:
                     if (inventory.removeProduct(productID)) {
                         System.out.println("\n"+mborder);
-                        System.out.println("Product Deleted Successfully!");
+                        System.out.printf("%39s\n", "Product Deleted Successfully!");
                         System.out.println(mborder);
                     }
 
@@ -637,7 +615,7 @@ public abstract class Employee {
                     break;
                 default:
                     System.out.println(mborder);
-                    System.out.println("Invalid Input!");
+                    System.out.printf("%32s\n", "Invalid Input!");
                     System.out.println(mborder);
                     break;
             }
@@ -681,7 +659,7 @@ public abstract class Employee {
 
         if (product == null) {
             System.out.println(mborder);
-            System.out.println("Product not found!");
+            System.out.printf("%34s\n", "Product not found!");
             System.out.println(mborder);
             return;
         }
@@ -811,7 +789,7 @@ public abstract class Employee {
 
                 if (product == null) {
                     System.out.println("\n"+mborder);
-                    System.out.println("ProductID not found!");
+                    System.out.printf("%35s\n", "ProductID not found!");
                     System.out.println(mborder);
                     break;
                 }
@@ -842,7 +820,7 @@ public abstract class Employee {
                             break;
                         default:
                             System.out.println("\n"+mborder);
-                            System.out.println("Invalid Input!");
+                            System.out.printf("%32s\n", "Invalid Input!");
                             System.out.println(mborder+"\n");
                             break;
                     }
@@ -875,7 +853,7 @@ public abstract class Employee {
                             break;
                         default:
                             System.out.println(mborder);
-                            System.out.println("Invalid Input!");
+                            System.out.printf("%32s\n", "Invalid Input!");
                             System.out.println(mborder);
                             break;
                     }
@@ -888,7 +866,7 @@ public abstract class Employee {
             case 0 : break;
             default: {
                 System.out.println(mborder);
-                System.out.println("Invalid Input! ");
+                System.out.printf("%32s\n", "Invalid Input!");
                 System.out.println(mborder);
                 break;
             }
@@ -916,29 +894,12 @@ public abstract class Employee {
              matchedProducts = inventory.findProductByName(productName);
 
             if (matchedProducts.isEmpty()) {
-                System.out.println("No matching product. Try again.");
+                System.out.println(mborder);
+                System.out.printf("%40s\n", "No matching product. Try again.");
+                System.out.println(mborder);
             }
             else break;
         }
-
-        /*
-        System.out.print("\n" + line +
-                "\nProduct Name: ");
-        String productName = in.nextLine().trim().toUpperCase();
-        System.out.println(line+"\n");
-        if(productName.equals("0")) {
-            return false;
-        }
-
-        ArrayList<Product> matchedProducts = inventory.findProductByName(productName);
-
-        if(matchedProducts.isEmpty()) {
-            System.out.println(mborder);
-            System.out.println("No Product Name Match!");
-            System.out.println(mborder);
-            return false;
-        }
-         */
 
         System.out.println(border);
         System.out.printf("%32s%n","SEARCH RESULTS");
@@ -965,7 +926,7 @@ public abstract class Employee {
 
         if(matchedProducts.isEmpty()) {
             System.out.println(mborder);
-            System.out.println("No Category Match");
+            System.out.printf("%33s\n", "No Category Match");
             System.out.println(mborder);
             return false;
         }

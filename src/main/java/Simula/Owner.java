@@ -80,7 +80,7 @@ public class Owner extends Employee {
                         }
                         default:{
                             System.out.println(mborder);
-                            System.out.println("Invalid input. Try Again");
+                            System.out.printf("%36s\n", "Invalid input. Try Again");
                             System.out.println(mborder);
                             pause();
                             break;
@@ -115,7 +115,7 @@ public class Owner extends Employee {
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
-                            System.out.println("Invalid input. Try Again");
+                            System.out.printf("%36s\n", "Invalid input. Try Again");
                             System.out.println(mborder);
                             pause();
                             break;
@@ -146,7 +146,7 @@ public class Owner extends Employee {
                         case 0 : break;
                         default : {
                             System.out.println(mborder);
-                            System.out.println("Invalid input. Try Again");
+                            System.out.printf("%36s\n", "Invalid input. Try Again");;
                             System.out.println(mborder);
                             pause();
                             break;
@@ -201,7 +201,7 @@ public class Owner extends Employee {
 
                         default:{
                             System.out.println(mborder);
-                            System.out.println("Invalid input. Try Again");
+                            System.out.printf("%36s\n", "Invalid input. Try Again");
                             System.out.println(mborder);
                             pause();
                             break;
@@ -242,14 +242,14 @@ public class Owner extends Employee {
 
                 case 10: {
                     System.out.println(mborder);
-                    System.out.println("Logging out...");
+                    System.out.printf("%32s\n", "Logging out...");
                     System.out.println(mborder);
                     return;
                 }
 
                 default: {
                     System.out.println(mborder);
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.printf("%41s\n", "Invalid choice. Please try again.");
                     System.out.println(mborder);
                     pause();
                     break;
@@ -304,22 +304,22 @@ public class Owner extends Employee {
 
             if (!password.matches(".*[A-Z].*")) {
                 System.out.println(mborder);
-                System.out.println("Password mush have at least one capital letter.");
+                System.out.printf("%48s\n", "Password must have at least one capital letter.");
                 System.out.println(mborder);
             }
             else if (!password.matches(".*[0-9].*")) {
                 System.out.println(mborder);
-                System.out.println("Password must have at least one number.");
+                System.out.printf("%44s\n", "Password must have at least one number.");
                 System.out.println(mborder);
             }
             else if (!password.matches(".*[^a-zA-Z0-9\\s].*")) {
                 System.out.println(mborder);
-                System.out.println("Password must have at least one special character");
+                System.out.printf("%49s\n", "Password must have at least one special character");
                 System.out.println(mborder);
             }
             else if (password.length() < 10) {
                 System.out.println(mborder);
-                System.out.println("Password must have at least 10 characters");
+                System.out.printf("%45s\n", "Password must have at least 10 characters");
                 System.out.println(mborder);
             }
             else {
@@ -333,7 +333,7 @@ public class Owner extends Employee {
                     && employee.getUsername().equalsIgnoreCase(username)){
                 System.out.println(line+"\n"+border+"\n");
                 System.out.println(mborder);
-                System.out.println("Account already exists.");
+                System.out.printf("%36s\n", "Account already exists.");
                 System.out.println(mborder);
                 return;
             }
@@ -352,14 +352,14 @@ public class Owner extends Employee {
         Employee newEmployee = createUserByChoice(choice, name, username, password);
         if (newEmployee == null) {
             System.out.println(mborder);
-            System.out.println("Invalid position. Employee creation cancelled.");
+            System.out.printf("%47s\n", "Invalid position. Employee creation cancelled.");
             System.out.println(mborder);
             return;
         }
 
         manager.getEmployees().add(newEmployee);
         System.out.println(mborder);
-        System.out.println("Employee created successfully!");
+        System.out.printf("%40s\n", "Employee created successfully!");
         System.out.println("Employee ID: " + newEmployee.getEmpID());
         System.out.println("Position: " + newEmployee.getPosition());
         System.out.println(mborder);
@@ -409,21 +409,21 @@ public class Owner extends Employee {
 
                 if (employee == this) {
                     System.out.println(mborder);
-                    System.out.println("You cannot delete your own account.");
+                    System.out.printf("%42s\n", "You cannot delete your own account.");
                     System.out.println(mborder);
                     return;
                 }
 
                 manager.getEmployees().remove(employee);
                 System.out.println(mborder);
-                System.out.println("Employee deleted successfully!");
+                System.out.printf("%40s\n", "Employee deleted successfully!");
                 System.out.println(mborder);
                 return;
             }
         }
 
         System.out.println(mborder);
-        System.out.println("Employee ID not found.");
+        System.out.printf("%36s\n", "Employee ID not found.");
         System.out.println(mborder);
     }
 
@@ -462,7 +462,7 @@ public class Owner extends Employee {
 
         if (choice != 1 && choice != 2) {
             System.out.println(mborder);
-            System.out.println("Invalid product type!");
+            System.out.printf("%35s\n", "Invalid product type!");
             System.out.println(mborder);
             return;
         }
@@ -499,7 +499,8 @@ public class Owner extends Employee {
 
         if( productName.isEmpty() || sellingPrice<=0 || reorderLevel <=0 || category ==null) { //validation kung tama ba yung details nilagay sa fields
             System.out.println(mborder);
-            System.out.println("Invalid Input in one of the Fields. Please Try Again.");
+            System.out.printf("%42s\n", "Invalid Input in one of the Fields.");
+            System.out.printf("%33s\n", "Please Try Again.");
             System.out.println(mborder);
             return;
         }
@@ -510,9 +511,9 @@ public class Owner extends Employee {
             case 1 : {
 
                 System.out.print(line+"\nMedicine Type:\n" +
-                        "\t[1]Over-The-Counter\n" +
-                        "\t[2]Prescription Medicine\n" +
-                        "\t[3]Exit\n"+line+"\nChoice: ");
+                        "\t[1] Over-The-Counter\n" +
+                        "\t[2] Prescription Medicine\n" +
+                        "\t[3] Exit\n"+line+"\nChoice: ");
                         //if medicine papapiliin kung OTP or PRESCRIPTION
                 int choice2  = userIntInput();
                 System.out.println(line);
@@ -532,13 +533,13 @@ public class Owner extends Employee {
                     case 3: {
                         System.out.println(border);
                         System.out.println("\n" +mborder);
-                        System.out.println("Task Cancelled!");
+                        System.out.printf("%32s\n", "Task Cancelled!");
                         System.out.println(mborder);
                         break;
                     }
                     default: {
                         System.out.println(mborder);
-                        System.out.print("Invalid choice. Please try again.");
+                        System.out.printf("%41s\n", "Invalid choice. Please try again.");
                         System.out.println(mborder);
                         break;
                     }
@@ -553,13 +554,13 @@ public class Owner extends Employee {
             case 3 : {
                 System.out.println(border);
                 System.out.println("\n" +mborder);
-                System.out.println("Task Cancelled!");
+                System.out.printf("%32s\n", "Task Cancelled!");
                 System.out.println(mborder);
                 break;
             }
             default: {
                 System.out.println(mborder);
-                System.out.print("Invalid choice. Please try again.");
+                System.out.printf("%41s\n", "Invalid choice. Please try again.");
                 System.out.println(mborder);
                 break;
             }
@@ -568,11 +569,11 @@ public class Owner extends Employee {
         if(newProduct!= null) {
             if (manager.getInventory().addProduct(this, newProduct)) {
                 System.out.println("\n"+mborder);
-                System.out.println("Product Added Successfully");
+                System.out.printf("%38s\n", "Product Added Successfully");
                 System.out.println(mborder);
             } else {
                 System.out.println(mborder);
-                System.out.println("Unable to add the Product");
+                System.out.printf("%37s\n", "Unable to add the Product");
                 System.out.println(mborder);
             }
         }
@@ -597,7 +598,7 @@ public class Owner extends Employee {
 
         if( categoryName.isEmpty()) {
             System.out.println("\n"+mborder);
-            System.out.println("Category ID and Category Name are Required!");
+            System.out.printf("%46s\n", "Category ID and Category Name are Required!");
             System.out.println(mborder);
             return;
         }
@@ -605,11 +606,13 @@ public class Owner extends Employee {
         Category newCategory = new Category(categoryName,description); //dito gumawa ng bagong object
 
         if(manager.getInventory().addCategory(this,newCategory)) { //dito pinasok yung object(eto yung inventory class)
-            System.out.println("\n" + mborder + "\nCategory Added Successfully!" +"\n"+mborder);
+            System.out.println("\n" + mborder);
+            System.out.printf("%38s\n", "Category Added Successfully!");
+            System.out.println(mborder);
         }
         else {
             System.out.println(mborder);
-            System.out.println("Unable to Add the Category!");
+            System.out.printf("%38s\n", "Unable to Add the Category!");
             System.out.println(mborder);
         }
 
@@ -631,7 +634,7 @@ public class Owner extends Employee {
         if(product == null){
             System.out.println(border +"\n");
             System.out.println(mborder);
-            System.out.println("Unable to find product!");
+            System.out.printf("%36s\n", "Unable to find product!");
             System.out.println(mborder);
             return;
         }
@@ -650,14 +653,14 @@ public class Owner extends Employee {
 
         if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
             System.out.println("\n"+ mborder);
-            System.out.println("Invalid Date");
+            System.out.printf("%31s\n", "Invalid Date");
             System.out.println(mborder);
             return;
         }
 
         if(quantity<=0) {
             System.out.println("\n"+ mborder);
-            System.out.println("Invalid Quantity");
+            System.out.printf("%33s\n", "Invalid Quantity");
             System.out.println(mborder);
             return;
         }
@@ -665,12 +668,12 @@ public class Owner extends Employee {
         Batch addbatch = new Batch( quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
         if(product.addBatch(addbatch)) {
             System.out.println("\n"+mborder);
-            System.out.println("Batch added successfully!");
+            System.out.printf("%37s\n", "Batch added successfully!");
             System.out.println(mborder);
         }
         else{
             System.out.println("\n"+mborder);
-            System.out.println("Failed to add new batch");
+            System.out.printf("%36s\n", "Failed to add new batch");
             System.out.println(mborder);
         }
     }
@@ -689,7 +692,7 @@ public class Owner extends Employee {
         if (product == null) {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Product not found!");
+            System.out.printf("%34s\n", "Product not found!");
             System.out.println(mborder);
             return;
         }
@@ -702,7 +705,7 @@ public class Owner extends Employee {
         if (batch == null) {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Batch not found!");
+            System.out.printf("%33s\n", "Batch not found!");
             System.out.println(mborder);
             return;
         }
@@ -714,13 +717,13 @@ public class Owner extends Employee {
         if(batch.increaseQuantity(amount)) {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Stock Increased Successfully!");
+            System.out.printf("%39s\n", "Stock Increased Successfully!");
             System.out.println(mborder);
         }
         else {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Invalid Amount.");
+            System.out.printf("%32s\n", "Invalid Amount.");
             System.out.println(mborder);
         }
     }
@@ -739,7 +742,7 @@ public class Owner extends Employee {
         if (product == null) {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Product not found!");
+            System.out.printf("%34s\n", "Product not found!");
             System.out.println(mborder);
             return;
         }
@@ -752,7 +755,7 @@ public class Owner extends Employee {
         if (batch == null) {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Batch not found!");
+            System.out.printf("%33s\n", "Batch not found!");
             System.out.println(mborder);
             return;
         }
@@ -763,13 +766,13 @@ public class Owner extends Employee {
         if (batch.reduceQuantity(amount)) {
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Stock Reduced Succesfully!");
+            System.out.printf("%38s\n", "Stock Reduced Successfully!");
             System.out.println(mborder);
         }
         else{
             System.out.println(border);
             System.out.println("\n"+mborder);
-            System.out.println("Invalid Amount.");
+            System.out.printf("%32s\n", "Invalid Amount.");
             System.out.println(mborder);
         }
     }
@@ -817,7 +820,7 @@ public class Owner extends Employee {
 
             if(product ==null ) {
                 System.out.println(mborder);
-                System.out.println("Product not Found!");
+                System.out.printf("%34s\n", "Product not Found!");
                 System.out.println(mborder);
                 continue;
             }
@@ -827,7 +830,7 @@ public class Owner extends Employee {
 
             if(quantity<=0) {
                 System.out.println(mborder);
-                System.out.println("Invalid Quantity");
+                System.out.printf("%33s\n", "Invalid Quantity");
                 System.out.println(mborder);
                 continue;
             }
@@ -846,7 +849,7 @@ public class Owner extends Employee {
 
             if(month<1 || month>12 || day <1 || day > 31) {
                 System.out.println(mborder);
-                System.out.println("Invalid Date");
+                System.out.printf("%31s\n", "Invalid Date");
                 System.out.println(mborder);
                 continue;
             }
@@ -856,17 +859,20 @@ public class Owner extends Employee {
 
             if(expiration.isBefore(minimum)) {
                 System.out.println(mborder);
-                System.out.println("Expiration date must be at least 3 years from today");
+                System.out.printf("%49s\n", "Expiration date must be at least 3 years from today");
                 System.out.println(mborder);
                 continue;
             }
 
             if(purchase.addPurchaseLine(quantity,unitCost,product,expiration)) { //pagg add eto sa TransactionDetail ArrayList
-                System.out.println("\n" + mborder + "Added to Checkout!" + mborder +"\n");
+                System.out.println("\n" + mborder);
+                System.out.printf("%34s\n", "Added to Checkout!");
+                System.out.println(mborder + "\n");
             }
             else {
                 System.out.println(mborder);
-                System.out.println("Input Failed! Invalid Quantity, Cost, or Expiration Date");
+                System.out.printf("%31s\n", "Input Failed!");
+                System.out.printf("%45s\n", "Invalid Quantity, Cost, or Expiration Date");
                 System.out.println(mborder);
             }
 
@@ -876,14 +882,14 @@ public class Owner extends Employee {
 
         if(purchase.getTransactionDetails().isEmpty()) { //kapag 0 agad pinindot at walang na add
             System.out.println(mborder);
-            System.out.println("No Products Added");
+            System.out.printf("%33s\n", "No Products Added");
             System.out.println(mborder);
             return;
         }
 
         if(!inventory.recordPurchase(purchase)) { //pagrecord na ng purchase, pag d nag go through mag eerror
             System.out.println(mborder);
-            System.out.println("Purchased Failed");
+            System.out.printf("%32s\n", "Purchase Failed");
             System.out.println(mborder);
             return;
         }
@@ -945,14 +951,14 @@ public class Owner extends Employee {
                 }
                 default: {
                     System.out.println(mborder);
-                    System.out.println("Invalid Choice! Try again.");
+                    System.out.printf("%37s\n", "Invalid Choice! Try again.");
                     System.out.println(mborder);
                     continue;
                 }
             }
 
             while (true) {
-                System.out.println("Enter Product ID [Enter 0 to Return]: ");
+                System.out.println("Product ID [0 to cancel]: ");
                 String productID = in.nextLine().trim().toUpperCase();
                 System.out.println(border);
 
@@ -962,40 +968,24 @@ public class Owner extends Employee {
 
                 if (productID.isEmpty()) {
                     System.out.println(mborder);
-                    System.out.println("Product ID cannot be empty.");
+                    System.out.printf("%38s\n", "Product ID cannot be empty.");
                     System.out.println(mborder);
                 }
                 else if (inventory.removeProduct(productID)) {
                     System.out.println(mborder);
-                    System.out.println("Product Deleted Successfully");
+                    System.out.printf("%39s\n", "Product Deleted Successfully");
                     System.out.println(mborder);
                     return;
                 }
                 else {
                     System.out.println(mborder);
-                    System.out.println("Product ID not found! Try again.");
+                    System.out.printf("%40s\n", "Product ID not found! Try again.");
                     System.out.println(mborder);
                 }
             }
         }
 
     }
-
-    /*
-    System.out.print("Enter Product ID: ");
-        String productID = in.nextLine().trim().toUpperCase();
-        System.out.println(border);
-
-        if (inventory.removeProduct(productID)) {
-            System.out.println("\n"+mborder);
-            System.out.println("Product Deleted Successfully!");
-            System.out.println(mborder);
-        } else {
-            System.out.println("\n"+mborder);
-            System.out.println("Product ID not found!");
-            System.out.println(mborder);
-        }
-     */
 
     private void deleteCategory() {
         tag();
@@ -1009,11 +999,11 @@ public class Owner extends Employee {
 
         if (inventory.removeCategory(categoryID)) {
             System.out.println("\n"+mborder);
-            System.out.println("Category Deleted Successfully!");
+            System.out.printf("%40s\n", "Category Deleted Successfully!");
             System.out.println(mborder);
         } else {
             System.out.println("\n"+mborder);
-            System.out.println("Category ID not found!");
+            System.out.printf("%36s\n", "Category ID not found!");
             System.out.println(mborder);
         }
     }

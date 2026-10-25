@@ -70,11 +70,15 @@ public class Staff extends Employee {
                     break;
 
                 case 0:
-                    System.out.println("Logging out...");
+                    System.out.println(mborder);
+                    System.out.printf("%32s\n", "Logging out...");
+                    System.out.println(mborder);
                     return;
 
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println(mborder);
+                    System.out.printf("%41s\n", "Invalid choice. Please try again.");
+                    System.out.println(mborder);
             }
         }
     }
