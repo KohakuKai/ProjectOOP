@@ -190,7 +190,9 @@ public abstract class Employee {
 
 
             if(choice == 2) {
-                searchProductByName();
+                if (!searchProductByName()) {
+                    continue;
+                }
             }
 
             else if (choice == 3) {
@@ -202,6 +204,31 @@ public abstract class Employee {
                 continue;
             }
 
+            Product product;
+            while (true) {
+                System.out.println("[Enter 0 to End]");
+                System.out.print("Enter Prouct ID: ");
+                String productID = in.nextLine().trim().toUpperCase();
+
+                if (productID.equals("0")) {
+                    end = true;
+                    product = null;
+                    break;
+                }
+
+                product = inventory.findProductById(productID);
+
+                if (productID.isEmpty()) {
+                    System.out.println("Product ID cannot be empty");
+                }
+                else if (product == null) {
+                    System.out.println("Product not found. Try again.");
+                }
+                else break;
+            }
+            if (end) break;
+
+            /*
             System.out.println("[Enter 0 to End]");
             System.out.print("Enter Product ID: ");
             String productID = in.nextLine().trim().toUpperCase();
@@ -220,6 +247,7 @@ public abstract class Employee {
                 System.out.println(mborder);
                 continue;
             }
+             */
 
             int removed = product.removeExpiredBatches();//pangremove ng expired batches para sa product nayon
             if(removed>0)System.out.println(
@@ -232,6 +260,40 @@ public abstract class Employee {
                 continue;
             }
 
+            int availableStock = product.getTotalStock();
+
+            for (TransactionDetail detail: receipt.getTransactionDetails()) {
+                if (detail.getProduct() == product) {
+                    availableStock -= detail.getQuantity();
+                }
+            }
+
+            if (availableStock <= 0) {
+                System.out.println("No more stock available for this product.");
+                continue;
+            }
+
+            System.out.println(line);
+            System.out.println("Product Name: " + product.getProductName());
+            System.out.println("Selling Price: " + product.getSellingPrice());
+            System.out.println("Available Stock: " + availableStock);
+
+            int quantity;
+
+            while (true) {
+                System.out.print("Enter Quantity: ");
+                quantity = userIntInput();
+
+                if (quantity <= 0) {
+                    System.out.println("Quantity must be greater than 0.");
+                }
+                else if (quantity > availableStock) {
+                    System.out.println("Insufficient stock.\nAvailable: " + availableStock);
+                }
+                else break;
+            }
+
+            /*
             System.out.println(line);
             System.out.println("Product Name: " + product.getProductName());
             System.out.println("Selling Price: " + product.getSellingPrice());
@@ -254,6 +316,7 @@ public abstract class Employee {
                 System.out.println(mborder);
                 continue;
             }
+             */
 
             if(receipt.addTransactionDetail(quantity, product.getSellingPrice(), product)) {
                 System.out.println("\n" + mborder + "\nAdded to Checkout!\n" + mborder +"\n");
@@ -268,35 +331,41 @@ public abstract class Employee {
 
         }
 
+        if (receipt.getTransactionDetails().isEmpty()) {
+            System.out.println("No products added. Sale cancelled.");
+            return;
+        }
+        boolean pwd = false;
+        boolean senior = false;
+        //taga check ng discount
+        while (true) {
+            System.out.printf("%33s","\nCUSTOMER DISCOUNT\n" +
+                    "\t[1] PWD\n" +
+                    "\t[2] Senior\n" +
+                    "\t[3] No Discount\n" + border +
+                    "\nChoice: ");
+            int customerDiscount = userIntInput();
+            switch (customerDiscount) {
+                case 1:
+                    pwd = true;
+                    break;
+                case 2:
+                    senior = true;
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println(border + "\n\n" + mborder + "\nInvalid Choice! try again...\n" + mborder);
+                    continue;
+            }
+            break;
+        }
         if (!inventory.recordSale(receipt)) {
             System.out.println(border + "\n");
             System.out.println(mborder);
             System.out.println("Sale Failed! Not enough Stock, Expired Batch, or not Allowed ");
             System.out.println(mborder);
             return;
-        }
-
-        //taga check ng discount
-        boolean pwd = false;
-        boolean senior = false;
-        System.out.printf("%33s\n","CUSTOMER DISCOUNT\n" +
-                "\t[1] PWD\n" +
-                "\t[2] Senior\n" +
-                "\t[3] No Discount\n" + border +
-                "\nChoice: ");
-        int customerDiscount = userIntInput();
-        switch (customerDiscount) {
-            case 1:
-                pwd = true;
-                break;
-            case 2:
-                senior = true;
-                break;
-            case 3:
-                break;
-            default:
-                System.out.println(border + "\n\n" + mborder + "\nInvalid Choice! try again...\n" + mborder);
-                break;
         }
 
         ArrayList<TransactionDetail> lines = receipt.getTransactionDetails();
@@ -829,6 +898,30 @@ public abstract class Employee {
 
     protected boolean searchProductByName() {
 
+        String productName;
+        ArrayList <Product> matchedProducts;
+
+        while (true) {
+            System.out.println("Product Name [0 to cancel]: ");
+            productName = in.nextLine().trim().toUpperCase();
+
+            if (productName.equals("0")) {
+                return false;
+            }
+
+            if (productName.isEmpty()) {
+                System.out.println("Product name cannot be empty.");
+                continue;
+            }
+             matchedProducts = inventory.findProductByName(productName);
+
+            if (matchedProducts.isEmpty()) {
+                System.out.println("No matching product. Try again.");
+            }
+            else break;
+        }
+
+        /*
         System.out.print("\n" + line +
                 "\nProduct Name: ");
         String productName = in.nextLine().trim().toUpperCase();
@@ -845,6 +938,7 @@ public abstract class Employee {
             System.out.println(mborder);
             return false;
         }
+         */
 
         System.out.println(border);
         System.out.printf("%27s%n","SEARCH RESULTS");
