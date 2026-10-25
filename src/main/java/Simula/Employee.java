@@ -128,9 +128,9 @@ public abstract class Employee {
 
     protected void changePassword() {
 
-        System.out.print("\n" + border);
+        System.out.println("\n" + border);
         System.out.printf("%32s%n", "CHANGE PASSWORD");
-        System.out.println("\n" + border + "\nEnter Current password: ");
+        System.out.print(border + "\nEnter Current password: ");
         String checkPassword = in.nextLine();
 
         if (checkPassword.equals(this.getPassword())) {
