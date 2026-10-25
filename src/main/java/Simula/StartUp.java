@@ -43,10 +43,14 @@ public class StartUp {
                     logIn();
                     break;
                 case 2:
+                    System.out.println(mborder);
                     System.out.println("Exiting...");
+                    System.out.println(mborder);
                     return;
                 case 67: {
+                    System.out.println(mborder);
                     System.out.println("Bypass!");
+                    System.out.println(mborder);
                     String username = "ownerUsername";
                     String empID = "1001";
                     String password = "ownerPassword";
@@ -55,7 +59,9 @@ public class StartUp {
                     break;
                 }
                 default:
+                    System.out.println(mborder);
                     System.out.println("Invalid option. Try again.");
+                    System.out.println(mborder);
             }
         }
     }
@@ -68,7 +74,8 @@ public class StartUp {
 
     // ----- LOG IN -----
     private void logIn() {
-        System.out.print("\nEnter your username: ");
+        System.out.println(line);
+        System.out.print("Enter your username: ");
         String username = in.nextLine().trim();
 
         System.out.print("Enter your employee ID: ");
@@ -81,14 +88,16 @@ public class StartUp {
         //ipapasa dito yung ininput then pagbalik, rekta store kay foundUser
         Employee foundEmployee = findUser(username, empID, password);
 
-        System.out.println(mborder);
+        System.out.println();
 
         if (foundEmployee != null) {
+            System.out.println(mborder);
             System.out.println("Login successful!");
             System.out.println(mborder);
             // may override each subclass
             foundEmployee.showDashboard();
         } else {
+            System.out.println(mborder);
             System.out.println("No matching account found. Please sign up first.");
             System.out.println(mborder);
         }

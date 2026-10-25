@@ -277,6 +277,7 @@ public class Owner extends Employee {
         System.out.println(border);
         System.out.printf("%27s%n", "CREATE EMPLOYEE");
         System.out.println(border);
+        System.out.println(line);
         String firstName = inputNames("Enter first name: ");
         String middleName = inputNames("Enter middle name: ");
         String lastName = inputNames("Enter last name: ");
@@ -296,20 +297,30 @@ public class Owner extends Employee {
         String password;
 
         while(true) {
+            System.out.println(line);
             System.out.print("Enter employee password: ");
             password = in.nextLine();
+            System.out.println(line);
 
             if (!password.matches(".*[A-Z].*")) {
+                System.out.println(mborder);
                 System.out.println("Password mush have at least one capital letter.");
+                System.out.println(mborder);
             }
             else if (!password.matches(".*[0-9].*")) {
+                System.out.println(mborder);
                 System.out.println("Password must have at least one number.");
+                System.out.println(mborder);
             }
             else if (!password.matches(".*[^a-zA-Z0-9\\s].*")) {
+                System.out.println(mborder);
                 System.out.println("Password must have at least one special character");
+                System.out.println(mborder);
             }
             else if (password.length() < 10) {
+                System.out.println(mborder);
                 System.out.println("Password must have at least 10 characters");
+                System.out.println(mborder);
             }
             else {
                 break;
@@ -319,16 +330,20 @@ public class Owner extends Employee {
 
         for (Employee employee : manager.getEmployees()) {
             if (employee.getName().equalsIgnoreCase(name)
-                    && employee.getUsername().equalsIgnoreCase(username)
-                    && employee.getPassword().equals(password)) {
+                    && employee.getUsername().equalsIgnoreCase(username)){
+                System.out.println(line+"\n"+border+"\n");
+                System.out.println(mborder);
                 System.out.println("Account already exists.");
+                System.out.println(mborder);
                 return;
             }
         }
 
-        System.out.println("\nAssign position:");
+        System.out.println(line);
+        System.out.println("Assign position:");
         System.out.println("\t[1] Pharmacist");
         System.out.println("\t[2] Staff");
+        System.out.println(line);
         System.out.println(border);
         System.out.print("Choice: ");
         int choice = userIntInput();
@@ -354,11 +369,11 @@ public class Owner extends Employee {
         System.out.println(border);
         System.out.printf("%27s%n", "DISPLAY EMPLOYEES");
         System.out.println(border);
-        System.out.printf("%-7s  %-15s  %-15s%n",
+        System.out.printf("%-10s  %-26s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
         System.out.println(line);
         for (Employee employee : manager.getEmployees()) {
-            System.out.printf("%-7s  %-15s  %-15s%n",
+            System.out.printf("%-10s  %-26s  %-10s%n",
                     employee.getEmpID(),
                     employee.getName(),
                     employee.getPosition());
@@ -373,16 +388,16 @@ public class Owner extends Employee {
         System.out.println(border);
         System.out.printf("%27s%n", "DELETE EMPLOYEE");
         System.out.println(border);
-        System.out.printf("%-7s  %-15s  %-15s%n",
+        System.out.printf("%-7s  %-15s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
-
+        System.out.println(line);
         for (Employee employee : manager.getEmployees()) {
-            System.out.printf("%-7s  %-15s  %-15s%n",
+            System.out.printf("%-7s  %-15s  %-10s%n",
                     employee.getEmpID(),
                     employee.getName(),
                     employee.getPosition());
         }
-        System.out.println(border);
+        System.out.println(line+"\n"+border);
 
         System.out.print("Enter employee ID to delete: ");
         String empID = in.nextLine().trim();
@@ -438,18 +453,21 @@ public class Owner extends Employee {
         System.out.print("PRODUCT TYPE\n" +
                 "\t[1] Medicine\n" +
                 "\t[2] Essentials\n" +
-                "\t[0]Exit\n" +border+ "\nChoice: ");
+                "\t[0]Exit\n" +line+ "\nChoice: ");
         int choice = userIntInput();
-        System.out.println(border);
+        System.out.println(line);
         if (choice == 0) {
             return;
         }
 
         if (choice != 1 && choice != 2) {
+            System.out.println(mborder);
             System.out.println("Invalid product type!");
+            System.out.println(mborder);
             return;
         }
 
+        System.out.println(line);
         System.out.print("Product Name: ");
         String productName = in.nextLine().trim();
 
@@ -491,7 +509,11 @@ public class Owner extends Employee {
 
             case 1 : {
 
-                System.out.print(line+"\nMedicine Type:\n\t[1]Over-The-Counter\n\t[2]Prescription Medicine\n\t[3]Exit\nChoice: "); //if medicine papapiliin kung OTP or PRESCRIPTION
+                System.out.print(line+"\nMedicine Type:\n" +
+                        "\t[1]Over-The-Counter\n" +
+                        "\t[2]Prescription Medicine\n" +
+                        "\t[3]Exit\n"+line+"\nChoice: ");
+                        //if medicine papapiliin kung OTP or PRESCRIPTION
                 int choice2  = userIntInput();
                 System.out.println(line);
 
@@ -821,6 +843,7 @@ public class Owner extends Employee {
             System.out.print("Expiration day: ");
             int day = userIntInput();
 
+
             if(month<1 || month>12 || day <1 || day > 31) {
                 System.out.println(mborder);
                 System.out.println("Invalid Date");
@@ -897,13 +920,14 @@ public class Owner extends Employee {
 
         System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
+        System.out.println(border);
 
         if (inventory.removeProduct(productID)) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Product Deleted Successfully!");
             System.out.println(mborder);
         } else {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Product ID not found!");
             System.out.println(mborder);
         }
@@ -917,13 +941,14 @@ public class Owner extends Employee {
 
         System.out.print("Enter Category ID: ");
         String categoryID = in.nextLine().trim().toUpperCase();
+        System.out.println(border);
 
         if (inventory.removeCategory(categoryID)) {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Category Deleted Successfully!");
             System.out.println(mborder);
         } else {
-            System.out.println(mborder);
+            System.out.println("\n"+mborder);
             System.out.println("Category ID not found!");
             System.out.println(mborder);
         }
