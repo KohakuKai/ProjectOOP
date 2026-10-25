@@ -902,7 +902,7 @@ public abstract class Employee {
         ArrayList <Product> matchedProducts;
 
         while (true) {
-            System.out.println("Product Name [0 to cancel]: ");
+            System.out.print("Product Name [0 to cancel]: ");
             productName = in.nextLine().trim().toUpperCase();
 
             if (productName.equals("0")) {
