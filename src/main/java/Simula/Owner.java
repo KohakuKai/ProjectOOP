@@ -915,10 +915,74 @@ public class Owner extends Employee {
     private void deleteProduct() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "DELETE PRODUCT");
+        System.out.printf("%31s%n", "DELETE PRODUCT");
         System.out.println(border);
 
-        System.out.print("Enter Product ID: ");
+        while (true) {
+            System.out.println("\t[1] Input Product ID to Delete");
+            System.out.println("\t[2] Search Product Name");
+            System.out.println("\t[0] Exit");
+            System.out.println(border);
+            System.out.print("Choice: ");
+
+            int choice = userIntInput();
+            System.out.println(border);
+
+            switch (choice) {
+                case 1: {
+                    break;
+                }
+
+                case 2: {
+                    if (!searchProductByName()) {
+                        continue;
+                    }
+                    break;
+                }
+
+                case 0 : {
+                    return;
+                }
+                default: {
+                    System.out.println(mborder);
+                    System.out.println("Invalid Choice! Try again.");
+                    System.out.println(mborder);
+                    continue;
+                }
+            }
+
+            while (true) {
+                System.out.println("Enter Product ID [Enter 0 to Return]: ");
+                String productID = in.nextLine().trim().toUpperCase();
+                System.out.println(border);
+
+                if (productID.equals("0")) {
+                    break;
+                }
+
+                if (productID.isEmpty()) {
+                    System.out.println(mborder);
+                    System.out.println("Product ID cannot be empty.");
+                    System.out.println(mborder);
+                }
+                else if (inventory.removeProduct(productID)) {
+                    System.out.println(mborder);
+                    System.out.println("Product Deleted Successfully");
+                    System.out.println(mborder);
+                    return;
+                }
+                else {
+                    System.out.println(mborder);
+                    System.out.println("Product ID not found! Try again.");
+                    System.out.println(mborder);
+                }
+            }
+        }
+
+    }
+
+    /*
+    System.out.print("Enter Product ID: ");
         String productID = in.nextLine().trim().toUpperCase();
         System.out.println(border);
 
@@ -931,7 +995,7 @@ public class Owner extends Employee {
             System.out.println("Product ID not found!");
             System.out.println(mborder);
         }
-    }
+     */
 
     private void deleteCategory() {
         tag();

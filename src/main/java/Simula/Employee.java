@@ -184,7 +184,7 @@ public abstract class Employee {
             System.out.print("\t[1]Input Product ID to Sell\n"+
                     "\t[2]Search Product Name\n" +
                     "\t[3]Checkout\n" +
-                    border + "\nChoice:");
+                    border + "\nChoice: ");
             int choice = userIntInput();
             System.out.println(border);
 
@@ -392,7 +392,7 @@ public abstract class Employee {
         if (!pwd && !senior) {
             System.out.printf("%-40s%10.2f%n", "VAT(12%):", receipt.getVATAmount());
             System.out.println(line);
-            System.out.printf("%-140s%10.2f%n", "Total(with VAT):", receipt.getTotalWithVAT());
+            System.out.printf("%-40s%10.2f%n", "Total(with VAT):", receipt.getTotalWithVAT());
         }
 
         if (pwd) {
