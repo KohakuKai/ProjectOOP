@@ -254,7 +254,7 @@ public class Inventory {
         zithromax.addBatch(new Batch(10,zithromax,LocalDate.parse("2027-11-30")));   // mababa sa reorder level (20) para ma-test ang low stock
 
         // ---------- batches ng bagong products ----------
-        vitaminC.addBatch(new Batch(200,vitaminC,LocalDate.parse("2028-09-11")));
+        vitaminC.addBatch(new Batch(200,vitaminC,LocalDate.parse("2025-09-11")));
         biogesic.addBatch(new Batch(300,biogesic,LocalDate.parse("2027-11-11")));
         bioflu.addBatch(new Batch(200, bioflu,LocalDate.parse("2028-07-11")));
         medicol.addBatch(new Batch(120,medicol,LocalDate.parse("2028-03-15")));

@@ -721,14 +721,11 @@ public abstract class Staff {
             for (Batch batch : product.getBatches()) {
                 if (batch.isExpired()) {
                     if (batch.getQuantity() > 0) {
-                        hasExpiredStock = true;
+                        expiredProducts++;
                     }
                 } else {
                     usableStock += batch.getQuantity();
                 }
-            }
-            if (hasExpiredStock) {
-                expiredProducts++;
             }
 
             if (usableStock < product.getReorderLevel()) {
