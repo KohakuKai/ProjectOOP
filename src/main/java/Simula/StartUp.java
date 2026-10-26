@@ -9,7 +9,7 @@ public class StartUp {
     String border = "=".repeat(50);
     String mborder = "~".repeat(50);
 
-    private ArrayList<Employee> registeredEmployees = new ArrayList<>();
+    private ArrayList<Staff> registeredStaffs = new ArrayList<>();
     private Scanner in = new Scanner(System.in);
 
     public StartUp() { // dito lalagay yung owner
@@ -32,7 +32,7 @@ public class StartUp {
             System.out.println("\t[2] Exit");
             System.out.println(border);
             System.out.print("Choice: ");
-            choice = Employee.userIntInput();//kinuha ko nalang yung nasa employee kaysa gumawa ulit method
+            choice = Staff.userIntInput();//kinuha ko nalang yung nasa staff kaysa gumawa ulit method
             System.out.println(border+"\n");
 
 
@@ -52,8 +52,8 @@ public class StartUp {
                     String username = "ownerUsername";
                     String empID = "1001";
                     String password = "ownerPassword";
-                    Employee foundEmployee = findUser(username, password);
-                    if (foundEmployee != null) foundEmployee.showDashboard();
+                    Staff foundStaff = findUser(username, password);
+                    if (foundStaff != null) foundStaff.showDashboard();
                     break;
                 }
                 default:
@@ -65,8 +65,8 @@ public class StartUp {
     }
 
     // getter para sa owner
-    public ArrayList<Employee> getEmployees() {
-        return registeredEmployees;
+    public ArrayList<Staff> getStaff() {
+        return registeredStaffs;
     }
 
 
@@ -81,16 +81,16 @@ public class StartUp {
 
         System.out.println(border);
         //ipapasa dito yung ininput then pagbalik, rekta store kay foundUser
-        Employee foundEmployee = findUser(username,  password);
+        Staff foundStaff = findUser(username,  password);
 
         System.out.println();
 
-        if (foundEmployee != null) {
+        if (foundStaff != null) {
             System.out.println(mborder);
             System.out.printf("%33s\n","Login successful!");
             System.out.println(mborder);
             // may override each subclass
-            foundEmployee.showDashboard();
+            foundStaff.showDashboard();
         } else {
             System.out.println(mborder);
             System.out.printf("%48s\n","No matching account found. Please sign up first.");
@@ -99,11 +99,11 @@ public class StartUp {
     }
 
         // taga hanap if may ganitong tao ba na na sign up sa arraylist
-    private Employee findUser (String username, String password){
-        for (Employee employee : registeredEmployees) {
-            if (employee.getUsername().equals(username)
-                    && employee.getPassword().equals(password)) {
-                return employee;
+    private Staff findUser (String username, String password){
+        for (Staff staff : registeredStaffs) {
+            if (staff.getUsername().equals(username)
+                    && staff.getPassword().equals(password)) {
+                return staff;
             }
         }
         return null;
@@ -112,15 +112,15 @@ public class StartUp {
     // MGA DEFAULT/PRE DEFINED NA MGA USERS NG SYSTEM -----------------------------------------------------------------------
 
     private  void setDefaultUsers () {
-        Employee owner = new Owner("ownerName", this, "ownerPassword", "ownerUsername", inventory);
-        registeredEmployees.add(owner);
+        Staff owner = new Owner("ownerName", this, "ownerPassword", "ownerUsername", inventory);
+        registeredStaffs.add(owner);
         inventory.defaultTransactions(owner); // para lang to sa predefined na Transcation History
 
-        Employee pharmacist1 = new Pharmacist("Clay Cruz","July242007_","clay",inventory);
-        registeredEmployees.add(pharmacist1);
+        Staff pharmacist1 = new Pharmacist("Clay Cruz","July242007_","clay",inventory);
+        registeredStaffs.add(pharmacist1);
 
-        Employee employee1 = new Staff("Raiven Joson","ILoveEunice_","raiven",inventory);
-        registeredEmployees.add(pharmacist1);
+        Staff staff1 = new Employee("Raiven Joson","ILoveEunice_","raiven",inventory);
+        registeredStaffs.add(staff1);
 
 
     }

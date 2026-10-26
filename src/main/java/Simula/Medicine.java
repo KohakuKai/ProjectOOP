@@ -13,5 +13,5 @@ public abstract class Medicine extends Product {
     }
 
     public abstract String getMedicineType();
-    public abstract boolean soldBy(Employee varname);
+    public abstract boolean soldBy(Staff varname);
 }

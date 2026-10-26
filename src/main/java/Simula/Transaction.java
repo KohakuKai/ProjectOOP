@@ -8,7 +8,7 @@ public abstract class Transaction {
     private static int currentIDNumber = 1;
     private String transactionID;
     private LocalDate transactionDate;
-    private Employee employee;
+    private Staff staff;
     private Inventory inventory;
 
     private final static double VAT = 0.12;
@@ -17,16 +17,16 @@ public abstract class Transaction {
 
     private ArrayList<TransactionDetail> transactionDetails = new ArrayList<>();
 
-    Transaction(Employee employee, Inventory inventory) {
+    Transaction(Staff staff, Inventory inventory) {
         this.transactionID = String.format("T%03d", currentIDNumber++);
         this.transactionDate = LocalDate.now();
-        this.employee = employee;
+        this.staff = staff;
         this.inventory = inventory;
     }
 
     //getter
-    public Employee getEmployee() {
-        return employee;
+    public Staff getStaff() {
+        return staff;
     }
     public String getTransactionID() { return transactionID;}
     public LocalDate getTransactionDate() {return transactionDate;}

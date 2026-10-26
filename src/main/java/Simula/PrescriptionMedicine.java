@@ -17,7 +17,7 @@ public class PrescriptionMedicine extends Medicine {
     }
 
     @Override
-    public boolean soldBy(Employee varname) {
+    public boolean soldBy(Staff varname) {
         return varname instanceof Owner || varname instanceof Pharmacist;
     }
 

@@ -1,10 +1,9 @@
 package Simula;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Owner extends Employee {
+public class Owner extends Staff {
 
 
     private final StartUp manager;
@@ -27,7 +26,7 @@ public class Owner extends Employee {
             displayStockAlerts();
 
             System.out.print("PERSON\n"+
-                    "\t[1] Manage Employees\n" +
+                    "\t[1] Manage Staff\n" +
                     "INVENTORY\n"+
                     "\t[2] Manage Products\n" +
                     "\t[3] Manage Categories\n" +
@@ -46,7 +45,7 @@ public class Owner extends Employee {
             System.out.println(border+"\n");
 
             switch (choice) {
-                case 1: manageEmployeeMenu();   break;
+                case 1: manageStaffMenu();   break;
                 case 2: manageProductMenu();   break;
                 case 3: manageCategoryMenu();   break;
                 case 4: manageStockMenu();   break;
@@ -90,10 +89,10 @@ public class Owner extends Employee {
     }
 
     //create employee ng owner yan ah
-    private void createEmployee() {
+    private void createStaff() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "CREATE EMPLOYEE");
+        System.out.printf("%27s%n", "CREATE STAFF");
         System.out.println(border);
         System.out.println(line);
         String firstName = inputNames("Enter first name: ");
@@ -109,14 +108,14 @@ public class Owner extends Employee {
                 + (middleName.isEmpty() ? "" : " " + middleName)
                 + " " + lastName;
 
-        System.out.print("Enter employee username: ");
+        System.out.print("Enter staff username: ");
         String username = in.nextLine().trim();
 
         String password;
 
         while(true) {
             System.out.println(line);
-            System.out.print("Enter employee password: ");
+            System.out.print("Enter staff password: ");
             password = in.nextLine();
             System.out.println(line);
 
@@ -146,9 +145,9 @@ public class Owner extends Employee {
 
         }
 
-        for (Employee employee : manager.getEmployees()) {
-            if (employee.getName().equalsIgnoreCase(name)
-                    && employee.getUsername().equalsIgnoreCase(username)){
+        for (Staff staff : manager.getStaff()) {
+            if (staff.getName().equalsIgnoreCase(name)
+                    && staff.getUsername().equalsIgnoreCase(username)){
                 System.out.println(line+"\n"+border+"\n");
                 System.out.println(mborder);
                 System.out.printf("%36s\n", "Account already exists.");
@@ -167,41 +166,41 @@ public class Owner extends Employee {
         int choice = userIntInput();
         System.out.println(border+"\n");
 
-        Employee newEmployee = createUserByChoice(choice, name, username, password);
-        if (newEmployee == null) {
+        Staff newStaff = createUserByChoice(choice, name, username, password);
+        if (newStaff == null) {
             System.out.println(mborder);
-            System.out.printf("%47s\n", "Invalid position. Employee creation cancelled.");
+            System.out.printf("%47s\n", "Invalid position. Staff creation cancelled.");
             System.out.println(mborder);
             return;
         }
 
-        manager.getEmployees().add(newEmployee);
+        manager.getStaff().add(newStaff);
         System.out.println(mborder);
-        System.out.printf("%40s\n", "Employee created successfully!");
-        System.out.println("Employee ID: " + newEmployee.getEmpID());
-        System.out.println("Position: " + newEmployee.getPosition());
+        System.out.printf("%40s\n", "Staff created successfully!");
+        System.out.println("Staff ID: " + newStaff.getStaffID());
+        System.out.println("Position: " + newStaff.getPosition());
         System.out.println(mborder);
     }
-    private void displayEmployees() {
+    private void displayStaff() {
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "DISPLAY EMPLOYEES");
+        System.out.printf("%27s%n", "DISPLAY STAFF");
         System.out.println(border);
         System.out.printf("%-10s  %-26s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
         System.out.println(line);
-        for (Employee employee : manager.getEmployees()) {
+        for (Staff staff : manager.getStaff()) {
             System.out.printf("%-10s  %-26s  %-10s%n",
-                    employee.getEmpID(),
-                    employee.getName(),
-                    employee.getPosition());
+                    staff.getStaffID(),
+                    staff.getName(),
+                    staff.getPosition());
         }
         System.out.println(line);
         System.out.println(border);
     }
 
     //delete employee
-    private void deleteEmployee() {
+    private void deleteStaff() {
         tag();
         System.out.println(border);
         System.out.printf("%27s%n", "DELETE EMPLOYEE");
@@ -209,51 +208,51 @@ public class Owner extends Employee {
         System.out.printf("%-7s  %-15s  %-10s%n",
                 "ID NO.", "NAME", "POSITION");
         System.out.println(line);
-        for (Employee employee : manager.getEmployees()) {
+        for (Staff staff : manager.getStaff()) {
             System.out.printf("%-7s  %-15s  %-10s%n",
-                    employee.getEmpID(),
-                    employee.getName(),
-                    employee.getPosition());
+                    staff.getStaffID(),
+                    staff.getName(),
+                    staff.getPosition());
         }
         System.out.println(line+"\n"+border);
 
-        System.out.print("Enter employee ID to delete: ");
+        System.out.print("Enter Staff ID to delete: ");
         String empID = in.nextLine().trim();
         System.out.println(border);
         System.out.println();
 
-        for (Employee employee : manager.getEmployees()) {
-            if (employee.getEmpID().equals(empID)) {
+        for (Staff staff : manager.getStaff()) {
+            if (staff.getStaffID().equals(empID)) {
 
-                if (employee == this) {
+                if (staff == this) {
                     System.out.println(mborder);
                     System.out.printf("%42s\n", "You cannot delete your own account.");
                     System.out.println(mborder);
                     return;
                 }
 
-                manager.getEmployees().remove(employee);
+                manager.getStaff().remove(staff);
                 System.out.println(mborder);
-                System.out.printf("%40s\n", "Employee deleted successfully!");
+                System.out.printf("%40s\n", "Staff deleted successfully!");
                 System.out.println(mborder);
                 return;
             }
         }
 
         System.out.println(mborder);
-        System.out.printf("%36s\n", "Employee ID not found.");
+        System.out.printf("%36s\n", "Staff ID not found.");
         System.out.println(mborder);
     }
 
     // pinagpasahan ng input. taga gawa object
-    private Employee createUserByChoice(int choice, String name,
-                                        String username, String password) {
+    private Staff createUserByChoice(int choice, String name,
+                                     String username, String password) {
         switch (choice) {
             case 1:
                 return new Pharmacist(name, password, username,inventory);
 
             case 2:
-                return new Staff(name, password, username,inventory);
+                return new Employee(name, password, username,inventory);
 
             default:
                 return null;
@@ -829,15 +828,15 @@ public class Owner extends Employee {
 
     //MGA MENUS NA TO --------------------------------------------------------------------------------------------------------------------------------------
 
-    private void manageEmployeeMenu() {
+    private void manageStaffMenu() {
 
         tag();
         System.out.println(border);
-        System.out.printf("%27s%n", "MANAGE EMPLOYEES");
+        System.out.printf("%27s%n", "MANAGE STAFF");
         System.out.println(border);
-        System.out.print("\t[1] Create Employee\n" +
-                "\t[2] View Employee\n" +
-                "\t[3] Delete Employee\n" +
+        System.out.print("\t[1] Create Staff\n" +
+                "\t[2] View Staff\n" +
+                "\t[3] Delete Staff\n" +
                 "\t[0] Exit\n" +
                 border+ "\n" +
                 "Choice: ");
@@ -845,17 +844,17 @@ public class Owner extends Employee {
         System.out.println(border+"\n");
         switch (temp) {
             case 1: {
-                createEmployee();
+                createStaff();
                 pause();
                 break;
             }
             case 2: {
-                displayEmployees();
+                displayStaff();
                 pause();
                 break;
             }
             case 3: {
-                deleteEmployee();
+                deleteStaff();
                 pause();
                 break;
             }

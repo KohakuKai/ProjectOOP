@@ -22,8 +22,8 @@ public class Inventory {
     }
 
     //Add product
-    public boolean addProduct(Employee employee, Product newProduct) {
-        if(!(employee instanceof  Owner))  return false; //pagka hindi owner gumamit
+    public boolean addProduct(Staff staff, Product newProduct) {
+        if(!(staff instanceof  Owner))  return false; //pagka hindi owner gumamit
         if(newProduct == null) return false; //pagka null yung laman ng newProduct
         if(findProductById(newProduct.getProductID()) != null)  return false; //pagka may ka same na ID
         if(newProduct.getCategory() == null) return false; //pagka naginput ng invalid na category name
@@ -82,8 +82,8 @@ public class Inventory {
     public ArrayList<Category> getCategories() { return categories; }
 
     //Add category
-    public boolean addCategory(Employee employee,Category newCategory) {
-        if(!(employee instanceof Owner)) return false; //pagka hindi owner ang gumamit
+    public boolean addCategory(Staff staff, Category newCategory) {
+        if(!(staff instanceof Owner)) return false; //pagka hindi owner ang gumamit
         if(newCategory == null) return false; //walang laman yung inadd
         if(findCategoryById(newCategory.getCategory_ID()) != null) return false; //ibigsabihin may nahanap na existing category
 
@@ -121,7 +121,7 @@ public class Inventory {
             Product p = line.getProduct(); //kinuha yung product sa transactionDetail na yon
 
             if(!products.contains(p)) return false; //pagka yung p is wala sa arraylist na products, return false
-            if(p instanceof Medicine && !((Medicine) p).soldBy(sale.getEmployee())) return false; //if medicine sya tapos hindi sya sold by pharmacist/owner , yung (Medicine) p, casting sya, DOWNCASTING
+            if(p instanceof Medicine && !((Medicine) p).soldBy(sale.getStaff())) return false; //if medicine sya tapos hindi sya sold by pharmacist/owner , yung (Medicine) p, casting sya, DOWNCASTING
 
             int totalNeeded = 0; //total ng isang product accross the entire transaction
             for(TransactionDetail otherLines : productLines) { //traverse yung transactionDetail uli, titignan kung may kasame yung current product
@@ -168,7 +168,7 @@ public class Inventory {
     public boolean recordPurchase(Purchase purchase) {
 
         if(purchase ==null || purchase.getTransactionDetails().isEmpty()) return false; //if walang laman yung purchase or if walang laman yung TransactionDetails arraylist ni Purchase
-        if(!(purchase.getEmployee() instanceof  Owner)) return false; //pagka hindi si owner yung gumawa ng purchase
+        if(!(purchase.getStaff() instanceof  Owner)) return false; //pagka hindi si owner yung gumawa ng purchase
 
         ArrayList<TransactionDetail> lines = purchase.getTransactionDetails();
         ArrayList<LocalDate> expirationDates = purchase.getExpirationDates();
@@ -205,7 +205,9 @@ public class Inventory {
         Product tempra = new OverTheCounter("Tempra Drops","Paracetamol","Taisho","Drops",150,15,findCategoryById("C005"));                   // index 7
         // Antibiotics (C002) - prescription
         Product amoxil = new PrescriptionMedicine("Amoxil 500mg","Amoxicillin","GSK","Capsule",14,60,findCategoryById("C002"));               // index 8
+        //LOW STOCK ALLERT
         Product zithromax = new PrescriptionMedicine("Zithromax 500mg","Azithromycin","Pfizer","Tablet",120,80,findCategoryById("C002"));     // index 9
+
         Product cipro = new PrescriptionMedicine("Ciprofloxacin 500mg","Ciprofloxacin","Generic","Tablet",20,30,findCategoryById("C002"));    // index 10
         Product augmentin = new PrescriptionMedicine("Augmentin 625mg","Amoxicillin + Clavulanic Acid","GSK","Tablet",65,30,findCategoryById("C002")); // index 11
         // Vitamins (C001)
@@ -220,8 +222,10 @@ public class Inventory {
         Product neozep = new OverTheCounter("Neozep Forte","Phenylephrine + Chlorphenamine + Paracetamol","Unilab","Tablet",8,60,findCategoryById("C007")); // index 18
         Product solmux = new OverTheCounter("Solmux 500mg","Carbocisteine","Unilab","Capsule",13,50,findCategoryById("C007"));               // index 19
         Product lagundi = new OverTheCounter("Lagundi 600mg","Vitex negundo","Ascof","Tablet",10,50,findCategoryById("C007"));               // index 20
-        // Digestive Health (C008)
+
+        // Digestive Health (C008) LOW STOCK TESTER
         Product kremil = new OverTheCounter("Kremil-S","Aluminum Hydroxide + Magnesium Hydroxide + Simethicone","Unilab","Tablet",8,50,findCategoryById("C008")); // index 21
+
         Product imodium = new OverTheCounter("Imodium 2mg","Loperamide","Johnson & Johnson","Capsule",18,30,findCategoryById("C008"));       // index 22
         Product omeprazole = new PrescriptionMedicine("Omeprazole 20mg","Omeprazole","Generic","Capsule",12,40,findCategoryById("C008"));    // index 23
         // Cardiovascular (C010) - prescription
@@ -237,22 +241,28 @@ public class Inventory {
         Product safeguard = new Essentials("Safeguard Bar Soap","Antibacterial Soap","P&G","Bar",45,30,findCategoryById("C003"));            // index 30
         // Baby Care (C012) - essentials
         Product babyPowder = new Essentials("Baby Powder","Talcum Powder","Johnson & Johnson","Bottle",110,20,findCategoryById("C012"));     // index 31
-        // Medical Devices (C013) - essentials
+
+
+        // Medical Devices (C013) - essentials //LOW STOCK TEST
         Product thermometer = new Essentials("Digital Thermometer","Digital Thermometer","Omron","Piece",350,30,findCategoryById("C013"));   // index 32
 
-        biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));  //EXPIRED
+        biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));  //EXPIRED na, para ma-test ang removeExpiredBatches
+        imodium.addBatch(new Batch(20,imodium,LocalDate.parse("2026-08-30")));   // EXPIRED
+
+        thermometer.addBatch(new Batch(5,thermometer,LocalDate.parse("2030-01-01"))); // mababa sa reorder level (10)
+        kremil.addBatch(new Batch(100,kremil,LocalDate.parse("2026-11-15")));        // malapit nang ma-expire para ma-test ang near expiry
+        zithromax.addBatch(new Batch(10,zithromax,LocalDate.parse("2027-11-30")));   // mababa sa reorder level (20) para ma-test ang low stock
+
+        // ---------- batches ng bagong products ----------
         vitaminC.addBatch(new Batch(200,vitaminC,LocalDate.parse("2028-09-11")));
         biogesic.addBatch(new Batch(300,biogesic,LocalDate.parse("2027-11-11")));
         bioflu.addBatch(new Batch(200, bioflu,LocalDate.parse("2028-07-11")));
-
-        // ---------- batches ng bagong products ----------
         medicol.addBatch(new Batch(120,medicol,LocalDate.parse("2028-03-15")));
         alaxan.addBatch(new Batch(150,alaxan,LocalDate.parse("2028-06-20")));
         ponstan.addBatch(new Batch(80,ponstan,LocalDate.parse("2028-01-10")));
         calpol.addBatch(new Batch(40,calpol,LocalDate.parse("2027-12-01")));
         tempra.addBatch(new Batch(30,tempra,LocalDate.parse("2027-09-30")));
         amoxil.addBatch(new Batch(100,amoxil,LocalDate.parse("2028-02-28")));
-        zithromax.addBatch(new Batch(10,zithromax,LocalDate.parse("2027-11-30")));   // mababa sa reorder level (20) para ma-test ang low stock
         cipro.addBatch(new Batch(60,cipro,LocalDate.parse("2028-04-15")));
         augmentin.addBatch(new Batch(50,augmentin,LocalDate.parse("2027-10-31")));
         conzace.addBatch(new Batch(90,conzace,LocalDate.parse("2028-05-05")));
@@ -264,9 +274,7 @@ public class Inventory {
         neozep.addBatch(new Batch(150,neozep,LocalDate.parse("2028-02-14")));
         solmux.addBatch(new Batch(90,solmux,LocalDate.parse("2028-04-04")));
         lagundi.addBatch(new Batch(80,lagundi,LocalDate.parse("2028-10-10")));
-        kremil.addBatch(new Batch(100,kremil,LocalDate.parse("2026-11-15")));        // malapit nang ma-expire para ma-test ang near expiry
         imodium.addBatch(new Batch(40,imodium,LocalDate.parse("2028-03-03")));
-        imodium.addBatch(new Batch(20,imodium,LocalDate.parse("2026-08-30")));       // expired na, para ma-test ang removeExpiredBatches
         omeprazole.addBatch(new Batch(70,omeprazole,LocalDate.parse("2028-06-06")));
         amlodipine.addBatch(new Batch(60,amlodipine,LocalDate.parse("2028-12-12")));
         losartan.addBatch(new Batch(60,losartan,LocalDate.parse("2028-12-01")));
@@ -276,7 +284,7 @@ public class Inventory {
         bandaid.addBatch(new Batch(50,bandaid,LocalDate.parse("2029-02-20")));
         safeguard.addBatch(new Batch(80,safeguard,LocalDate.parse("2029-06-01")));
         babyPowder.addBatch(new Batch(30,babyPowder,LocalDate.parse("2029-03-03")));
-        thermometer.addBatch(new Batch(5,thermometer,LocalDate.parse("2030-01-01"))); // mababa sa reorder level (10)
+
 
         products.add(biogesic);
         products.add(vitaminC);
@@ -335,7 +343,7 @@ public class Inventory {
 
     }
 
-    public void defaultTransactions(Employee owner) { //sa start up na constructor to ilalagay, kasi kailangan na malaman na owner ang gumamit
+    public void defaultTransactions(Staff owner) { //sa start up na constructor to ilalagay, kasi kailangan na malaman na owner ang gumamit
         Product biogesic = products.get(0);
         Product vitaminC = products.get(1);
         Product bioflu = products.get(2);

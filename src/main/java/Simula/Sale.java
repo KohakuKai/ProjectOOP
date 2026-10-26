@@ -4,8 +4,8 @@ public class Sale extends Transaction {
     private String saleNo;
     private static int currentRecieptNo = 1;
 
-    Sale(Employee employee, Inventory inventory){
-        super(employee, inventory);
+    Sale(Staff staff, Inventory inventory){
+        super(staff, inventory);
         this.saleNo = String.format("SN%03d",currentRecieptNo++);
     }
 

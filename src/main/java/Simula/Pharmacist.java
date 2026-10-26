@@ -2,7 +2,7 @@ package Simula;
 
 import java.time.LocalDate;
 
-public class Pharmacist extends Employee {
+public class Pharmacist extends Staff {
 
     public Pharmacist(String name, String password, String username, Inventory inventory) {
         super(name, "Pharmacist",password, username, inventory);

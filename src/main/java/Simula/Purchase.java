@@ -11,8 +11,8 @@ public class Purchase extends Transaction{
     private final double BULKDISCOUNT = 0.20;
 
 
-    Purchase (Employee employee, Inventory inventory) {
-        super(employee, inventory);
+    Purchase (Staff staff, Inventory inventory) {
+        super(staff, inventory);
         this.purchaseOrderNo = String.format("PN%03d",currentNumber++);
     }
 
