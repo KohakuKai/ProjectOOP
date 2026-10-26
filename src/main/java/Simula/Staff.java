@@ -183,7 +183,6 @@ public abstract class Staff {
             int choice = userIntInput();
             System.out.println(border);
 
-
             if(choice == 2) {
                 if (!searchProductByName()) {
                     continue;
@@ -221,12 +220,6 @@ public abstract class Staff {
                 else break;
             }
             if (end) break;
-
-            int removed = product.removeExpiredBatches();//pangremove ng expired batches para sa product nayon
-            if(removed>0)System.out.println(
-                    "\n"+mborder+"\n[Removed] "+ removed+
-                    " Expired Batches from "+
-                    product.getProductName()+"\n"+mborder+"\n");
 
             if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
                 System.out.println(border + "\n");
