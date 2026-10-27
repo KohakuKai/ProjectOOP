@@ -55,16 +55,6 @@ public abstract class Staff {
         return staffID;
     }
 
-    // Setters
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-    //a
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -190,6 +180,31 @@ public abstract class Staff {
         System.out.println("Position: " + getPosition());
         System.out.println("Username: " + getUsername());
         System.out.println("Password: " + getPassword());
+
+        System.out.println(border);
+        System.out.print("\t[1] Change Username\n\t[0]Exit\n");
+        System.out.println(border);
+        System.out.print("Choice: ");
+        int choice  = userIntInput();
+
+        System.out.println(border);
+        switch (choice)  {
+            case 1 : {
+                System.out.print("Enter New Username: ");
+                String newUsername = in.nextLine();
+                this.setUsername(newUsername);
+                System.out.println(border);
+                System.out.printf("%25s\n", "Username Changed Successfully!");
+                break;
+            }
+            case 0 : return;
+            default:
+                System.out.println(mborder);
+                System.out.printf("%32s\n", "Invalid Input!");
+                System.out.println(mborder);
+                break;
+
+        }
 
     }
 
