@@ -270,7 +270,7 @@ public class Owner extends Staff {
         System.out.print("PRODUCT TYPE\n" +
                 "\t[1] Medicine\n" +
                 "\t[2] Essentials\n" +
-                "\t[0]Exit\n" +line+ "\nChoice: ");
+                "\t[0] Exit\n" +line+ "\nChoice: ");
         int choice = userIntInput();
         System.out.println(line);
         if (choice == 0) {
@@ -379,7 +379,7 @@ public class Owner extends Staff {
                 System.out.println("\n" +mborder);
                 System.out.printf("%32s\n", "Task Cancelled!");
                 System.out.println(mborder);
-                break;
+                return;
             }
             default: {
                 System.out.println(mborder);
@@ -439,66 +439,6 @@ public class Owner extends Staff {
             System.out.println(mborder);
         }
 
-    }
-
-
-    private void addBatch(){
-
-        tag();
-        System.out.println(border);
-        System.out.printf("%27s%n", "ADD BATCH");
-        System.out.println(border);
-        System.out.print("Enter Product ID: ");
-        String ProductID = in.nextLine().trim().toUpperCase();
-
-        //hahanapin yung product gamit product id
-        Product product = manager.getInventory().findProductById(ProductID);
-
-        if(product == null){
-            System.out.println(border +"\n");
-            System.out.println(mborder);
-            System.out.printf("%36s\n", "Unable to find product!");
-            System.out.println(mborder);
-            return;
-        }
-
-        //pag initialize ng variables
-
-        System.out.print("Enter quantity: ");
-        int quantity = userIntInput();
-        System.out.print("Enter year of expiration: ");
-        int yearExpiration = userIntInput();
-        System.out.print("Enter month of expiration: ");
-        int monthExpiration = userIntInput();
-        System.out.print("Enter day of expiration: ");
-        int dayExpiration = userIntInput();
-        System.out.println(border);
-
-        if(monthExpiration<1 || dayExpiration <1 || monthExpiration > 12 || dayExpiration >31) {
-            System.out.println("\n"+ mborder);
-            System.out.printf("%31s\n", "Invalid Date");
-            System.out.println(mborder);
-            return;
-        }
-
-        if(quantity<=0) {
-            System.out.println("\n"+ mborder);
-            System.out.printf("%33s\n", "Invalid Quantity");
-            System.out.println(mborder);
-            return;
-        }
-
-        Batch addbatch = new Batch( quantity, product, LocalDate.of(yearExpiration, monthExpiration, dayExpiration));
-        if(product.addBatch(addbatch)) {
-            System.out.println("\n"+mborder);
-            System.out.printf("%37s\n", "Batch added successfully!");
-            System.out.println(mborder);
-        }
-        else{
-            System.out.println("\n"+mborder);
-            System.out.printf("%36s\n", "Failed to add new batch");
-            System.out.println(mborder);
-        }
     }
 
     private void addStock() {
@@ -785,11 +725,11 @@ public class Owner extends Staff {
             }
 
             LocalDate expiration = LocalDate.of(year,month,day);
-            LocalDate minimum = LocalDate.now().plusYears(3);
+            LocalDate minimum = LocalDate.now().plusYears(2);
 
             if(expiration.isBefore(minimum)) {
                 System.out.println(mborder);
-                System.out.printf("%49s\n", "Expiration date must be at least 3 years from today");
+                System.out.printf("%49s\n", "Expiration date must be at least 2 years from today");
                 System.out.println(mborder);
                 continue;
             }
