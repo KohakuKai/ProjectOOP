@@ -1,4 +1,4 @@
-package Simula;
+package Pharmacy_Invetory_System;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

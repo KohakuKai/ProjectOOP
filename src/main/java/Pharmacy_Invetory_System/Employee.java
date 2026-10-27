@@ -1,4 +1,4 @@
-package Simula;
+package Pharmacy_Invetory_System;
 import java.time.LocalDate;
 
 public class Employee extends Staff {

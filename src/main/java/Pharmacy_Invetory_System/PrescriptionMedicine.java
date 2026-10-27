@@ -1,4 +1,4 @@
-package Simula;
+package Pharmacy_Invetory_System;
 
 public class PrescriptionMedicine extends Medicine {
 

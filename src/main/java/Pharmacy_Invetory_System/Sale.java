@@ -1,4 +1,4 @@
-package Simula;
+package Pharmacy_Invetory_System;
 
 public class Sale extends Transaction {
     private final String saleNo;
