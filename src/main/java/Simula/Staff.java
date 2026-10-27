@@ -63,6 +63,7 @@ public abstract class Staff {
     public void setPosition(String position) {
         this.position = position;
     }
+    //a
 
     public void setUsername(String username) {
         this.username = username;
@@ -1166,7 +1167,7 @@ public abstract class Staff {
 
             case 1 : displayExpiredBatches(); pause(); break;
             case 2 : displayNearExpiryBatches(); pause(); break;
-            case 0 : ; return;
+            case 0 : return;
             default: {
                 System.out.println(mborder);
                 System.out.printf("%36s\n", "Invalid input. Try Again");
