@@ -2,17 +2,18 @@ package Simula;
 
 import java.time.LocalDate;
 
+
 public class Batch {
 
     private static int currentIDNumber = 1;
 
-    private String batchID;
-    private LocalDate expirationDate;
-    private LocalDate dateReceived;
+    private final String batchID;
+    private final LocalDate expirationDate;
+    private final LocalDate dateReceived;
     private int quantity;
 
     private static int warningDays = 150;
-    private Product product;
+    private final Product product;
 
     //mga constructor
     Batch(int quantity,Product product, LocalDate expirationDate){
@@ -36,14 +37,6 @@ public class Batch {
     }
     public LocalDate getExpirationDate() {
         return expirationDate;
-    }
-
-    //mga setter
-    public void setDateReceived(LocalDate dateReceived) {
-        this.dateReceived = dateReceived;
-    }
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
     }
 
     //taga check expiration date

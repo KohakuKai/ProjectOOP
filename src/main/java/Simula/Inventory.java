@@ -4,12 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+
 public class Inventory {
 
     //mga controllers
-    private ArrayList<Product> products = new ArrayList<>();
-    private ArrayList<Category> categories = new ArrayList<>();
-    private ArrayList<Transaction> transactions = new ArrayList<>();
+    private final ArrayList<Product> products = new ArrayList<>();
+    private final ArrayList<Category> categories = new ArrayList<>();
+    private final ArrayList<Transaction> transactions = new ArrayList<>();
 
     public Inventory() {
         defaultCategories();
@@ -257,7 +258,6 @@ public class Inventory {
         biogesic.addBatch(new Batch(100,biogesic,LocalDate.parse("2026-10-10")));  //EXPIRED na, para ma-test ang removeExpiredBatches
         imodium.addBatch(new Batch(20,imodium,LocalDate.parse("2026-08-30")));   // EXPIRED
         kremil.addBatch(new Batch(100,kremil,LocalDate.parse("2026-11-15")));        // malapit nang ma-expire para ma-test ang near expiry
-
 
 
 

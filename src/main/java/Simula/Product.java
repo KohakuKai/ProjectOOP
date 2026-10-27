@@ -1,16 +1,16 @@
 package Simula;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public abstract class Product {
 
     private static int currentIDNumber = 1;
-    private String productID, productName, genericName, brand, unit;
+    private final String productID;
+    private String productName, genericName, brand, unit;
     private double sellingPrice;
     private int reorderLevel;
     private Category category;
-    private ArrayList<Batch> batches = new ArrayList<>();
+    private final ArrayList<Batch> batches = new ArrayList<>();
 
     //2.) constructor para sa pag aadd mismo ng user ng products
     Product(String productName, String genericName, String brand, String unit, double sellingPrice, int reorderLevel, Category category) {
@@ -37,10 +37,6 @@ public abstract class Product {
 
     public String getProductName() {
         return productName;
-    }
-
-    public String getGenericName() {
-        return genericName;
     }
 
     public String getBrand() {
@@ -114,17 +110,11 @@ public abstract class Product {
     }
 
     public int getTotalStock() {
-        int ctr = 1;
         int total = 0;
         for (Batch b : batches) {
             total += b.getQuantity();
         }
         return total;
-    }
-
-    //kailangan na set na reorder level para rito
-    public boolean isBelowReorderLevel() {
-        return getTotalStock() < reorderLevel;
     }
 
     //get info method
@@ -161,28 +151,8 @@ public abstract class Product {
         }
     }
 
-    public boolean isNearExpiration() {
-        for (Batch b : batches) {
-            if (b.isNearExpiration()) return true;
-        }
-        return false;
-    }
-
     public ArrayList<Batch> getBatches() {
         return batches;
-    }
-
-    public int removeExpiredBatches() {
-
-        int removed = 0;
-        for (int i = 0; i < batches.size(); i++) {
-            if (batches.get(i).isExpired()) {
-                batches.remove(i);
-                removed++;
-            }
-
-        }
-        return removed;
     }
 
 }

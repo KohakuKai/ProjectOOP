@@ -6,16 +6,16 @@ import java.util.ArrayList;
 public abstract class Transaction {
 
     private static int currentIDNumber = 1;
-    private String transactionID;
-    private LocalDate transactionDate;
-    private Staff staff;
-    private Inventory inventory;
+    private final String transactionID;
+    private final LocalDate transactionDate;
+    private final Staff staff;
+    private final Inventory inventory;
 
     private final static double VAT = 0.12;
     private final static double SENIOR_DISCOUNT = 0.20;
     private final static double PWD_DISCOUNT = 0.20;
 
-    private ArrayList<TransactionDetail> transactionDetails = new ArrayList<>();
+    private final ArrayList<TransactionDetail> transactionDetails = new ArrayList<>();
 
     Transaction(Staff staff, Inventory inventory) {
         this.transactionID = String.format("T%03d", currentIDNumber++);
@@ -30,9 +30,6 @@ public abstract class Transaction {
     }
     public String getTransactionID() { return transactionID;}
     public LocalDate getTransactionDate() {return transactionDate;}
-    public static double getVAT() {
-        return VAT;
-    }
 
     public abstract String getTransactionType();
 

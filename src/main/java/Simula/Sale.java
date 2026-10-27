@@ -1,7 +1,7 @@
 package Simula;
 
 public class Sale extends Transaction {
-    private String saleNo;
+    private final String saleNo;
     private static int currentRecieptNo = 1;
 
     Sale(Staff staff, Inventory inventory){

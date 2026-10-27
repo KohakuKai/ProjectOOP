@@ -81,7 +81,7 @@ public class Employee extends Staff {
             }
         }
     }
-    private LocalDate hireDate = LocalDate.now();
+    private final LocalDate hireDate = LocalDate.now();
 
     @Override
     public void displayProfile() {

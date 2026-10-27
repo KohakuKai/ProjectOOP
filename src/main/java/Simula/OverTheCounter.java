@@ -8,7 +8,7 @@ public class OverTheCounter extends Medicine {
 
     @Override
     public String getProductType() {
-        return "Medicine";
+        return "Over the Counter Medicine";
     }
 
     @Override
