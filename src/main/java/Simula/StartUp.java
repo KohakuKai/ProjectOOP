@@ -51,7 +51,7 @@ public class StartUp {
                     System.out.println(mborder);
                     String username = "ownerUsername";
                     String empID = "1001";
-                    String password = "ownerPassword";
+                    String password = "ownerPassword123_";
                     Staff foundStaff = findUser(username, password);
                     if (foundStaff != null) foundStaff.showDashboard();
                     break;
@@ -112,14 +112,14 @@ public class StartUp {
     // MGA DEFAULT/PRE DEFINED NA MGA USERS NG SYSTEM -----------------------------------------------------------------------
 
     private  void setDefaultUsers () {
-        Staff owner = new Owner("ownerName", this, "ownerPassword", "ownerUsername", inventory);
+        Staff owner = new Owner("ownerName", this, "ownerPassword123_", "ownerUsername", inventory);
         registeredStaffs.add(owner);
         inventory.defaultTransactions(owner); // para lang to sa predefined na Transcation History
 
         Staff pharmacist1 = new Pharmacist("Clay Cruz","July242007_","clay",inventory);
         registeredStaffs.add(pharmacist1);
 
-        Staff staff1 = new Employee("Raiven Joson","ILoveEunice_","raiven",inventory);
+        Staff staff1 = new Employee("Raiven Joson","ILoveEunice07_","raiven",inventory);
         registeredStaffs.add(staff1);
 
 

@@ -123,15 +123,46 @@ public abstract class Staff {
 
     protected void changePassword() {
 
-        System.out.print("\n" + border);
+        System.out.println("\n" + border);
         System.out.printf("%32s%n", "CHANGE PASSWORD");
-        System.out.println("\n" + border + "\nEnter Current password: ");
+        System.out.println(  border + "\nEnter Current password: ");
         String checkPassword = in.nextLine();
 
         if (checkPassword.equals(this.getPassword())) {
 
-            System.out.print("Enter new password: ");
-            String newPassword = in.nextLine();
+            String newPassword;
+
+            while(true) {
+                System.out.println(line);
+                System.out.print("Enter new password: ");
+                newPassword = in.nextLine();
+                System.out.println(line);
+
+                if (!newPassword.matches(".*[A-Z].*")) {
+                    System.out.println(mborder);
+                    System.out.printf("%48s\n", "Password must have at least one capital letter.");
+                    System.out.println(mborder);
+                }
+                else if (!newPassword.matches(".*[0-9].*")) {
+                    System.out.println(mborder);
+                    System.out.printf("%44s\n", "Password must have at least one number.");
+                    System.out.println(mborder);
+                }
+                else if (!newPassword.matches(".*[^a-zA-Z0-9\\s].*")) {
+                    System.out.println(mborder);
+                    System.out.printf("%49s\n", "Password must have at least one special character");
+                    System.out.println(mborder);
+                }
+                else if (newPassword.length() < 10) {
+                    System.out.println(mborder);
+                    System.out.printf("%45s\n", "Password must have at least 10 characters");
+                    System.out.println(mborder);
+                }
+                else {
+                    break;
+                }
+
+            }
 
             setPassword(newPassword);
             System.out.println(mborder);
@@ -230,11 +261,16 @@ public abstract class Staff {
                 continue;
             }
 
-            int availableStock = product.getTotalStock();
+            int availableStock = 0; // etong block na to, minamake sure na hindi kasama sa count yung expired na stock
+            for (Batch b : product.getBatches()) {
+                if (!b.isExpired()) {
+                    availableStock += b.getQuantity();
+                }
+            }
 
-            for (TransactionDetail detail: receipt.getTransactionDetails()) {
+            for (TransactionDetail detail : receipt.getTransactionDetails()) {
                 if (detail.getProduct() == product) {
-                    availableStock -= detail.getQuantity();
+                    availableStock -= detail.getQuantity(); // already in this cart
                 }
             }
 
@@ -378,26 +414,6 @@ public abstract class Staff {
             counter++;
         }
         System.out.println(line);
-
-        System.out.print("\t[1] View More Product Details\n" +
-                "\t[0] Exit\n" +
-                border +
-                "\nChoice: ");
-        int choice = userIntInput();
-        System.out.println(border);
-
-        switch (choice) {
-            case 1:
-                displayMoreProductDetails();
-                break;
-            case 0:
-                break;
-            default:
-                System.out.println(mborder);
-                System.out.printf("%32s\n", "Invalid Input!");
-                System.out.println(mborder);
-                break;
-        }
 
     }
 
@@ -640,8 +656,15 @@ public abstract class Staff {
         System.out.println(border);
         System.out.printf("%32s\n","PRODUCT BATCHES");
         System.out.println(border);
-        System.out.print("Enter Product ID: ");
+
+        System.out.print("Enter Product ID[0 to View Products]: ");
         String productID = in.nextLine().trim().toUpperCase();
+        if(productID.equals("0")) {
+            displayProducts();
+            System.out.print("Product ID: ");
+            productID = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
 
         Product product = inventory.findProductById(productID);
 
@@ -705,6 +728,7 @@ public abstract class Staff {
 
     protected void displayStockAlerts() {
         int expiredProducts = 0;
+        int nearExpiryProducts =0;
         int lowStockProducts = 0;
 
         for (Product product : inventory.getProducts()) {
@@ -713,9 +737,15 @@ public abstract class Staff {
 
             for (Batch batch : product.getBatches()) {
                 if (batch.isExpired()) {
-                    if (batch.getQuantity() > 0) {
+                    if (batch.getQuantity() > 0)
                         expiredProducts++;
-                    }
+
+                } else if (batch.isNearExpiration()) { {
+                   if(batch.getQuantity()>0)
+                    nearExpiryProducts++;
+                   usableStock += batch.getQuantity();
+                }
+
                 } else {
                     usableStock += batch.getQuantity();
                 }
@@ -726,18 +756,18 @@ public abstract class Staff {
             }
         }
 
-        if (expiredProducts > 0 && lowStockProducts > 0) {
+        if ((expiredProducts > 0 || nearExpiryProducts > 0) && lowStockProducts > 0) {
             System.out.println(line);
             System.out.printf("%28s%n", "!ALERTS!");
-            System.out.print("[11] EXPIRED(" + expiredProducts + " items)");
+            System.out.print("[11] EXPIRED(" + (expiredProducts + nearExpiryProducts) + " items)");
             System.out.printf("%26s%n", "[12] LOW STOCK(" + lowStockProducts + " items)");
             System.out.println(line);
-        } else if (expiredProducts > 0 && lowStockProducts == 0) {
+        } else if ((expiredProducts > 0 || nearExpiryProducts > 0) && lowStockProducts == 0) {
             System.out.println(line);
             System.out.printf("%28s%n", "!ALERTS!");
-            System.out.println("[11] EXPIRED(" + expiredProducts + " items)");
+            System.out.println("[11] EXPIRED(" + (expiredProducts+ nearExpiryProducts) + " items)");
             System.out.println(line);
-        } else if (expiredProducts == 0 && lowStockProducts > 0) {
+        } else if ((expiredProducts == 0 && nearExpiryProducts ==0) && lowStockProducts > 0) {
             System.out.println(line);
             System.out.printf("%28s%n", "!ALERTS!");
             System.out.println("[12] LOW STOCK(" + lowStockProducts + " items)");
@@ -899,8 +929,15 @@ public abstract class Staff {
     protected boolean searchProductByCategory() {
 
         System.out.println("\n"+line);
-        System.out.print("Category Name/ID: ");
+        System.out.print("Category ID/Name[0 to View Categories]: ");
         String givenCategoryString = in.nextLine().trim().toUpperCase();
+        if(givenCategoryString.equals("0")) {
+            displayCategories();
+            System.out.print("Category ID: ");
+            givenCategoryString = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
+
         System.out.println(line+"\n");
 
         ArrayList<Product> matchedProducts = inventory.findProductByCategory(givenCategoryString);
@@ -929,6 +966,7 @@ public abstract class Staff {
 
     }
 
+
     protected int returnNearExpiration() {
 
         if(!(this instanceof Owner)) {
@@ -943,7 +981,7 @@ public abstract class Staff {
 
             ArrayList<Batch> batches = p.getBatches();
 
-            for(int i=0; i<batches.size();i++) {
+            for(int i=batches.size()-1; i>=0;i--) {
                 if(batches.get(i).isNearExpiration()) {
                     batches.remove(i);
                     returnedBatches++;
@@ -968,7 +1006,7 @@ public abstract class Staff {
 
             ArrayList<Batch> batches = p.getBatches();
 
-            for (int i = 0; i < batches.size(); i++) {
+            for (int i=batches.size()-1; i>=0;i--) {
                 if (batches.get(i).isExpired()) {
                     batches.remove(i);
                     removed++;
@@ -1107,8 +1145,6 @@ public abstract class Staff {
             }
 
         }
-
-
     }
 
     //MENUS _________________________________________________________________________________________________________________
@@ -1121,7 +1157,7 @@ public abstract class Staff {
         System.out.printf("%31s%n", "EXPIRATION" );
         System.out.print(border +
                 "\n\t[1] View Expired Batches\n" +
-                "\t[2] View Near Expiry Product\n" +
+                "\t[2] View Near Expiry Batches\n" +
                 "\t[0] Exit\n" + border +
                 "\nChoice: ");
         int choice = userIntInput();
@@ -1139,6 +1175,31 @@ public abstract class Staff {
                 break;
             }
         }
+
+    }
+
+    protected void moreProductDetailsMenu() {
+
+        System.out.print("\t[1] View More Product Details\n" +
+                "\t[0] Exit\n" +
+                border +
+                "\nChoice: ");
+        int choice = userIntInput();
+        System.out.println(border);
+
+        switch (choice) {
+            case 1:
+                displayMoreProductDetails();
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println(mborder);
+                System.out.printf("%32s\n", "Invalid Input!");
+                System.out.println(mborder);
+                break;
+        }
+
 
     }
 

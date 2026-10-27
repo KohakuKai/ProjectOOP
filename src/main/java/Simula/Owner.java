@@ -309,8 +309,14 @@ public class Owner extends Staff {
         System.out.print("Reorder Level: ");
         int reorderLevel = userIntInput();
 
-        System.out.print("Category ID: ");
+        System.out.print("Category ID[0 to View Categories]: ");
         String categoryID = in.nextLine().trim().toUpperCase();
+        if(categoryID.equals("0")) {
+            displayCategories();
+            System.out.print("Category ID: ");
+            categoryID = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
 
         Category category = manager.getInventory().findCategoryById(categoryID); //dito hinanap yugn actual category object using String CategoryID
 
@@ -496,12 +502,40 @@ public class Owner extends Staff {
     }
 
     private void addStock() {
+
+        System.out.println(border);
+        System.out.printf("%27s%n", "WARNING!");
+        System.out.println(border);
+        System.out.println(line);
+        System.out.print( " Use the Manual Operations Only in the Events of\n   Human-Error in the Purchase Product Method.\n" + line +
+                "\n\t[1]Continue\n" +
+                "\t[2]Cancel\n"+ border +
+                "\nChoice: ");
+        int choice = userIntInput();
+
+        if(choice==2) {
+            return;
+        }
+        else if(choice != 1) {
+            System.out.println("Invalid Input!");
+            return;
+        }
+
+
+
         tag();
         System.out.println(border);
         System.out.printf("%27s%n", "ADD STOCK");
         System.out.println(border);
-        System.out.print("Enter Product ID: ");
+
+        System.out.print("Enter Product ID[0 to View Products]: ");
         String productID = in.nextLine().trim().toUpperCase();
+        if(productID.equals("0")) {
+            displayProducts();
+            System.out.print("Product ID: ");
+            productID = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
 
         Product product = manager.getInventory()
                 .findProductById(productID);
@@ -514,8 +548,23 @@ public class Owner extends Staff {
             return;
         }
 
-        System.out.print("Enter Batch ID: ");
+        System.out.print("Enter Batch ID[0 to View Batches]: ");
         String batchID = in.nextLine().trim().toUpperCase();
+        if(batchID.equals("0")) {
+
+            System.out.printf("%-15s: %d%n", "Total Stock: ", product.getTotalStock());
+
+            System.out.println(line);
+            System.out.printf("%31s\n","BATCH DETAILS");
+            System.out.println(line);
+            product.checkExpiration();
+            System.out.println(line);
+            System.out.println(border);
+
+            System.out.print("Batch ID: ");
+            batchID = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
 
         Batch batch = product.findBatchById(batchID);
 
@@ -546,12 +595,37 @@ public class Owner extends Staff {
     }
 
     private void reduceStock() {
+
+        System.out.println(border);
+        System.out.printf("%27s%n", "WARNING!");
+        System.out.println(border);
+        System.out.println(line);
+        System.out.print( " Use the Manual Operations Only in the Events of\n   Human-Error in the Sell Product Method.\n" + line +
+                "\n\t[1]Continue\n" +
+                "\t[2]Cancel\n"+ border +
+                "\nChoice: ");
+        int choice = userIntInput();
+
+        if(choice==2) {
+            return;
+        }
+        else if(choice != 1) {
+            System.out.println("Invalid Input!");
+            return;
+        }
+
         tag();
         System.out.println(border);
         System.out.printf("%27s%n", "REDUCE STOCK");
         System.out.println(border);
-        System.out.print("Enter Product ID: ");
+        System.out.print("Enter Product ID[0 to View Products]: ");
         String productID = in.nextLine().trim().toUpperCase();
+        if(productID.equals("0")) {
+            displayProducts();
+            System.out.print("Product ID: ");
+            productID = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
 
         Product product = manager.getInventory()
                 .findProductById(productID);
@@ -564,8 +638,23 @@ public class Owner extends Staff {
             return;
         }
 
-        System.out.print("Enter Batch ID: ");
+        System.out.print("Enter Batch ID[0 to View Batches]: ");
         String batchID = in.nextLine().trim().toUpperCase();
+        if(batchID.equals("0")) {
+
+            System.out.printf("%-15s: %d%n", "Total Stock: ", product.getTotalStock());
+
+            System.out.println(line);
+            System.out.printf("%31s\n","BATCH DETAILS");
+            System.out.println(line);
+            product.checkExpiration();
+            System.out.println(line);
+            System.out.println(border);
+
+            System.out.print("Batch ID: ");
+            batchID = in.nextLine().trim().toUpperCase();
+            System.out.println(border);
+        }
 
         Batch batch = product.findBatchById(batchID);
 
@@ -653,6 +742,12 @@ public class Owner extends Staff {
             }
 
             double unitCost = product.getSellingPrice();
+
+            System.out.println();
+
+            if(product instanceof Essentials) {
+                System.out.println("[Input 9999 for Year Field if Expiration is not Applicable]\n");
+            }
 
             System.out.print("Expiration Year: ");
             int year = userIntInput();
@@ -810,9 +905,32 @@ public class Owner extends Staff {
         System.out.printf("%27s%n", "DELETE CATEGORY");
         System.out.println(border);
 
-        System.out.print("Enter Category ID: ");
+        System.out.print("Category ID[0 to View Categories]: ");
         String categoryID = in.nextLine().trim().toUpperCase();
+        if(categoryID.equals("0")) {
+            displayCategories();
+            System.out.print("Category ID: ");
+            categoryID = in.nextLine().trim().toUpperCase();
+        }
+
         System.out.println(border);
+        System.out.printf("%27s%n", "WARNING!");
+        System.out.println(border);
+        System.out.print(line);
+        System.out.print( "\n Products that have this Category may Return a\n     Null Value in their Category field.\n" + line +
+                "\n\t[1]Continue\n" +
+                "\t[2]Cancel\n"+ border +
+                "\nChoice: ");
+        int choice = userIntInput();
+
+        if(choice==2) {
+            return;
+        }
+        else if(choice != 1) {
+            System.out.println("Invalid Input!");
+            return;
+        }
+
 
         if (inventory.removeCategory(categoryID)) {
             System.out.println("\n"+mborder);
@@ -893,7 +1011,7 @@ public class Owner extends Staff {
         switch(choice2) {
 
             case 1 : createProduct(); pause(); break;
-            case 2 : displayProducts(); pause(); break;
+            case 2 : displayProducts(); moreProductDetailsMenu(); pause(); break;
             case 3 : deleteProduct(); pause(); break;
             case 4 : searchProduct(); pause(); break;
             case 0 : break;
