@@ -9,8 +9,8 @@ public class StartUp {
     String border = "=".repeat(50);
     String mborder = "~".repeat(50);
 
-    private ArrayList<Staff> registeredStaffs = new ArrayList<>();
-    private Scanner in = new Scanner(System.in);
+    private final ArrayList<Staff> registeredStaffs = new ArrayList<>();
+    private final Scanner in = new Scanner(System.in);
 
     public StartUp() { // dito lalagay yung owner
         setDefaultUsers();
@@ -23,7 +23,7 @@ public class StartUp {
 
     // login or sign up
     public void start() {
-        int choice = 0;
+        int choice;
         while (true) {
             System.out.println("\n" + border);
             System.out.printf("%32s\n","PHARMACY SYSTEM");
@@ -50,7 +50,6 @@ public class StartUp {
                     System.out.printf("%28s\n","Bypass!");
                     System.out.println(mborder);
                     String username = "ownerUsername";
-                    String empID = "1001";
                     String password = "ownerPassword123_";
                     Staff foundStaff = findUser(username, password);
                     if (foundStaff != null) foundStaff.showDashboard();
@@ -84,15 +83,14 @@ public class StartUp {
         Staff foundStaff = findUser(username,  password);
 
         System.out.println();
-
+        System.out.println(mborder);
         if (foundStaff != null) {
-            System.out.println(mborder);
+
             System.out.printf("%33s\n","Login successful!");
             System.out.println(mborder);
             // may override each subclass
             foundStaff.showDashboard();
         } else {
-            System.out.println(mborder);
             System.out.printf("%48s\n","No matching account found. Please sign up first.");
             System.out.println(mborder);
         }

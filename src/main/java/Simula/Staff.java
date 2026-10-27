@@ -22,7 +22,7 @@ public abstract class Staff {
     private String username;
     private String password;
     private static int nextStaffID = 1001;
-    private String staffID;
+    private final String staffID;
     protected final Inventory inventory;
 
     public Staff(String name, String position, String password, String username, Inventory inventory) {
@@ -197,7 +197,7 @@ public abstract class Staff {
     //PRODUCT METHODS
 
     protected void sellProduct() {
-        int i =0;
+        int i;
 
         tag();
         System.out.println("\n" + border);
@@ -248,10 +248,11 @@ public abstract class Staff {
                 }
                 else if (product == null) {
                     System.out.println("Product not found. Try again.");
+
                 }
                 else break;
             }
-            if (end) break;
+            if (end) continue;
 
             if (product instanceof Medicine && !((Medicine) product).soldBy(this)) {
                 System.out.println(border + "\n");
@@ -733,7 +734,6 @@ public abstract class Staff {
         int lowStockProducts = 0;
 
         for (Product product : inventory.getProducts()) {
-            boolean hasExpiredStock = false;
             int usableStock = 0;
 
             for (Batch batch : product.getBatches()) {
@@ -1030,12 +1030,12 @@ public abstract class Staff {
 
             ArrayList<Batch> batches = p.getBatches();
 
-            for(int i=0;i<batches.size();i++) {
-                if(batches.get(i).isExpired()) {
+            for(Batch b : batches) {
+                if(b.isExpired()) {
                     System.out.printf("%27s%n", p.getProductName() );
-                    System.out.println("\nBatch ID       : " + batches.get(i).getBatchID());
-                    System.out.println("Quantity       : " + batches.get(i).getQuantity());
-                    System.out.println("Expiration Date: " + batches.get(i).getExpirationDate());
+                    System.out.println("\nBatch ID       : " + b.getBatchID());
+                    System.out.println("Quantity       : " + b.getQuantity());
+                    System.out.println("Expiration Date: " + b.getExpirationDate());
                     System.out.println(mborder);
 
                 }
@@ -1076,14 +1076,14 @@ public abstract class Staff {
 
             ArrayList<Batch> batches = p.getBatches();
 
-            for(int i =0; i<batches.size();i++) {
+            for(Batch b : batches) {
 
-                if(batches.get(i).isNearExpiration()) {
+                if(b.isNearExpiration()) {
 
                     System.out.printf("%27s%n", p.getProductName() );
-                    System.out.println("\nBatch ID       : " + batches.get(i).getBatchID());
-                    System.out.println("Quantity       : " + batches.get(i).getQuantity());
-                    System.out.println("Expiration Date: " + batches.get(i).getExpirationDate());
+                    System.out.println("\nBatch ID       : " + b.getBatchID());
+                    System.out.println("Quantity       : " + b.getQuantity());
+                    System.out.println("Expiration Date: " + b.getExpirationDate());
                     System.out.println(mborder);
 
                 }
@@ -1153,53 +1153,58 @@ public abstract class Staff {
 
     protected void expiredItemsMenu() {
 
-        System.out.println("\n"+ border);
+        while(true) {
 
-        System.out.printf("%31s%n", "EXPIRATION" );
-        System.out.print(border +
-                "\n\t[1] View Expired Batches\n" +
-                "\t[2] View Near Expiry Batches\n" +
-                "\t[0] Exit\n" + border +
-                "\nChoice: ");
-        int choice = userIntInput();
+            System.out.println("\n"+ border);
 
-        switch (choice) {
+            System.out.printf("%31s%n", "EXPIRATION" );
+            System.out.print(border +
+                    "\n\t[1] View Expired Batches\n" +
+                    "\t[2] View Near Expiry Batches\n" +
+                    "\t[0] Exit\n" + border +
+                    "\nChoice: ");
+            int choice = userIntInput();
 
-            case 1 : displayExpiredBatches(); pause(); break;
-            case 2 : displayNearExpiryBatches(); pause(); break;
-            case 0 : return;
-            default: {
-                System.out.println(mborder);
-                System.out.printf("%36s\n", "Invalid input. Try Again");
-                System.out.println(mborder);
-                pause();
-                break;
+            switch (choice) {
+
+                case 1 : displayExpiredBatches(); pause(); break;
+                case 2 : displayNearExpiryBatches(); pause(); break;
+                case 0 : return;
+                default: {
+                    System.out.println(mborder);
+                    System.out.printf("%36s\n", "Invalid input. Try Again");
+                    System.out.println(mborder);
+                    pause();
+                    break;
+                }
             }
         }
+
 
     }
 
     protected void moreProductDetailsMenu() {
 
-        System.out.print("\t[1] View More Product Details\n" +
-                "\t[0] Exit\n" +
-                border +
-                "\nChoice: ");
-        int choice = userIntInput();
-        System.out.println(border);
+        while(true) {
 
-        switch (choice) {
-            case 1:
-                displayMoreProductDetails();
-                break;
-            case 0:
-                break;
-            default:
-                System.out.println(mborder);
-                System.out.printf("%32s\n", "Invalid Input!");
-                System.out.println(mborder);
-                break;
+            System.out.print("\t[1] View More Product Details\n" +
+                    "\t[0] Exit\n" +
+                    border +
+                    "\nChoice: ");
+            int choice = userIntInput();
+            System.out.println(border);
+
+            switch (choice) {
+                case 1: displayMoreProductDetails();break;
+                case 0: return;
+                default:
+                    System.out.println(mborder);
+                    System.out.printf("%32s\n", "Invalid Input!");
+                    System.out.println(mborder);
+                    break;
+            }
         }
+
 
 
     }

@@ -715,14 +715,32 @@ public class Owner extends Staff {
                 continue;
             }
 
-            System.out.print("Product ID(Enter 0 to end): ");
-            String productID = in.nextLine().trim().toUpperCase();
-            if(productID.equals("0")) {
-                end = true;
-                break;
+            Product product;
+            while (true) {
+                System.out.print("Product ID [0 to cancel]: ");
+                String productID = in.nextLine().trim().toUpperCase();
+
+                if (productID.equals("0")) {
+                    end = true;
+                    product = null;
+                    break;
+                }
+
+                product = inventory.findProductById(productID);
+
+                if (productID.isEmpty()) {
+                    System.out.println("Product ID cannot be empty");
+                }
+                else if (product == null) {
+                    System.out.println("Product not found. Try again.");
+
+                }
+                else break;
             }
 
-            Product product = inventory.findProductById(productID);
+            if(end)continue;
+
+
 
             if(product ==null ) {
                 System.out.println(mborder);
@@ -948,156 +966,160 @@ public class Owner extends Staff {
 
     private void manageStaffMenu() {
 
-        tag();
-        System.out.println(border);
-        System.out.printf("%27s%n", "MANAGE STAFF");
-        System.out.println(border);
-        System.out.print("\t[1] Create Staff\n" +
-                "\t[2] View Staff\n" +
-                "\t[3] Delete Staff\n" +
-                "\t[0] Exit\n" +
-                border+ "\n" +
-                "Choice: ");
-        int temp = userIntInput();
-        System.out.println(border+"\n");
-        switch (temp) {
-            case 1: {
-                createStaff();
-                pause();
-                break;
+
+        while (true) {
+
+            tag();
+            System.out.println(border);
+            System.out.printf("%27s%n", "MANAGE STAFF");
+            System.out.println(border);
+            System.out.print("\t[1] Create Staff\n" +
+                    "\t[2] View Staff\n" +
+                    "\t[3] Delete Staff\n" +
+                    "\t[0] Exit\n" +
+                    border+ "\n" +
+                    "Choice: ");
+            int temp = userIntInput();
+            System.out.println(border+"\n");
+            switch (temp) {
+                case 1: {
+                    createStaff();
+                    pause();
+                    break;
+                }
+                case 2: {
+                    displayStaff();
+                    pause();
+                    break;
+                }
+                case 3: {
+                    deleteStaff();
+                    pause();
+                    break;
+                }
+                case 0: {
+                    return;
+                }
+                default:{
+                    System.out.println(mborder);
+                    System.out.printf("%36s\n", "Invalid input. Try Again");
+                    System.out.println(mborder);
+                    pause();
+                    break;
+                }
             }
-            case 2: {
-                displayStaff();
-                pause();
-                break;
-            }
-            case 3: {
-                deleteStaff();
-                pause();
-                break;
-            }
-            case 0: {
-                break;
-            }
-            default:{
-                System.out.println(mborder);
-                System.out.printf("%36s\n", "Invalid input. Try Again");
-                System.out.println(mborder);
-                pause();
-                break;
-            }
+
         }
+
 
     }
 
     private void manageProductMenu() {
 
+        while(true) {
 
-        tag();
-        System.out.println(border);
-        System.out.printf("%27s%n", "MANAGE PRODUCTS");
-        System.out.println(border);
-        System.out.print("\t[1]Create Product\n" +
-                "\t[2]Display Products\n" +
-                "\t[3]Delete Product\n" +
-                "\t[4]Search Product\n" +
-                "\t[0] Exit\n" + border +
-                "\nChoice:");
-        int choice2 = userIntInput();
-        System.out.println(border+"\n");
+            tag();
+            System.out.println(border);
+            System.out.printf("%27s%n", "MANAGE PRODUCTS");
+            System.out.println(border);
+            System.out.print("\t[1]Create Product\n" +
+                    "\t[2]Display Products\n" +
+                    "\t[3]Delete Product\n" +
+                    "\t[4]Search Product\n" +
+                    "\t[0] Exit\n" + border +
+                    "\nChoice:");
+            int choice2 = userIntInput();
+            System.out.println(border+"\n");
 
-        //case 3 : editProductDetails(); pause(); break;
+            //case 3 : editProductDetails(); pause(); break;
 
-        switch(choice2) {
+            switch(choice2) {
 
-            case 1 : createProduct(); pause(); break;
-            case 2 : displayProducts(); moreProductDetailsMenu(); pause(); break;
-            case 3 : deleteProduct(); pause(); break;
-            case 4 : searchProduct(); pause(); break;
-            case 0 : break;
-            default : {
-                System.out.println(mborder);
-                System.out.printf("%36s\n", "Invalid input. Try Again");
-                System.out.println(mborder);
-                pause();
-                break;
+                case 1 : createProduct(); pause(); break;
+                case 2 : displayProducts(); moreProductDetailsMenu(); pause(); break;
+                case 3 : deleteProduct(); pause(); break;
+                case 4 : searchProduct(); pause(); break;
+                case 0 : return;
+                default : {
+                    System.out.println(mborder);
+                    System.out.printf("%36s\n", "Invalid input. Try Again");
+                    System.out.println(mborder);
+                    pause();
+                    break;
+                }
             }
+
         }
+
+
 
     }
 
     private void manageCategoryMenu() {
 
-        tag();
-        System.out.println(border);
-        System.out.printf("%27s%n", "MANAGE CATEGORIES");
-        System.out.println(border);
-        System.out.print("\t[1]Add Category\n" +
-                "\t[2]Display Categories\n" +
-                "\t[3]Delete Category\n" +
-                "\t[0] Exit\n" + border +
-                "\nChoice:");
-        int choice2 = userIntInput();
-        System.out.println(border+"\n");
+        while(true) {
 
-        switch(choice2) {
+            tag();
+            System.out.println(border);
+            System.out.printf("%27s%n", "MANAGE CATEGORIES");
+            System.out.println(border);
+            System.out.print("\t[1]Add Category\n" +
+                    "\t[2]Display Categories\n" +
+                    "\t[3]Delete Category\n" +
+                    "\t[0] Exit\n" + border +
+                    "\nChoice:");
+            int choice2 = userIntInput();
+            System.out.println(border+"\n");
 
-            case 1 : addCategory(); pause(); break;
-            case 2 : displayCategories(); pause(); break;
-            case 3 : deleteCategory(); pause(); break;
-            case 0 : break;
-            default : {
-                System.out.println(mborder);
-                System.out.printf("%36s\n", "Invalid input. Try Again");;
-                System.out.println(mborder);
-                pause();
-                break;
+            switch(choice2) {
+
+                case 1 : addCategory(); pause(); break;
+                case 2 : displayCategories(); pause(); break;
+                case 3 : deleteCategory(); pause(); break;
+                case 0 : return;
+                default : {
+                    System.out.println(mborder);
+                    System.out.printf("%36s\n", "Invalid input. Try Again");;
+                    System.out.println(mborder);
+                    pause();
+                    break;
+                }
             }
         }
+
 
     }
 
     private void manageStockMenu() {
 
-        tag();
-        System.out.println(border);
-        System.out.printf("%27s%n", "MANAGE STOCKS");
-        System.out.println(border);
-        System.out.print("\t[1]View a Product's Batches\n" +
-                "\t[2]Add Stock(Manual Add)\n" +
-                "\t[3]Reduce Stock(Manual Remove)\n" +
-                "\t[0] Exit\n"+ border +
-                "\nChoice: ");
-        int choice4 = userIntInput();
-        System.out.println(border+"\n");
+        while(true) {
 
-        switch(choice4){
-            case 1:{
-                viewProductBatchDetails();
-                pause();
-                break;
-            }
-            case 2:{
-                addStock();
-                pause();
-                break;
-            }
-            case 3:{
-                reduceStock();
-                pause();
-                break;
-            }
+            tag();
+            System.out.println(border);
+            System.out.printf("%27s%n", "MANAGE STOCKS");
+            System.out.println(border);
+            System.out.print("\t[1]View a Product's Batches\n" +
+                    "\t[2]Add Stock(Manual Add)\n" +
+                    "\t[3]Reduce Stock(Manual Remove)\n" +
+                    "\t[0] Exit\n"+ border +
+                    "\nChoice: ");
+            int choice4 = userIntInput();
+            System.out.println(border+"\n");
 
-            case 0: {
-                break;
-            }
+            switch(choice4){
+                case 1: viewProductBatchDetails(); pause();  break;
+                case 2: addStock();  pause();  break;
+                case 3: reduceStock();  pause();  break;
+                case 0: return;
 
-            default:{
-                System.out.println(mborder);
-                System.out.printf("%36s\n", "Invalid input. Try Again");
-                System.out.println(mborder);
-                pause();
-                break;
+                default:{
+                    System.out.println(mborder);
+                    System.out.printf("%36s\n", "Invalid input. Try Again");
+                    System.out.println(mborder);
+                    pause();
+                    break;
+                }
+
             }
 
         }
