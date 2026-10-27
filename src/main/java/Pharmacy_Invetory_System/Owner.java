@@ -36,9 +36,8 @@ public class Owner extends Staff {
                     "\t[6] Purchase Product\n" +
                     "\t[7] View Transaction History\n "+
                     "ACCOUNT\n" +
-                    "\t[8] Change Password\n" +
-                    "\t[9] View My Profile\n" +
-                    "\t[10] Logout\n" +
+                    "\t[8] View My Profile\n" +
+                    "\t[9] Logout\n" +
                     border + "\n" +
                     "Choice: ");
             int choice = userIntInput();
@@ -52,17 +51,16 @@ public class Owner extends Staff {
                 case 5: sellProduct();  pause();  break;
                 case 6 : purchaseProduct();  pause();  break;
                 case 7: viewTransactionHistory();  pause();  break;
-                case 8: changePassword(); pause(); break;
-                case 9: displayProfile(); pause(); break;
-                case 10: {
+                case 8: myProfileMenu(); pause(); break;
+                case 9: {
                     System.out.println(mborder);
                     System.out.printf("%32s\n", "Logging out...");
                     System.out.println(mborder);
                     return;
                 }
 
-                case 11 : expiredItemsMenu(); break;
-                case 12 : displayLowStockProducts(); pause(); break;
+                case 10 : expiredItemsMenu(); break;
+                case 11 : displayLowStockProducts(); pause(); break;
 
                 default: {
                     System.out.println(mborder);
@@ -447,7 +445,7 @@ public class Owner extends Staff {
         System.out.printf("%27s%n", "WARNING!");
         System.out.println(border);
         System.out.println(line);
-        System.out.print( " Use the Manual Operations Only in the Events of\n   Human-Error in the Purchase Product Method.\n" + line +
+        System.out.print( " Use the Manual Operation Only in the Events of\n   Human-Error in the Purchase Product Method.\n" + line +
                 "\n\t[1]Continue\n" +
                 "\t[2]Cancel\n"+ border +
                 "\nChoice: ");
@@ -540,7 +538,7 @@ public class Owner extends Staff {
         System.out.printf("%27s%n", "WARNING!");
         System.out.println(border);
         System.out.println(line);
-        System.out.print( " Use the Manual Operations Only in the Events of\n   Human-Error in the Sell Product Method.\n" + line +
+        System.out.print( " Use the Manual Operation Only in the Events of\n   Human-Error in the Sell Product Method.\n" + line +
                 "\n\t[1]Continue\n" +
                 "\t[2]Cancel\n"+ border +
                 "\nChoice: ");
@@ -634,9 +632,10 @@ public class Owner extends Staff {
         boolean end = false;
 
         while(!end) {//Loop to, add lang ng add ng product sa checkout hanggang mag input ng 0, tapos don matatapos
-            System.out.print("\t[1]Input Product ID to Purchase\n"+
-                    "\t[2]Search Product Name\n" +
-                    "\t[3]Checkout\n" +
+            System.out.print("\t[1] Input Product ID to Purchase\n"+
+                    "\t[2] Search Product Name\n" +
+                    "\t[3] View Low Stock Products\n" +
+                    "\t[4] Checkout\n" +
                     border + "\nChoice:");
             int choice = userIntInput();
             System.out.println(border);
@@ -647,10 +646,14 @@ public class Owner extends Staff {
             }
 
             else if (choice == 3) {
+                displayLowStockProducts();
+            }
+
+            else if(choice ==4) {
                 break;
             }
 
-            else if(choice!= 1) {
+            else if(choice!= 1 ) {
                 System.out.println("Invalid Input!");
                 continue;
             }
@@ -764,27 +767,51 @@ public class Owner extends Staff {
             return;
         }
 
-        ArrayList <TransactionDetail> lines  = purchase.getTransactionDetails(); //para lang to sa pagn print ng receipt
-        ArrayList<LocalDate> expirationDates = purchase.getExpirationDates(); //para lang to sa pag print ng receipt
+
+        ArrayList<TransactionDetail> lines = purchase.getTransactionDetails();
+        ArrayList<LocalDate> expirationDates = purchase.getExpirationDates();
 
         System.out.println(border);
         System.out.printf("%27s%n", "RECEIPT");
-        System.out.println("Transaction ID: "+ purchase.getTransactionID());
-        System.out.println("Transaction Type: "+ purchase.getTransactionType());
-        System.out.println("Purchase No.: " + purchase.getPurchaseOrderNo());
+        System.out.println(border);
+        System.out.println("Transaction ID   : " + purchase.getTransactionID());
+        System.out.println("Transaction Type : " + purchase.getTransactionType());
+        System.out.println("Purchase No.     : " + purchase.getPurchaseOrderNo());
 
-        System.out.println("\n" + border);
-        for (int i=0; i<lines.size();i++) { //etong for loop nato para lang sa individual products, pinapakita yung Product name | quantity x price = subtotal | expirationDate
-            TransactionDetail line = lines.get(i);
-            System.out.println( line.getProduct().getProductName() + " | " + line.getQuantity() + " x " + line.getUnitPrice() + " = " + line.getSubTotal() + " | Exp:" + expirationDates.get(i) +"");
+        System.out.println(line);
+        System.out.printf("%-5s %-16s %8s   %12s%n","Qty", "Product(s)", "Price", "Expiration");
+        System.out.println(line);
+
+        for (int i = 0; i < lines.size(); i++) {
+            TransactionDetail detail = lines.get(i);
+
+            System.out.printf("%-5d %-16s %8.2f   %12s%n",
+                    detail.getQuantity(),
+                    detail.getProduct().getProductName(),
+                    detail.getUnitPrice(),
+                    expirationDates.get(i));
         }
 
-        System.out.println(mborder);
+        System.out.println(line);
+        System.out.println("--------------------" + lines.size()
+                + " item(s)---------------------");
 
-        System.out.printf("\nSubtotal: %.2f%n", purchase.getSubTotalPrice());
-        System.out.printf("VAT(12%%): %.2f%n", purchase.getVATAmount());
-        System.out.printf("Bulk Discount(20%%): %.2f%n", purchase.getSubTotalPrice()*purchase.getBULKDISCOUNT());
-        System.out.printf("Total: %.2f%n%n", purchase.getTotalWithVAT() - (purchase.getSubTotalPrice()*purchase.getBULKDISCOUNT()));
+        System.out.printf("%-40s%10.2f%n",
+                "Subtotal:", purchase.getSubTotalPrice());
+        System.out.printf("%-40s%10.2f%n",
+                "VAT(12%):", purchase.getVATAmount());
+        System.out.printf("%-40s%10.2f%n",
+                "Bulk Discount(20%):",
+                purchase.getSubTotalPrice() * purchase.getBULKDISCOUNT());
+
+        System.out.println(line);
+        System.out.printf("%-40s%10.2f%n",
+                "Total:",
+                purchase.getTotalWithVAT()
+                        - (purchase.getSubTotalPrice() * purchase.getBULKDISCOUNT()));
+
+        System.out.println(border);
+
 
     }
 
@@ -828,7 +855,7 @@ public class Owner extends Staff {
             }
 
             while (true) {
-                System.out.println("Product ID [0 to cancel]: ");
+                System.out.print("Product ID [0 to cancel]: ");
                 String productID = in.nextLine().trim().toUpperCase();
                 System.out.println(border);
 

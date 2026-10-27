@@ -116,7 +116,7 @@ public abstract class Staff {
 
         System.out.println("\n" + border);
         System.out.printf("%32s%n", "CHANGE PASSWORD");
-        System.out.println(  border + "\nEnter Current password: ");
+        System.out.print(  border + "\nEnter Current password: ");
         String checkPassword = in.nextLine();
 
         if (checkPassword.equals(this.getPassword())) {
@@ -169,7 +169,7 @@ public abstract class Staff {
 
     }
 
-    protected void displayProfile() {
+    protected void displayProfileInfo() {
         tag();
         System.out.println(border);
         System.out.printf("%30s\n", "MY PROFILE");
@@ -181,30 +181,6 @@ public abstract class Staff {
         System.out.println("Username: " + getUsername());
         System.out.println("Password: " + getPassword());
 
-        System.out.println(border);
-        System.out.print("\t[1] Change Username\n\t[0]Exit\n");
-        System.out.println(border);
-        System.out.print("Choice: ");
-        int choice  = userIntInput();
-
-        System.out.println(border);
-        switch (choice)  {
-            case 1 : {
-                System.out.print("Enter New Username: ");
-                String newUsername = in.nextLine();
-                this.setUsername(newUsername);
-                System.out.println(border);
-                System.out.printf("%25s\n", "Username Changed Successfully!");
-                break;
-            }
-            case 0 : return;
-            default:
-                System.out.println(mborder);
-                System.out.printf("%32s\n", "Invalid Input!");
-                System.out.println(mborder);
-                break;
-
-        }
 
     }
 
@@ -775,18 +751,18 @@ public abstract class Staff {
         if ((expiredProducts > 0 || nearExpiryProducts > 0) && lowStockProducts > 0) {
             System.out.println(line);
             System.out.printf("%28s%n", "!ALERTS!");
-            System.out.print("[11] EXPIRED(" + (expiredProducts + nearExpiryProducts) + " items)");
-            System.out.printf("%26s%n", "[12] LOW STOCK(" + lowStockProducts + " items)");
+            System.out.print("[10] EXPIRED(" + (expiredProducts + nearExpiryProducts) + " items)");
+            System.out.printf("%26s%n", "[11] LOW STOCK(" + lowStockProducts + " items)");
             System.out.println(line);
         } else if ((expiredProducts > 0 || nearExpiryProducts > 0) && lowStockProducts == 0) {
             System.out.println(line);
             System.out.printf("%28s%n", "!ALERTS!");
-            System.out.println("[11] EXPIRED(" + (expiredProducts+ nearExpiryProducts) + " items)");
+            System.out.println("[10] EXPIRED(" + (expiredProducts+ nearExpiryProducts) + " items)");
             System.out.println(line);
         } else if ((expiredProducts == 0 && nearExpiryProducts ==0) && lowStockProducts > 0) {
             System.out.println(line);
             System.out.printf("%28s%n", "!ALERTS!");
-            System.out.println("[12] LOW STOCK(" + lowStockProducts + " items)");
+            System.out.println("[11] LOW STOCK(" + lowStockProducts + " items)");
             System.out.println(line);
         }
     }
@@ -991,6 +967,26 @@ public abstract class Staff {
             System.out.println(mborder);
             return 0;
         }
+
+        System.out.println(border);
+        System.out.printf("%27s%n", "WARNING!");
+        System.out.println(border);
+        System.out.println(line);
+        System.out.print( " The Returning of Near Expiry Products to the \n  Supplier May Trigger a Low Stock Alert. Please\n  Ensure that the Product has Enough Stock\n" + line +
+                "\n\t[1]Continue\n" +
+                "\t[2]Cancel\n"+ border +
+                "\nChoice: ");
+        int choice = userIntInput();
+
+        if(choice==2) {
+            return 0;
+        }
+        else if(choice != 1) {
+            System.out.println("Invalid Input!");
+            return 0;
+        }
+
+
 
         int returnedBatches=0;
         for(Product p : inventory.getProducts()) {
@@ -1217,6 +1213,43 @@ public abstract class Staff {
                     System.out.printf("%32s\n", "Invalid Input!");
                     System.out.println(mborder);
                     break;
+            }
+        }
+
+    }
+
+    protected void myProfileMenu() {
+
+
+        while(true) {
+
+            displayProfileInfo();
+
+            System.out.println(border);
+            System.out.print("\t[1] Change Username\n\t[2] Change Password\n\t[0] Exit\n");
+            System.out.println(border);
+            System.out.print("Choice: ");
+            int choice  = userIntInput();
+
+            System.out.println(border);
+            switch (choice)  {
+                case 1 : {
+                    System.out.print("Enter New Username: ");
+                    String newUsername = in.nextLine();
+                    this.setUsername(newUsername);
+                    System.out.println(border);
+                    System.out.printf("%25s\n", "Username Changed Successfully!");
+                    pause();
+                    break;
+                }
+                case 2 : changePassword(); pause(); break;
+                case 0 : return;
+                default:
+                    System.out.println(mborder);
+                    System.out.printf("%32s\n", "Invalid Input!");
+                    System.out.println(mborder);
+                    break;
+
             }
         }
 

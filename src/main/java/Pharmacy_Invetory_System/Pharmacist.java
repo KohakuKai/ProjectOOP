@@ -26,9 +26,8 @@ public class Pharmacist extends Staff {
                     + "\t[4] Sell Product\n"
                     + "\t[5] View Transaction History\n"
                     + "ACCOUNT\n"
-                    + "\t[6] Change Password\n"
-                    + "\t[7] View Profile\n"
-                    + "\t[0] Logout\n"
+                    + "\t[6] View Profile\n"
+                    + "\t[7] Logout\n"
                     + border + "\nChoice: ");
 
             int choice = userIntInput();
@@ -60,24 +59,19 @@ public class Pharmacist extends Staff {
                     break;
 
                 case 6:
-                    changePassword();
+                    myProfileMenu();
                     pause();
                     break;
 
-                case 7:
-                    displayProfile();
-                    pause();
-                    break;
-
-                case 0: {
+                case 7: {
                     System.out.println(mborder);
                     System.out.printf("%32s\n", "Logging out...");
                     System.out.println(mborder);
                     return;
                 }
 
-                case 11 : expiredItemsMenu(); break;
-                case 12 : displayLowStockProducts(); pause(); break;
+                case 10 : expiredItemsMenu(); break;
+                case 11 : displayLowStockProducts(); pause(); break;
 
 
                 default:
@@ -90,8 +84,8 @@ public class Pharmacist extends Staff {
     private final LocalDate hireDate = LocalDate.now();
 
     @Override
-    public void displayProfile() {
-        super.displayProfile();
+    public void displayProfileInfo() {
+        super.displayProfileInfo();
         System.out.println("Hire Date: " + hireDate);
     }
 }

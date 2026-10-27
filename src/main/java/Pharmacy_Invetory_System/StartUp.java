@@ -114,7 +114,7 @@ public class StartUp {
         registeredStaffs.add(owner);
         inventory.defaultTransactions(owner); // para lang to sa predefined na Transcation History
 
-        Staff pharmacist1 = new Pharmacist("Clay Cruz","July242007_","clay",inventory);
+        Staff pharmacist1 = new Pharmacist("Arnold Pinto","July242007_","arnold",inventory);
         registeredStaffs.add(pharmacist1);
 
         Staff staff1 = new Employee("Raiven Joson","ILoveEunice07_","raiven",inventory);
