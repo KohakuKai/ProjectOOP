@@ -1,4 +1,6 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.transaction;
+
+import Pharmacy_Invetory_System.product.Product;
 
 public class TransactionDetail {
 

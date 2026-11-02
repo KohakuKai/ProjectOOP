@@ -1,4 +1,8 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.transaction;
+
+import Pharmacy_Invetory_System.inventory.Inventory;
+import Pharmacy_Invetory_System.employees.Staff;
+import Pharmacy_Invetory_System.product.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

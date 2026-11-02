@@ -1,4 +1,6 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.product;
+
+import Pharmacy_Invetory_System.employees.Staff;
 
 public abstract class Medicine extends Product {
 
@@ -14,5 +16,5 @@ public abstract class Medicine extends Product {
 
     public abstract String getMedicineType();
 
-    abstract boolean soldBy(Staff varname);
+    public abstract boolean soldBy(Staff varname);
 }

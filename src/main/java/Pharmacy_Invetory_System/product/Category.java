@@ -1,11 +1,11 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.product;
 
 public class Category {
     private static int currentIDNumber = 1;
     private final String Category_ID, Category_Name, Description;
     // mga attributes
 
-    Category( String Category_Name, String Description){
+    public Category( String Category_Name, String Description){
         this.Category_ID = String.format("C%03d", currentIDNumber++);
         this.Category_Name = Category_Name;     //constructor
         this.Description = Description;

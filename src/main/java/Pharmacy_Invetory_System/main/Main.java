@@ -1,4 +1,4 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.main;
 
 
 public class Main {

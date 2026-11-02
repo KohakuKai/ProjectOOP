@@ -1,8 +1,12 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.product;
+
+import Pharmacy_Invetory_System.employees.Owner;
+import Pharmacy_Invetory_System.employees.Pharmacist;
+import Pharmacy_Invetory_System.employees.Staff;
 
 public class PrescriptionMedicine extends Medicine {
 
-    PrescriptionMedicine( String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
+    public PrescriptionMedicine( String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
         super(productName, genericName, brand, unit, sellingPrice,reorderLevel, category );
     }
 

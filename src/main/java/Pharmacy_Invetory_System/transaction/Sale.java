@@ -1,10 +1,14 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.transaction;
+
+import Pharmacy_Invetory_System.inventory.Inventory;
+import Pharmacy_Invetory_System.employees.Staff;
+import Pharmacy_Invetory_System.product.Product;
 
 public class Sale extends Transaction {
     private final String saleNo;
     private static int currentRecieptNo = 1;
 
-    Sale(Staff staff, Inventory inventory){
+    public Sale(Staff staff, Inventory inventory){
         super(staff, inventory);
         this.saleNo = String.format("SN%03d",currentRecieptNo++);
     }
