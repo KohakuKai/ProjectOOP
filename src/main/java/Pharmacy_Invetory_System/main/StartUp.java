@@ -1,13 +1,15 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.main;
+
+import Pharmacy_Invetory_System.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StartUp {
 
-    String line = "-".repeat(50);
-    String border = "=".repeat(50);
-    String mborder = "~".repeat(50);
+    public static final String line = "-".repeat(50);
+    public static final String border = "=".repeat(50);
+    public static final String mborder = "~".repeat(50);
 
     private final ArrayList<Staff> registeredStaffs = new ArrayList<>();
     private final Scanner in = new Scanner(System.in);
