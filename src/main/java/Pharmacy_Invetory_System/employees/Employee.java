@@ -1,11 +1,12 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.employees;
+import Pharmacy_Invetory_System.inventory.Inventory;
 
 import java.time.LocalDate;
 
-public class Pharmacist extends Staff {
+public class Employee extends Staff {
 
-    public Pharmacist(String name, String password, String username, Inventory inventory) {
-        super(name, "Pharmacist",password, username, inventory);
+    public Employee(String name, String password, String username, Inventory inventory) {
+        super(name, "Employee", password, username, inventory);
     }
 
     @Override
@@ -58,8 +59,9 @@ public class Pharmacist extends Staff {
                     pause();
                     break;
 
+
                 case 6:
-                    myProfileMenu();
+                    displayProfileInfo();
                     pause();
                     break;
 
@@ -71,7 +73,7 @@ public class Pharmacist extends Staff {
                 }
 
                 case 10 : expiredItemsMenu(); break;
-                case 11 : displayLowStockProducts(); pause(); break;
+                case 11: displayLowStockProducts(); pause(); break;
 
 
                 default:

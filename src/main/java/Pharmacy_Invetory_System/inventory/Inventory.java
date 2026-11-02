@@ -1,4 +1,12 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.inventory;
+
+import Pharmacy_Invetory_System.employees.Owner;
+import Pharmacy_Invetory_System.employees.Staff;
+import Pharmacy_Invetory_System.product.*;
+import Pharmacy_Invetory_System.transaction.Purchase;
+import Pharmacy_Invetory_System.transaction.Sale;
+import Pharmacy_Invetory_System.transaction.Transaction;
+import Pharmacy_Invetory_System.transaction.TransactionDetail;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +32,7 @@ public class Inventory {
 
     //Add product
     public boolean addProduct(Staff staff, Product newProduct) {
-        if(!(staff instanceof  Owner))  return false; //pagka hindi owner gumamit
+        if(!(staff instanceof Owner))  return false; //pagka hindi owner gumamit
         if(newProduct == null) return false; //pagka null yung laman ng newProduct
         if(findProductById(newProduct.getProductID()) != null)  return false; //pagka may ka same na ID
         if(newProduct.getCategory() == null) return false; //pagka naginput ng invalid na category name

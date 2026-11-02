@@ -1,4 +1,6 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.product;
+
+import Pharmacy_Invetory_System.inventory.Batch;
 
 import java.util.ArrayList;
 

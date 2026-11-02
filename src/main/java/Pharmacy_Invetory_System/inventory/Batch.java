@@ -1,4 +1,6 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.inventory;
+
+import Pharmacy_Invetory_System.product.Product;
 
 import java.time.LocalDate;
 

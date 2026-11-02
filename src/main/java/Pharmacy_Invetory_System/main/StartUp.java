@@ -1,6 +1,10 @@
 package Pharmacy_Invetory_System.main;
 
-import Pharmacy_Invetory_System.*;
+import Pharmacy_Invetory_System.employees.Employee;
+import Pharmacy_Invetory_System.employees.Owner;
+import Pharmacy_Invetory_System.employees.Pharmacist;
+import Pharmacy_Invetory_System.employees.Staff;
+import Pharmacy_Invetory_System.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.Scanner;

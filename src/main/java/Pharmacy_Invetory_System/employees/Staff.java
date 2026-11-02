@@ -1,4 +1,13 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.employees;
+import Pharmacy_Invetory_System.inventory.Batch;
+import Pharmacy_Invetory_System.inventory.Inventory;
+import Pharmacy_Invetory_System.product.Category;
+import Pharmacy_Invetory_System.product.Medicine;
+import Pharmacy_Invetory_System.product.Product;
+import Pharmacy_Invetory_System.transaction.Sale;
+import Pharmacy_Invetory_System.transaction.Transaction;
+import Pharmacy_Invetory_System.transaction.TransactionDetail;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

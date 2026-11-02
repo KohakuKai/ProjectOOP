@@ -1,6 +1,11 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.employees;
 
+import Pharmacy_Invetory_System.inventory.Batch;
+import Pharmacy_Invetory_System.inventory.Inventory;
 import Pharmacy_Invetory_System.main.StartUp;
+import Pharmacy_Invetory_System.product.*;
+import Pharmacy_Invetory_System.transaction.Purchase;
+import Pharmacy_Invetory_System.transaction.TransactionDetail;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +15,7 @@ public class Owner extends Staff {
 
     private final StartUp manager;
 
-    public Owner(String name, StartUp manager, String password, String username,Inventory inventory) {
+    public Owner(String name, StartUp manager, String password, String username, Inventory inventory) {
         super(name, "Owner", password, username, inventory);
         this.manager = manager;
 
@@ -1096,5 +1101,3 @@ public class Owner extends Staff {
     }
 
 }
-
-//malapit na tayo mag 1000 lines

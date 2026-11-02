@@ -1,8 +1,8 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.product;
 
-public class Essentials extends Product{
+public class Essentials extends Product {
 
-    Essentials( String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
+    public Essentials( String productName, String genericName, String brand, String unit, double sellingPrice,int reorderLevel, Category category){
         super( productName, genericName, brand, unit, sellingPrice,reorderLevel, category);
     }
 

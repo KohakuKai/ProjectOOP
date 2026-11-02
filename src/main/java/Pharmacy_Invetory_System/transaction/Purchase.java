@@ -1,9 +1,13 @@
-package Pharmacy_Invetory_System;
+package Pharmacy_Invetory_System.transaction;
+
+import Pharmacy_Invetory_System.inventory.Inventory;
+import Pharmacy_Invetory_System.employees.Staff;
+import Pharmacy_Invetory_System.product.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Purchase extends Transaction{
+public class Purchase extends Transaction {
 
     private String purchaseOrderNo,purchaseStatus;
     private static int currentNumber =1;
@@ -11,7 +15,7 @@ public class Purchase extends Transaction{
     private final double BULKDISCOUNT = 0.20;
 
 
-    Purchase (Staff staff, Inventory inventory) {
+    public Purchase (Staff staff, Inventory inventory) {
         super(staff, inventory);
         this.purchaseOrderNo = String.format("PN%03d",currentNumber++);
     }
